@@ -32,4 +32,12 @@ public interface UserService {
      * @return
      */
     Map<String, Object> insert(User user)  throws Exception;
+
+    /**
+     * 获取token
+     * @param code
+     * @return
+     * @throws Exception
+     */
+	Map<String, Object> getToken(String code) throws Exception;
 }

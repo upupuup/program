@@ -38,5 +38,10 @@ public class UserController {
         return userService.insert(user);
     }
 
+    @RequestMapping("/getToken/{code}")
+    public Map<String, Object> getToken(@PathVariable String code) throws Exception {
+        return userService.getToken(code);
+    }
+
 
 }
