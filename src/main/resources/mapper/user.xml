@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mini.program.dao.UserDao">
-    <resultMap id="user" type="com.mini.program.bean.User">
+<mapper namespace="com.navi.mini.program.dao.UserDao">
+    <resultMap id="user" type="com.navi.mini.program.bean.User">
 		<id property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
+        <result property="password" column="code"/>
     </resultMap>
 
     <sql id="Table_Name">
@@ -18,7 +19,7 @@
 	</sql>
 
     <!-- insert -->
-    <insert id="insert" parameterType="com.mini.program.bean.User">
+    <insert id="insert" parameterType="com.navi.mini.program.bean.User">
         INSERT INTO
         <include refid="Table_Name" />
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -53,7 +54,7 @@
           id = #{id}
     </select>
 
-    <select id="queryList" parameterType="com.mini.program.bean.User" resultMap="user">
+    <select id="queryList" parameterType="com.navi.mini.program.bean.User" resultMap="user">
         SELECT
           <include refid="Table_Columns" />
         FROM

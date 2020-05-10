@@ -1,7 +1,7 @@
 logging:
   level:
     root: info
-    com.mini.program.dao: debug
+    com.navi.mini.program.dao: debug
 
 spring:
 #  redis:
@@ -22,13 +22,13 @@ spring:
 #      suffix: .html
   datasource:
     #url: jdbc:mysql://26q1n04800.wicp.vip:29154/ngyun_3.0?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
-    #    url: jdbc:mysql://172.21.3.2:3306/ngyun_3.0?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://172.21.3.2:3306/mini?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
 #    url: jdbc:mysql://server.natappfree.cc:42624/ngyun_3.0?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
-#    username: root
-#    password: nangao2019-
-    url: jdbc:mysql://47.102.115.74:3306/mini
     username: root
-    password: root
+    password: nangao2019-
+#    url: jdbc:mysql://47.102.115.74:3306/mini
+#    username: root
+#    password: root
     driverClassName: com.mysql.jdbc.Driver
     initialSize: 5
     minIdle: 5
@@ -72,17 +72,15 @@ spring:
 #  # ��������·��
 #  web-server-url: http://172.21.3.2/
 server:
-  port: 3000
+  port: 8081
 #  servlet:
 #    context-path: /equipngy
 
-# ΢��redis����
-#wechat:
-#  we-chat-access-token: weChatAccessToken3.0Dev
-#  ticket-token: ticketToken3.0Dev
-#  app-id: wx55654dabd7d971a4
-#  app-secret: 09cff65de9a9515c853fd954a567014b
-#  domain-name: nangaodev.nat300.top
-#  send-url: https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=
+# 微信配置
+wechat:
+  we-chat-access-token: weChatAccessTokenMiniDev
+  ticket-token: ticketTokenMiniDev
+  app-id: wx38b00b683bf8be2d
+  app-secret: 91d189e9ec39403f778d0b4893ca76ca
 
 
