@@ -1,4 +1,4 @@
-package com.mini.program.config;
+package com.navi.mini.program.config;
 
 import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.plugin.Interceptor;
@@ -21,7 +21,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@MapperScan("com.mini.program.dao")
+@MapperScan("com.navi.mini.program.dao")
 public class MyBatisConfig implements TransactionManagementConfigurer {
 
     @Autowired
@@ -31,7 +31,7 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
     public SqlSessionFactory sqlSessionFactoryBean() {
     	SqlSessionFactoryBean  bean = new SqlSessionFactoryBean ();
         bean.setDataSource(dataSource);
-        bean.setTypeAliasesPackage("com.mini.program.model");
+        bean.setTypeAliasesPackage("com.navi.mini.program.model");
 
         //分页插件
         PageHelper pageHelper = new PageHelper();

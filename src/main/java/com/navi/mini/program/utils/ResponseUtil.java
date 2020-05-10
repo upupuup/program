@@ -1,4 +1,4 @@
-package com.mini.program.utils;
+package com.navi.mini.program.utils;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,6 +1,6 @@
-package com.mini.program.base;
+package com.navi.mini.program.base;
 
-import com.mini.program.common.Constant;
+import com.navi.mini.program.common.Constant;
 
 import java.io.Serializable;
 

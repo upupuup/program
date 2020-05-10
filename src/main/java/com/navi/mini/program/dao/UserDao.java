@@ -1,6 +1,6 @@
-package com.mini.program.dao;
+package com.navi.mini.program.dao;
 
-import com.mini.program.bean.User;
+import com.navi.mini.program.bean.User;
 
 import java.util.List;
 

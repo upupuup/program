@@ -1,8 +1,4 @@
-package com.mini.program.bean;
-
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+package com.navi.mini.program.bean;
 
 import java.io.Serializable;
 
@@ -11,9 +7,6 @@ import java.io.Serializable;
  * @Author: jiangzhihong
  * @CreateDate: 2020/2/16 19:26
  */
-@Data
-@Setter
-@Getter
 public class User implements Serializable {
     private Long id;
     private String username;
