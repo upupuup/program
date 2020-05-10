@@ -4,31 +4,10 @@ logging:
     com.navi.mini.program.dao: debug
 
 spring:
-#  redis:
-#    database: 0
-#    host: 127.0.0.1
-#    port: 6379
-#    password:
-#    timeout: 10000
-#    block-when-exhausted: true
-#    jedis:
-#      pool:
-#        max-active: 1024
-#        max-wait: 10000
-#        max-idle: 200
-#        min-idle: 5
-#  mvc:
-#    view:
-#      suffix: .html
   datasource:
-    #url: jdbc:mysql://26q1n04800.wicp.vip:29154/ngyun_3.0?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
     url: jdbc:mysql://172.21.3.2:3306/mini?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
-#    url: jdbc:mysql://server.natappfree.cc:42624/ngyun_3.0?useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
     username: root
     password: nangao2019-
-#    url: jdbc:mysql://47.102.115.74:3306/mini
-#    username: root
-#    password: root
     driverClassName: com.mysql.jdbc.Driver
     initialSize: 5
     minIdle: 5
@@ -45,32 +24,7 @@ spring:
     filters: stat,wall,log4j
     hikari:
       max-lifetime: 30000
-#  jpa:
-#    database: MYSQL
-#    show-sql: true
-#  thymeleaf:
-#    cache: false
-## �ֲ�ʽ�ļ�ϵͳfastdfs����
-#fdfs:
-#  # socket���ӳ�ʱʱ��
-#  soTimeout: 1500
-#  # ����tracker��������ʱʱ��
-#  connectTimeout: 600
-#  pool:
-#    # �ӳ��н���Ķ���������Ŀ
-#    max-total: 153
-#    # ��ȡ����ʱ�����ȴ�������100
-#    max-wait-millis: 102
-#  # ����ͼ���ɲ�������ѡ
-#  thumbImage:
-#    width: 150
-#    height: 150
-#  # ���ٷ�����tracker_server�����ַ,֧�ֶ��������ֻ��һ��������ж�����·���- x.x.x.x:port
-#  trackerList:
-#  # ��������·��
-#  - 172.21.3.2:22122
-#  # ��������·��
-#  web-server-url: http://172.21.3.2/
+
 server:
   port: 8081
 #  servlet:
