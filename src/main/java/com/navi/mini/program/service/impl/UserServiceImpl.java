@@ -67,4 +67,5 @@ public class UserServiceImpl implements UserService {
         result.put("data", resultJson);
         return result;
     }
+
 }
