@@ -1,4 +1,4 @@
-package com.navi.mini.program.bean;
+package com.navi.mini.program.model;
 
 import java.io.Serializable;
 

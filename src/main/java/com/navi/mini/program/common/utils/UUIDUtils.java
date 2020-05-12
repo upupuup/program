@@ -1,4 +1,4 @@
-package com.navi.mini.program.utils;
+package com.navi.mini.program.common.utils;
 
 import java.util.Date;
 import java.util.Random;

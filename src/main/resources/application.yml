@@ -25,6 +25,20 @@ spring:
     hikari:
       max-lifetime: 30000
 
+  redis:
+    database: 0
+    host: 172.21.3.2
+    port: 6379
+    password: nangao
+    timeout: 10000
+    block-when-exhausted: true
+    jedis:
+      pool:
+        max-active: 20
+        max-wait-millis: 200
+        max-idle: 20
+        min-idle: 0
+
 server:
   port: 8081
 #  servlet:

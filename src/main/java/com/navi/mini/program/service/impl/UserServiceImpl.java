@@ -1,13 +1,15 @@
 package com.navi.mini.program.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.navi.mini.program.bean.User;
-import com.navi.mini.program.common.Constant;
+import com.navi.mini.program.model.User;
+import com.navi.mini.program.common.constant.Constant;
 import com.navi.mini.program.dao.UserDao;
 import com.navi.mini.program.service.UserService;
-import com.navi.mini.program.utils.HttpUtils;
-import com.navi.mini.program.utils.ResponseUtil;
-import com.navi.mini.program.utils.UUIDUtils;
+import com.navi.mini.program.common.utils.HttpUtils;
+import com.navi.mini.program.common.utils.RedisUtils;
+import com.navi.mini.program.common.utils.ResponseUtil;
+import com.navi.mini.program.common.utils.UUIDUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ import java.util.Map;
  */
 @Service
 public class UserServiceImpl implements UserService {
+    @Autowired
+    private RedisUtils redisUtils;
     @Autowired
     private UserDao userDao;
 
@@ -58,13 +62,19 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Map<String, Object> getToken(String code) throws Exception {
-        // 拼接请求地址
-        String url =  Constant.URL.replace("#{0}", Constant.APP_ID).replace("#{1}", Constant.SECRET).replace("#{2}", code);
-        // 调用微信接口
-        JSONObject resultJson = HttpUtils.doGet(url);
+//        redisUtils.getString(Constant.WE_CHAT_ACCESS_TOKEN);
+        String weChatAccessToken = "";
         // 处理结果
         Map<String, Object> result = ResponseUtil.getResponseSuccess();
-        result.put("data", resultJson);
+        if (StringUtils.isBlank(weChatAccessToken)) {
+            // 拼接请求地址
+            String url = Constant.URL.replace("#{0}", Constant.APP_ID).replace("#{1}", Constant.SECRET).replace("#{2}", code);
+            // 调用微信接口
+            JSONObject resultJson = HttpUtils.doGet(url);
+            result.put("data", resultJson.get("openid"));
+        } else {
+            result.put("data", weChatAccessToken);
+        }
         return result;
     }
 

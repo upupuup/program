@@ -1,4 +1,4 @@
-package com.navi.mini.program.utils;
+package com.navi.mini.program.common.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import okhttp3.*;

@@ -1,6 +1,6 @@
 package com.navi.mini.program.config;
 
-import com.navi.mini.program.common.Constant;
+import com.navi.mini.program.common.constant.Constant;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

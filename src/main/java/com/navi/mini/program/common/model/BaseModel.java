@@ -1,12 +1,13 @@
-package com.navi.mini.program.base;
+package com.navi.mini.program.common.model;
 
-import com.navi.mini.program.common.Constant;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.navi.mini.program.common.constant.Constant.IsDelete;
 
 import java.io.Serializable;
 
 /**
  * 类描述： Model基类
- * @author
+ * @author miaojinyong
  */
 public class BaseModel implements Serializable {
 
@@ -25,7 +26,7 @@ public class BaseModel implements Serializable {
 	/**
 	 * 删除标记:0为未删除,1为已删除
 	 */
-	private Integer isDelete = Constant.IsDelete.IS_NOT_DELETE;
+	private Integer isDelete = IsDelete.IS_NOT_DELETE;
 
 	/**
 	 * 创建人
@@ -35,7 +36,7 @@ public class BaseModel implements Serializable {
 	/**
 	 * 创建时间
 	 */
-//	@JSONField(format =  "yyyy-MM-dd HH:mm:ss")
+	@JSONField(format =  "yyyy-MM-dd HH:mm:ss")
 	private String createTime;
 	
 	/**
@@ -46,7 +47,7 @@ public class BaseModel implements Serializable {
 	/**
 	 * 修改时间
 	 */
-//	@JSONField(format =  "yyyy-MM-dd HH:mm:ss")
+	@JSONField(format =  "yyyy-MM-dd HH:mm:ss")
 	private String updateTime;
 	
 	/**
@@ -67,13 +68,13 @@ public class BaseModel implements Serializable {
 	/**
 	 * 查询时间
 	 */
-//	@JSONField(format =  "yyyy-MM-dd")
+	@JSONField(format =  "yyyy-MM-dd")
 	private String creStartTime;
 	
 	/**
 	 * 结束时间
 	 */
-//	@JSONField(format =  "yyyy-MM-dd")
+	@JSONField(format =  "yyyy-MM-dd")
 	private String creEndTime;
 
 	/**

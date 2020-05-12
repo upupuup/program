@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.navi.mini.program.dao.bisuser.BisUserDao">
+    <resultMap id="bisUser" type="com.navi.mini.program.model.bisuser.BisUser">
+		<id property="usrId" column="USR_ID"/>
+        <result property="unqSeqId" column="UNQ_SEQ_ID"/>
+        <result property="usrKey" column="USR_KEY"/>
+        <result property="usrName" column="USR_NAME"/>
+        <result property="deptIdFk" column="DEPT_ID_FK"/>
+        <result property="usrHeadFlg" column="USR_HEAD_FLG"/>
+        <result property="validFlg" column="VALID_FLG"/>
+        <result property="usrPhs" column="USR_PHS"/>
+        <result property="wechat" column="WECHAT"/>
+        <result property="token" column="TOKEN"/>
+        <result property="evtUsr" column="EVT_USR"/>
+        <result property="evtTimestamp" column="EVT_TIMESTAMP"/>
+    </resultMap>
+	
+    <sql id="Table_Name">
+        bis_user
+    </sql>
+	
+	<sql id="Table_Columns">
+        USR_ID,
+        UNQ_SEQ_ID,
+        USR_KEY,
+        USR_NAME,
+        DEPT_ID_FK,
+        USR_HEAD_FLG,
+        VALID_FLG,
+        USR_PHS,
+        WECHAT,
+        TOKEN,
+        EVT_USR,
+        EVT_TIMESTAMP		
+	</sql>
+	
+	<!-- insert -->
+	<insert id="insert" parameterType="com.navi.mini.program.model.bisuser.BisUser">
+        INSERT INTO 
+        <include refid="Table_Name" />
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="usrId != null">
+				USR_ID,
+            </if>
+			<if test="unqSeqId != null">
+				UNQ_SEQ_ID,
+            </if>
+			<if test="usrKey != null">
+				USR_KEY,
+            </if>
+			<if test="usrName != null">
+				USR_NAME,
+            </if>
+			<if test="deptIdFk != null">
+				DEPT_ID_FK,
+            </if>
+			<if test="usrHeadFlg != null">
+				USR_HEAD_FLG,
+            </if>
+			<if test="validFlg != null">
+				VALID_FLG,
+            </if>
+			<if test="usrPhs != null">
+				USR_PHS,
+            </if>
+			<if test="wechat != null">
+				WECHAT,
+            </if>
+			<if test="token != null">
+				TOKEN,
+            </if>
+			<if test="evtUsr != null">
+				EVT_USR,
+            </if>
+			<if test="evtTimestamp != null">
+				EVT_TIMESTAMP,
+            </if>
+        </trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="usrId != null">
+				#{usrId},
+            </if>
+			<if test="unqSeqId != null">
+				#{unqSeqId},
+            </if>
+			<if test="usrKey != null">
+				#{usrKey},
+            </if>
+			<if test="usrName != null">
+				#{usrName},
+            </if>
+			<if test="deptIdFk != null">
+				#{deptIdFk},
+            </if>
+			<if test="usrHeadFlg != null">
+				#{usrHeadFlg},
+            </if>
+			#{id},
+			<if test="usrPhs != null">
+				#{usrPhs},
+            </if>
+			<if test="wechat != null">
+				#{wechat},
+            </if>
+			<if test="token != null">
+				#{token},
+            </if>
+			<if test="evtUsr != null">
+				#{evtUsr},
+            </if>
+			<if test="evtTimestamp != null">
+				#{evtTimestamp},
+            </if>
+        </trim>
+    </insert>
+	
+	<!-- insert -->
+	<insert id="batchInsert" parameterType="com.navi.mini.program.model.bisuser.BisUser">
+        INSERT INTO 
+        <include refid="Table_Name" />
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			USR_ID,
+			UNQ_SEQ_ID,
+			USR_KEY,
+			USR_NAME,
+			DEPT_ID_FK,
+			USR_HEAD_FLG,
+			VALID_FLG,
+			USR_PHS,
+			WECHAT,
+			TOKEN,
+			EVT_USR,
+			EVT_TIMESTAMP,
+        </trim>
+		VALUES
+		<foreach  collection="list" item="item"  index="index" separator=",">
+		(	
+			#{item.usrId},
+			#{item.unqSeqId},
+			#{item.usrKey},
+			#{item.usrName},
+			#{item.deptIdFk},
+			#{item.usrHeadFlg},
+			#{item.validFlg},
+			#{item.usrPhs},
+			#{item.wechat},
+			#{item.token},
+			#{item.evtUsr},
+			#{item.evtTimestamp},
+		)
+		</foreach>
+    </insert>
+	
+	<!-- update:修改时不修改createUser、createTime、isDelete -->
+    <update id="update" parameterType="com.navi.mini.program.model.bisuser.BisUser">
+        UPDATE 
+        <include refid="Table_Name" />
+        <set>
+            <trim suffix=" " suffixOverrides=",">
+				<if test="unqSeqId != null">
+					UNQ_SEQ_ID = #{unqSeqId},
+				</if>
+				<if test="usrKey != null">
+					USR_KEY = #{usrKey},
+				</if>
+				<if test="usrName != null">
+					USR_NAME = #{usrName},
+				</if>
+				<if test="deptIdFk != null">
+					DEPT_ID_FK = #{deptIdFk},
+				</if>
+				<if test="usrHeadFlg != null">
+					USR_HEAD_FLG = #{usrHeadFlg},
+				</if>
+				<if test="validFlg != null">
+					VALID_FLG = #{validFlg},
+				</if>
+				<if test="usrPhs != null">
+					USR_PHS = #{usrPhs},
+				</if>
+				<if test="wechat != null">
+					WECHAT = #{wechat},
+				</if>
+				<if test="token != null">
+					TOKEN = #{token},
+				</if>
+				<if test="evtUsr != null">
+					EVT_USR = #{evtUsr},
+				</if>
+				<if test="evtTimestamp != null">
+					EVT_TIMESTAMP = #{evtTimestamp},
+				</if>
+            </trim>
+        </set>
+		WHERE
+			id = #{id}
+    </update>	
+	
+	<!-- deleteById -->
+	<update id="deleteById">
+		UPDATE 
+			<include refid="Table_Name" />
+		SET
+			is_delete = 1,
+			update_user_id = #{updateUserId},
+			update_user_name = #{updateUserName},
+			update_time = #{updateTime}
+		WHERE
+			id = #{id}
+	</update>
+
+	<!-- parameterType -->
+	<update id="physicsDeleteById" parameterType="Long">
+		DELETE FROM
+			<include refid="Table_Name"/>
+		WHERE
+			id = #{id}
+	</update>
+	
+	<!-- physicsDeleteById -->
+	<update id="deleteByIdsForList">
+		UPDATE
+			<include refid="Table_Name" />
+		SET
+			is_delete = 1,
+			update_user_id = #{updateUserId},
+			update_user_name = #{updateUserName},
+			update_time = #{updateTime}
+		WHERE 
+			id 
+				IN
+			<foreach collection="array" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+	</update>
+	
+	<!-- deleteByIds -->
+	<update id="deleteByIdsForArray">
+		UPDATE
+			<include refid="Table_Name" />
+		SET
+			is_delete = 1,
+			update_user_id = #{updateUserId},
+			update_user_name = #{updateUserName},
+			update_time = #{updateTime}
+		WHERE
+			id 
+				IN
+			<foreach collection="array" item="item" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+	</update>
+	
+	<!-- queryList -->
+	<select id="queryList" resultMap="bisUser" parameterType="com.navi.mini.program.model.bisuser.BisUser">
+		SELECT 
+			<include refid="Table_Columns" />
+		FROM
+			<include refid="Table_Name" />
+		WHERE
+			is_delete = 0
+		ORDER BY 
+			create_time DESC
+	</select>
+	
+	<!-- queryById -->
+	<select id="queryById" resultMap="bisUser" parameterType="Long">
+		SELECT 
+			<include refid="Table_Columns" />
+		FROM 
+			<include refid="Table_Name" />
+		WHERE
+			is_delete = 0 
+		AND
+			id = #{id}
+	</select>
+
+	<!-- 使用opendis查询用户信息 -->
+	<select id="queryByToken" resultMap="bisUser" parameterType="Long">
+		SELECT
+			<include refid="Table_Columns" />
+		FROM
+			<include refid="Table_Name" />
+		WHERE
+			is_delete = 0
+		AND
+			TOKEN = #{token}
+	</select>
+
+
+</mapper>

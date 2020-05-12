@@ -1,11 +1,10 @@
 package com.navi.mini.program.controller;
 
-import com.navi.mini.program.bean.User;
+import com.navi.mini.program.model.User;
 import com.navi.mini.program.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -41,7 +40,6 @@ public class UserController {
 
     @RequestMapping("/getToken/{code}")
     public Map<String, Object> getToken(@PathVariable String code) throws Exception {
-        Map<String, Object> resultMap = new HashMap<>(8);
 //        HashMap<String, String> codeMap = new HashMap<>(8);
 //        codeMap.put("openid", "oEite5a14ZR3bnC4rkTp7Rw-Qd8Q");
 //        codeMap.put("session_key", "qP2UP998Yd4syZhoMepuyg==");

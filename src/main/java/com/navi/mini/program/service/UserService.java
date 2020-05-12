@@ -1,6 +1,6 @@
 package com.navi.mini.program.service;
 
-import com.navi.mini.program.bean.User;
+import com.navi.mini.program.model.User;
 
 import java.util.Map;
 

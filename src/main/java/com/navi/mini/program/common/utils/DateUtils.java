@@ -1,5 +1,5 @@
 
-package com.navi.mini.program.utils;
+package com.navi.mini.program.common.utils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
