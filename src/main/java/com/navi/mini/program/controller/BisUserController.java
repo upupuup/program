@@ -72,7 +72,7 @@ public class BisUserController extends BaseController {
 	public BaseResponse getToken(@PathVariable String code) {
 		try {
 			String token = bisUserService.getToken(code);
-			data.put(ResultInfo.DATA, token);
+			data.put("openid", token);
 		} catch (Exception e) {
 			logger.info("/bisUser/queryByToken 异常：" + e.toString());
 			error(Constant.ERRORMSG + e.getMessage());

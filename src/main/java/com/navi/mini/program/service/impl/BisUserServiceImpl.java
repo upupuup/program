@@ -5,14 +5,18 @@ import com.navi.mini.program.common.constant.Constant;
 import com.navi.mini.program.common.service.impl.BaseServiceImpl;
 import com.navi.mini.program.common.utils.EmptyUtils;
 import com.navi.mini.program.common.utils.HttpUtils;
+import com.navi.mini.program.common.utils.RedisUtils;
 import com.navi.mini.program.dao.bisuser.BisUserDao;
 import com.navi.mini.program.model.bisuser.BisUser;
 import com.navi.mini.program.service.BisUserService;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BisUserServiceImpl extends BaseServiceImpl<BisUser, BisUserDao> implements BisUserService {
+    @Autowired
+    private RedisUtils redisUtils;
 	
 	@Override
     public void saveBisUser(BisUser bisUser) throws Exception{
@@ -49,7 +53,7 @@ public class BisUserServiceImpl extends BaseServiceImpl<BisUser, BisUserDao> imp
      */
     @Override
     public String getToken(String code) throws Exception {
-        String weChatAccessToken = "";
+        String weChatAccessToken = redisUtils.getString(Constant.WE_CHAT_ACCESS_TOKEN);
         // 处理结果
         if (StringUtils.isEmpty(weChatAccessToken)) {
             // 拼接请求地址
