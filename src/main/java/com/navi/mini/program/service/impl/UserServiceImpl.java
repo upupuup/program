@@ -71,7 +71,10 @@ public class UserServiceImpl implements UserService {
             String url = Constant.URL.replace("#{0}", Constant.APP_ID).replace("#{1}", Constant.SECRET).replace("#{2}", code);
             // 调用微信接口
             JSONObject resultJson = HttpUtils.doGet(url);
-            result.put("data", resultJson.get("openid"));
+            weChatAccessToken = (String) resultJson.get("openid");
+            result.put("data", weChatAccessToken);
+            // 放到redis中
+            redisUtils.set(Constant.WE_CHAT_ACCESS_TOKEN, weChatAccessToken, 6000);
         } else {
             result.put("data", weChatAccessToken);
         }
