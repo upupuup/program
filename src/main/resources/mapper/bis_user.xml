@@ -96,7 +96,6 @@
 			<if test="usrHeadFlg != null">
 				#{usrHeadFlg},
             </if>
-			#{id},
 			<if test="usrPhs != null">
 				#{usrPhs},
             </if>
@@ -195,20 +194,7 @@
         </set>
 		WHERE
 			id = #{id}
-    </update>	
-	
-	<!-- deleteById -->
-	<update id="deleteById">
-		UPDATE 
-			<include refid="Table_Name" />
-		SET
-			is_delete = 1,
-			update_user_id = #{updateUserId},
-			update_user_name = #{updateUserName},
-			update_time = #{updateTime}
-		WHERE
-			id = #{id}
-	</update>
+    </update>
 
 	<!-- parameterType -->
 	<update id="physicsDeleteById" parameterType="Long">
@@ -218,48 +204,12 @@
 			id = #{id}
 	</update>
 	
-	<!-- physicsDeleteById -->
-	<update id="deleteByIdsForList">
-		UPDATE
-			<include refid="Table_Name" />
-		SET
-			is_delete = 1,
-			update_user_id = #{updateUserId},
-			update_user_name = #{updateUserName},
-			update_time = #{updateTime}
-		WHERE 
-			id 
-				IN
-			<foreach collection="array" item="item" open="(" separator="," close=")">
-				#{item}
-			</foreach>
-	</update>
-	
-	<!-- deleteByIds -->
-	<update id="deleteByIdsForArray">
-		UPDATE
-			<include refid="Table_Name" />
-		SET
-			is_delete = 1,
-			update_user_id = #{updateUserId},
-			update_user_name = #{updateUserName},
-			update_time = #{updateTime}
-		WHERE
-			id 
-				IN
-			<foreach collection="array" item="item" open="(" separator="," close=")">
-				#{item}
-			</foreach>
-	</update>
-	
 	<!-- queryList -->
 	<select id="queryList" resultMap="bisUser" parameterType="com.navi.mini.program.model.bisuser.BisUser">
 		SELECT 
 			<include refid="Table_Columns" />
 		FROM
 			<include refid="Table_Name" />
-		WHERE
-			is_delete = 0
 		ORDER BY 
 			create_time DESC
 	</select>
@@ -271,21 +221,28 @@
 		FROM 
 			<include refid="Table_Name" />
 		WHERE
-			is_delete = 0 
-		AND
 			id = #{id}
 	</select>
 
 	<!-- 使用opendis查询用户信息 -->
-	<select id="queryByToken" resultMap="bisUser" parameterType="Long">
+	<select id="queryByToken" resultMap="bisUser" parameterType="String">
 		SELECT
 			<include refid="Table_Columns" />
 		FROM
 			<include refid="Table_Name" />
 		WHERE
-			is_delete = 0
-		AND
 			TOKEN = #{token}
+	</select>
+
+	<select id="queryByPhone" resultMap="bisUser" parameterType="String">
+		SELECT
+			<include refid="Table_Columns" />
+		FROM
+			<include refid="Table_Name" />
+		WHERE
+			USR_PHS = #{usrPhs}
+		AND
+			VALID_FLG = #{validFlg}
 	</select>
 
 

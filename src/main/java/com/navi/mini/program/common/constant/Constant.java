@@ -89,34 +89,45 @@ public class Constant {
          */
         public final static String UPDATE = "update";
 
+    }
+
+    /**
+     * 关于用户的信息
+     */
+    public interface UserConstants {
         /**
-         * 详情操作
+         * session有效时间（毫秒）,24小时
          */
-        public final static String DETAIL = "detail";
+        public static final int TIME_OUT = 86400000;
 
         /**
-         * 删除操作
+         * 有效标识
          */
-        public final static String DEL = "del";
-        /**
-         * 下发操作
-         */
-        public final static String ISSUED = "issued";
+        public static  final String VALID_FLAG = "Y";
 
         /**
-         * 绑定操作
+         * 无效标识
          */
-        public final static String BINDING = "binding";
+        public static  final String INVALID_FLAG = "N";
+    }
 
+    /**
+     * 关于用户类型的信息
+     */
+    public interface UserType {
         /**
-         * 解绑操作
+         * 管理员
          */
-        public final static String UNBUNDLING = "unbundling";
+        public static final String MANAGER = "1";
+        /**
+         * 质检员
+         */
+        public static final String QUALITY_INSPECTOR = "2";
+        /**
+         * 送果员
+         */
+        public static final String SEND_FRUIT = "3";
 
-        /**
-         * 1代表本人
-         */
-        public final static Integer IS_CURRENT_USER = 1;
     }
 
 }

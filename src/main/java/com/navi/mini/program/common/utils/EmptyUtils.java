@@ -1,14 +1,11 @@
 package com.navi.mini.program.common.utils;
 
 import com.navi.mini.program.common.constant.Constant;
-import com.navi.mini.program.common.constant.Constant.OperationType;
-import com.navi.mini.program.common.model.BaseModel;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +25,7 @@ public class EmptyUtils {
 			throw new Exception(strName + "为空" );
 		}
 	}
-	
+
 	/**
 	 * 判读Long类型的是否为空
 	 * @author: miaojy
@@ -39,7 +36,7 @@ public class EmptyUtils {
 			throw new Exception(strName + "为空" );
 		}
 	}
-	
+
 	/**
 	 * 判断主键是否为空
 	 * @author: miaojy
@@ -50,7 +47,7 @@ public class EmptyUtils {
 			throw new Exception(strName + "为空" );
 		}
 	}
-	
+
 	/**
 	 * 对Integer格式的进行判空处理
 	 * @author: miaojy
@@ -246,50 +243,6 @@ public class EmptyUtils {
 		throw new Exception("用户名或密码错误");
 	}
 	
-	/**
-	 * 判断某个字段再新增或者更新的时候是否重复
-	 * @author: miaojy
-	 * @date: 2018年2月27日 下午10:44:27
-	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static void unique(String strName,Collection coll,String type,Long id) throws Exception{
-		// 新增的时候集合需要为空
-		if(OperationType.ADD.equals(type)){
-			if(!CollectionUtils.isEmpty(coll)){
-				throw new Exception(strName + "重复,请重新输入");
-			}
-			return;
-		}
-		// 更新的时候需要判断是集合是否为空,如果为空则可以,
-		// 如果不为空,则需要判断集合的大小,如果集合大小大于1则重复,如果集合集合的大小等于1则判断id是否相同,如果不相同,则重复
-		if(OperationType.UPDATE.equals(type)){
-			// 为空直接返回
-			if(CollectionUtils.isEmpty(coll)){
-				return;
-			}
-			// 不为空,则判断集合的大小
-			if(coll.size() > 1){
-				throw new Exception(strName + " 重复,请重新输入");
-			}
-			// 获取集合中的第一个元素
-			BaseModel model = (BaseModel) ((ArrayList<Object>)coll).get(0);
-			if(!model.getId().equals(id)){
-				throw new Exception(strName + " 重复,请重新输入");
-			}
-		}
-	}
-	public static void unique(String strName,Object obj,Long id) throws Exception{
-		if (id == null) {
-			if (null != obj) {
-				throw new Exception(strName + "重复,请重新输入");
-			}
-		} else {
-			if (null != obj && !((BaseModel) obj).getId().equals(id)) {
-				throw new Exception(strName + "重复,请重新输入");
-			}
-		}
-	}
-
 	/**
 	 * 检查集合不为空且数量为1
 	 * @param collection 集合

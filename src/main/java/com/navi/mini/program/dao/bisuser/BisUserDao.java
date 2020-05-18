@@ -4,6 +4,8 @@ package com.navi.mini.program.dao.bisuser;
 import com.navi.mini.program.common.dao.BaseDao;
 import com.navi.mini.program.model.bisuser.BisUser;
 
+import java.util.List;
+
 public interface BisUserDao extends BaseDao<BisUser> {
 	/**
 	 * 使用opendis查询用户信息
@@ -14,4 +16,14 @@ public interface BisUserDao extends BaseDao<BisUser> {
 	 * @CreateDate: 2020/5/12 21:53
 	 */
 	BisUser queryByToken(String token) throws Exception;
+
+	/**
+	 * 使用手机号查询用户
+	 * @param usrPhs
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/18 14:32
+	 */
+	List<BisUser> queryByPhone(String usrPhs, String validFlg) throws Exception;
 }

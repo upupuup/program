@@ -3,18 +3,16 @@ package com.navi.mini.program.common.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.navi.mini.program.common.constant.Constant;
+import com.navi.mini.program.common.constant.Constant.PageHelperDefault;
 import com.navi.mini.program.common.dao.BaseDao;
 import com.navi.mini.program.common.model.BaseModel;
 import com.navi.mini.program.common.service.BaseService;
 import com.navi.mini.program.common.utils.DateUtils;
 import com.navi.mini.program.common.utils.SessionUtils;
-import com.navi.mini.program.common.utils.UUIDUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import com.navi.mini.program.common.constant.Constant.IsDelete;
-import com.navi.mini.program.common.constant.Constant.PageHelperDefault;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,19 +34,6 @@ public class BaseServiceImpl<T extends BaseModel,D extends BaseDao<T>> implement
 	@Transactional(rollbackFor=Exception.class)
 	@Override
     public int insert(T t) throws Exception {
-		Long id = t.getId();
-		if(id == null) {
-			t.setId(UUIDUtils.generatePrimaryKey());
-		}
-		if (t.getCompanyId() == null) {
-			t.setCompanyId(SessionUtils.getCompanyId());
-		}
-		t.setCreateTime(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
-		t.setCreateUserId(SessionUtils.getCurrentUserId());
-		t.setCreateUserName(SessionUtils.getCurrentUserName());
-		t.setUpdateTime(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
-		t.setUpdateUserId(SessionUtils.getCurrentUserId());
-		t.setUpdateUserName(SessionUtils.getCurrentUserName());
         return this.dao.insert(t);
     }
 
@@ -59,30 +44,12 @@ public class BaseServiceImpl<T extends BaseModel,D extends BaseDao<T>> implement
 			throw new Exception("新增的数据为空");
 		}
 
-		for (T t : tlist) {
-			Long id = t.getId();
-			if(id == null) {
-				t.setId(UUIDUtils.generatePrimaryKey());
-			}
-			if (t.getCompanyId() == null) {
-				t.setCompanyId(SessionUtils.getCompanyId());
-			}
-			t.setCreateTime(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
-			t.setCreateUserId(SessionUtils.getCurrentUserId());
-			t.setCreateUserName(SessionUtils.getCurrentUserName());
-			t.setUpdateTime(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
-			t.setUpdateUserId(SessionUtils.getCurrentUserId());
-			t.setUpdateUserName(SessionUtils.getCurrentUserName());
-		}
 		return this.dao.batchInsert(tlist);
 	}
 
 	@Transactional(rollbackFor=Exception.class)
 	@Override
     public int update(T t) throws Exception {
-		t.setUpdateTime(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
-		t.setUpdateUserId(SessionUtils.getCurrentUserId());
-		t.setUpdateUserName(SessionUtils.getCurrentUserName());
         return this.dao.update(t);
     }
     
@@ -100,10 +67,6 @@ public class BaseServiceImpl<T extends BaseModel,D extends BaseDao<T>> implement
         }
     	T t = queryById(id);
     	if(null != t){
-    		t.setIsDelete(IsDelete.IS_DELETE);
-    		t.setUpdateTime(DateUtils.getYYYYMMDDHHMMSS(new Date()));
-    		t.setUpdateUserId(SessionUtils.getCurrentUserId());
-    		t.setUpdateUserName(SessionUtils.getCurrentUserName());
     		return update(t);
     	}
         return Constant.DEFAULT_OPERATE_SUCCESS;
@@ -122,7 +85,6 @@ public class BaseServiceImpl<T extends BaseModel,D extends BaseDao<T>> implement
     		if(null == t){
     			continue;
     		}
-    		t.setIsDelete(IsDelete.IS_DELETE);
     		tList.add(t);
     		dao.update(t);
     	}
@@ -158,7 +120,6 @@ public class BaseServiceImpl<T extends BaseModel,D extends BaseDao<T>> implement
 
 	@Override
     public PageInfo<T> queryList(T t) throws Exception {
-		t.setCompanyId(SessionUtils.getCompanyId());
     	if (t.getPageIndex() == 0) {
 			t.setPageIndex(PageHelperDefault.PAGENUM);
 		}else{

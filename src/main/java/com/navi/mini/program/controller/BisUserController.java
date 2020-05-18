@@ -1,5 +1,6 @@
 package com.navi.mini.program.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.navi.mini.program.common.constant.Constant;
 import com.navi.mini.program.common.constant.Constant.ResultInfo;
@@ -71,10 +72,48 @@ public class BisUserController extends BaseController {
 	@RequestMapping("/getToken/{code}")
 	public BaseResponse getToken(@PathVariable String code) {
 		try {
-			String token = bisUserService.getToken(code);
-			data.put("openid", token);
+			JSONObject jsonObject = bisUserService.getToken(code);
+			data.put(Constant.ResultInfo.DATALIST, jsonObject);
 		} catch (Exception e) {
 			logger.info("/bisUser/queryByToken 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
+
+	/**
+	 * 登录
+	 * @param bisUser 用户实体类
+	 * @return
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/18 10:12
+	 */
+	@RequestMapping("/login")
+	public BaseResponse login(@RequestBody BisUser bisUser) {
+		try {
+			bisUserService.login(bisUser);
+		} catch (Exception e) {
+			logger.info("/bisUser/login 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
+
+	/**
+	 * 注册
+	 * @param bisUser 用户实体类
+	 * @return
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/18 10:12
+	 */
+	@RequestMapping("/register")
+	public BaseResponse register(@RequestBody BisUser bisUser) {
+		try {
+			bisUserService.register(bisUser);
+		} catch (Exception e) {
+			logger.info("/bisUser/register 异常：" + e.toString());
 			error(Constant.ERRORMSG + e.getMessage());
 		}
 
