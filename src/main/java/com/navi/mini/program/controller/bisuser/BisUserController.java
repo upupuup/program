@@ -1,4 +1,4 @@
-package com.navi.mini.program.controller;
+package com.navi.mini.program.controller.bisuser;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
@@ -7,7 +7,7 @@ import com.navi.mini.program.common.constant.Constant.ResultInfo;
 import com.navi.mini.program.common.controller.BaseController;
 import com.navi.mini.program.common.response.BaseResponse;
 import com.navi.mini.program.model.bisuser.BisUser;
-import com.navi.mini.program.service.BisUserService;
+import com.navi.mini.program.service.bisuser.BisUserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -77,6 +77,7 @@ public class BisUserController extends BaseController {
 		} catch (Exception e) {
 			logger.info("/bisUser/queryByToken 异常：" + e.toString());
 			error(Constant.ERRORMSG + e.getMessage());
+			e.printStackTrace();
 		}
 
 		return returnBaseResponse();

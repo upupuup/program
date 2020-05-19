@@ -1,4 +1,4 @@
-package com.navi.mini.program.service;
+package com.navi.mini.program.service.bisuser;
 
 import com.alibaba.fastjson.JSONObject;
 import com.navi.mini.program.common.service.BaseService;

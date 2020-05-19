@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.navi.mini.program.dao.retwo.RetWoDao">
+    <resultMap id="retWo" type="com.navi.mini.program.model.retwo.RetWo">
+		<id property="id" column="ID"/>
+        <result property="unqSeqId" column="UNQ_SEQ_ID"/>
+        <result property="woNo" column="WO_NO"/>
+        <result property="sendUsrId" column="SEND_USR_ID"/>
+        <result property="grade" column="GRADE"/>
+        <result property="orchardist" column="ORCHARDIST"/>
+        <result property="qusrId" column="Q_USR_ID"/>
+        <result property="cnt" column="CNT"/>
+        <result property="wet" column="WET"/>
+        <result property="status" column="STATUS"/>
+        <result property="inWharf" column="IN_WHARF"/>
+        <result property="evtUsr" column="EVT_USR"/>
+        <result property="evtTimestamp" column="EVT_TIMESTAMP"/>
+        <result property="startBoxTimestamp" column="START_BOX_TIMESTAMP"/>
+        <result property="stopBoxTimestamp" column="STOP_BOX_TIMESTAMP"/>
+        <result property="inWharfChanger" column="IN_WHARF_CHANGER"/>
+        <result property="approvalStatus" column="APPROVAL_STATUS"/>
+        <result property="approvalResults" column="APPROVAL_RESULTS"/>
+        <result property="approvalComments" column="APPROVAL_COMMENTS"/>
+    </resultMap>
+	
+    <sql id="Table_Name">
+        ret_wo
+    </sql>
+	
+	<sql id="Table_Columns">
+        ID,
+        UNQ_SEQ_ID,
+        WO_NO,
+        SEND_USR_ID,
+        GRADE,
+        ORCHARDIST,
+        Q_USR_ID,
+        CNT,
+        WET,
+        STATUS,
+        IN_WHARF,
+        EVT_USR,
+        EVT_TIMESTAMP,
+        START_BOX_TIMESTAMP,
+        STOP_BOX_TIMESTAMP,
+        IN_WHARF_CHANGER,
+        APPROVAL_STATUS,
+        APPROVAL_RESULTS,
+        APPROVAL_COMMENTS		
+	</sql>
+	
+	<!-- insert -->
+	<insert id="insert" parameterType="com.navi.mini.program.model.retwo.RetWo">
+        INSERT INTO 
+        <include refid="Table_Name" />
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+            </if>
+			<if test="unqSeqId != null">
+				UNQ_SEQ_ID,
+            </if>
+			<if test="woNo != null">
+				WO_NO,
+            </if>
+			<if test="sendUsrId != null">
+				SEND_USR_ID,
+            </if>
+			<if test="grade != null">
+				GRADE,
+            </if>
+			<if test="orchardist != null">
+				ORCHARDIST,
+            </if>
+			<if test="qusrId != null">
+				Q_USR_ID,
+            </if>
+			<if test="cnt != null">
+				CNT,
+            </if>
+			<if test="wet != null">
+				WET,
+            </if>
+			<if test="status != null">
+				STATUS,
+            </if>
+			<if test="inWharf != null">
+				IN_WHARF,
+            </if>
+			<if test="evtUsr != null">
+				EVT_USR,
+            </if>
+			<if test="evtTimestamp != null">
+				EVT_TIMESTAMP,
+            </if>
+			<if test="startBoxTimestamp != null">
+				START_BOX_TIMESTAMP,
+            </if>
+			<if test="stopBoxTimestamp != null">
+				STOP_BOX_TIMESTAMP,
+            </if>
+			<if test="inWharfChanger != null">
+				IN_WHARF_CHANGER,
+            </if>
+			<if test="approvalStatus != null">
+				APPROVAL_STATUS,
+            </if>
+			<if test="approvalResults != null">
+				APPROVAL_RESULTS,
+            </if>
+			<if test="approvalComments != null">
+				APPROVAL_COMMENTS,
+            </if>
+        </trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{id},
+			<if test="unqSeqId != null">
+				#{unqSeqId},
+            </if>
+			<if test="woNo != null">
+				#{woNo},
+            </if>
+			<if test="sendUsrId != null">
+				#{sendUsrId},
+            </if>
+			<if test="grade != null">
+				#{grade},
+            </if>
+			<if test="orchardist != null">
+				#{orchardist},
+            </if>
+			<if test="qusrId != null">
+				#{qusrId},
+            </if>
+			<if test="cnt != null">
+				#{cnt},
+            </if>
+			<if test="wet != null">
+				#{wet},
+            </if>
+			<if test="status != null">
+				#{status},
+            </if>
+			<if test="inWharf != null">
+				#{inWharf},
+            </if>
+			<if test="evtUsr != null">
+				#{evtUsr},
+            </if>
+			<if test="evtTimestamp != null">
+				#{evtTimestamp},
+            </if>
+			<if test="startBoxTimestamp != null">
+				#{startBoxTimestamp},
+            </if>
+			<if test="stopBoxTimestamp != null">
+				#{stopBoxTimestamp},
+            </if>
+			<if test="inWharfChanger != null">
+				#{inWharfChanger},
+            </if>
+			<if test="approvalStatus != null">
+				#{approvalStatus},
+            </if>
+			<if test="approvalResults != null">
+				#{approvalResults},
+            </if>
+			<if test="approvalComments != null">
+				#{approvalComments},
+            </if>
+        </trim>
+    </insert>
+	
+	<!-- insert -->
+	<insert id="batchInsert" parameterType="com.navi.mini.program.model.retwo.RetWo">
+        INSERT INTO 
+        <include refid="Table_Name" />
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			ID,
+			UNQ_SEQ_ID,
+			WO_NO,
+			SEND_USR_ID,
+			GRADE,
+			ORCHARDIST,
+			Q_USR_ID,
+			CNT,
+			WET,
+			STATUS,
+			IN_WHARF,
+			EVT_USR,
+			EVT_TIMESTAMP,
+			START_BOX_TIMESTAMP,
+			STOP_BOX_TIMESTAMP,
+			IN_WHARF_CHANGER,
+			APPROVAL_STATUS,
+			APPROVAL_RESULTS,
+			APPROVAL_COMMENTS,
+        </trim>
+		VALUES
+		<foreach  collection="list" item="item"  index="index" separator=",">
+		(	
+			#{item.id},
+			#{item.unqSeqId},
+			#{item.woNo},
+			#{item.sendUsrId},
+			#{item.grade},
+			#{item.orchardist},
+			#{item.qusrId},
+			#{item.cnt},
+			#{item.wet},
+			#{item.status},
+			#{item.inWharf},
+			#{item.evtUsr},
+			#{item.evtTimestamp},
+			#{item.startBoxTimestamp},
+			#{item.stopBoxTimestamp},
+			#{item.inWharfChanger},
+			#{item.approvalStatus},
+			#{item.approvalResults},
+			#{item.approvalComments},
+		)
+		</foreach>
+    </insert>
+	
+	<!-- update:修改时不修改createUser、createTime、isDelete -->
+    <update id="update" parameterType="com.navi.mini.program.model.retwo.RetWo">
+        UPDATE 
+        <include refid="Table_Name" />
+        <set>
+            <trim suffix=" " suffixOverrides=",">
+				<if test="unqSeqId != null">
+					UNQ_SEQ_ID = #{unqSeqId},
+				</if>
+				<if test="woNo != null">
+					WO_NO = #{woNo},
+				</if>
+				<if test="sendUsrId != null">
+					SEND_USR_ID = #{sendUsrId},
+				</if>
+				<if test="grade != null">
+					GRADE = #{grade},
+				</if>
+				<if test="orchardist != null">
+					ORCHARDIST = #{orchardist},
+				</if>
+				<if test="qusrId != null">
+					Q_USR_ID = #{qusrId},
+				</if>
+				<if test="cnt != null">
+					CNT = #{cnt},
+				</if>
+				<if test="wet != null">
+					WET = #{wet},
+				</if>
+				<if test="status != null">
+					STATUS = #{status},
+				</if>
+				<if test="inWharf != null">
+					IN_WHARF = #{inWharf},
+				</if>
+				<if test="evtUsr != null">
+					EVT_USR = #{evtUsr},
+				</if>
+				<if test="evtTimestamp != null">
+					EVT_TIMESTAMP = #{evtTimestamp},
+				</if>
+				<if test="startBoxTimestamp != null">
+					START_BOX_TIMESTAMP = #{startBoxTimestamp},
+				</if>
+				<if test="stopBoxTimestamp != null">
+					STOP_BOX_TIMESTAMP = #{stopBoxTimestamp},
+				</if>
+				<if test="inWharfChanger != null">
+					IN_WHARF_CHANGER = #{inWharfChanger},
+				</if>
+				<if test="approvalStatus != null">
+					APPROVAL_STATUS = #{approvalStatus},
+				</if>
+				<if test="approvalResults != null">
+					APPROVAL_RESULTS = #{approvalResults},
+				</if>
+				<if test="approvalComments != null">
+					APPROVAL_COMMENTS = #{approvalComments},
+				</if>
+            </trim>
+        </set>
+		WHERE
+			id = #{id}
+    </update>	
+
+	<!-- parameterType -->
+	<update id="physicsDeleteById" parameterType="String">
+		DELETE FROM
+			<include refid="Table_Name"/>
+		WHERE
+			id = #{id}
+	</update>
+	
+	<!-- queryList -->
+	<select id="queryList" resultMap="retWo" parameterType="com.navi.mini.program.model.retwo.RetWo">
+		SELECT 
+			<include refid="Table_Columns" />
+		FROM
+			<include refid="Table_Name" />
+		WHERE
+			SEND_USR_ID = #{sendUsrId}
+		<if test="woNo != null and woNo != ''">
+			AND
+				WO_NO LIKE CONCAT("%", #{woNo}, "%")
+		</if>
+		ORDER BY
+			START_BOX_TIMESTAMP DESC
+	</select>
+	
+	<!-- queryById -->
+	<select id="queryById" resultMap="retWo" parameterType="Long">
+		SELECT 
+			<include refid="Table_Columns" />
+		FROM 
+			<include refid="Table_Name" />
+		AND
+			id = #{id}
+	</select>
+</mapper>

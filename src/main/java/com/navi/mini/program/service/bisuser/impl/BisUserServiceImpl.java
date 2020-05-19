@@ -1,4 +1,4 @@
-package com.navi.mini.program.service.impl;
+package com.navi.mini.program.service.bisuser.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.navi.mini.program.common.constant.Constant;
@@ -6,7 +6,7 @@ import com.navi.mini.program.common.service.impl.BaseServiceImpl;
 import com.navi.mini.program.common.utils.*;
 import com.navi.mini.program.dao.bisuser.BisUserDao;
 import com.navi.mini.program.model.bisuser.BisUser;
-import com.navi.mini.program.service.BisUserService;
+import com.navi.mini.program.service.bisuser.BisUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
