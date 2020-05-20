@@ -45,20 +45,6 @@ public interface BaseService<T>{
     int physicsDeleteById(Long id) throws Exception;
 
     /**
-     * 函数功能描述：根据ID数组批量删除操作
-     * @param idsList
-     * @return
-     * @throws Exception
-     */
-    int deleteByIds(List<Long> idsList) throws Exception;
-    
-    /**
-     * 批量删除
-     * @author: miaojinyong
-     */
-    int deleteByIds(String ids) throws Exception;
-
-    /**
      * 方法描述： 根据id删除一条记录
      * @param id
      * @return

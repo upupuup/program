@@ -7,15 +7,12 @@ import com.navi.mini.program.common.constant.Constant.PageHelperDefault;
 import com.navi.mini.program.common.dao.BaseDao;
 import com.navi.mini.program.common.model.BaseModel;
 import com.navi.mini.program.common.service.BaseService;
-import com.navi.mini.program.common.utils.DateUtils;
-import com.navi.mini.program.common.utils.SessionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -91,32 +88,6 @@ public class BaseServiceImpl<T extends BaseModel,D extends BaseDao<T>> implement
     	
         return Constant.DEFAULT_OPERATE_SUCCESS;
     }
-	
-	@Override
-	@Transactional(rollbackFor=Exception.class)
-	public int deleteByIds(String ids) throws Exception {
-		// 判空
-		if(StringUtils.isEmpty(ids)){
-			return 0;
-		}
-		// 按照","拆分
-        String[] strs = ids.split(",");
-        List<Long> idList = new ArrayList<Long>();
-        for (int i = 0; i < strs.length; i++) {
-        	// 获取第一个数
-        	String str = strs[i];
-        	// 判空
-        	if(StringUtils.isEmpty(str)){
-        		continue;
-        	}
-        	idList.add(Long.valueOf(str.trim()));
-        }
-        // 判空
-        if(CollectionUtils.isEmpty(idList)){
-        	return 0;
-        }
-        return dao.deleteByIdsForList(SessionUtils.getCurrentUserId(), SessionUtils.getCurrentUserName(), DateUtils.getYYYYMMDDHHMMSS(new Date()), idList);
-	}
 
 	@Override
     public PageInfo<T> queryList(T t) throws Exception {
@@ -152,10 +123,4 @@ public class BaseServiceImpl<T extends BaseModel,D extends BaseDao<T>> implement
         return this.dao.queryById(id);
     }
 
-    @Transactional(rollbackFor=Exception.class)
-	@Override
-	public int deleteByIds(List<Long> idsList) throws Exception {
-		return this.dao.deleteByIdsForList(SessionUtils.getCurrentUserId(), SessionUtils.getCurrentUserName(), DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS), idsList);
-	}
-	
 }

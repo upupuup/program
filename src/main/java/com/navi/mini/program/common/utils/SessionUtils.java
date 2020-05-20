@@ -1,10 +1,13 @@
 package com.navi.mini.program.common.utils;
 
 import com.navi.mini.program.common.constant.UserConstants;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
 import org.springframework.cglib.beans.BeanMap;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import java.util.Map;
 
@@ -15,6 +18,14 @@ import java.util.Map;
  * @Description: 用户登录之后要用的信息
  */
 public class SessionUtils {
+
+	public static HttpServletRequest getRequest(){
+		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+	}
+
+	public static HttpSession getSession() {
+		return getRequest().getSession();
+	}
 
 	public static Object getCurrentUser() {
 		return getSession().getAttribute(UserConstants.LOGIN_USER);
@@ -33,10 +44,6 @@ public class SessionUtils {
 		getSession().setAttribute(UserConstants.USER_PERMISSIONS, list);
 	}
 
-	public static Session getSession() {
-		return SecurityUtils.getSubject().getSession();
-	}
-
 	public static Map<String, Object> currentUserToMap() {
 		Object currentUser = getCurrentUser();
 		if (null != currentUser) {
@@ -50,13 +57,13 @@ public class SessionUtils {
 	 * 获取登录人id
 	 * @return
 	 */
-	public static Long getCurrentUserId() {
+	public static String getCurrentUserId() {
 		Map<String, Object> map = currentUserToMap();
 		// 判空
 		if (CollectionUtils.isEmpty(map)) {
 			return null;
 		}
-		return (Long) map.get("id");
+		return (String) map.get("usrId");
 	}
 
 	/**
@@ -69,7 +76,7 @@ public class SessionUtils {
 		if (CollectionUtils.isEmpty(map)) {
 			return null;
 		}
-		return (String) map.get("userName");
+		return (String) map.get("usrName");
 	}
 
 	/**

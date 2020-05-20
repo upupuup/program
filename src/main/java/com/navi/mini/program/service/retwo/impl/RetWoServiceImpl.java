@@ -7,7 +7,6 @@ import com.navi.mini.program.dao.retwo.RetWoDao;
 import com.navi.mini.program.model.retwo.RetWo;
 import com.navi.mini.program.service.retwo.RetWoService;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -30,9 +29,14 @@ public class RetWoServiceImpl extends BaseServiceImpl<RetWo, RetWoDao> implement
 		EmptyUtils.isEmpty("用户主键", retWo.getSendUsrId());
 		PageInfo<RetWo> retWoPageInfo = super.queryList(retWo);
 		List<RetWo> list = retWoPageInfo.getList();
-		if (!CollectionUtils.isEmpty(list)) {
-
-		}
+//		if (!CollectionUtils.isEmpty(list)) {
+//			for (RetWo retWoItem : list) {
+//				if () {
+//
+//				}
+//				retWoItem.setStartBoxTimestamp();
+//			}
+//		}
 		return retWoPageInfo;
 	}
 }

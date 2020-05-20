@@ -51,7 +51,14 @@ public class BisUserServiceImpl extends BaseServiceImpl<BisUser, BisUserDao> imp
     @Override
     public BisUser queryByToken(String token) throws Exception {
         EmptyUtils.isEmpty("小程序openid", token);
-        return this.dao.queryByToken(token);
+        BisUser bisUser = this.dao.queryByToken(token, Constant.UserConstants.VALID_FLAG);
+//        if (bisUser != null) {
+//            SessionUtils.setUserSession(bisUser);
+//            System.out.println(SessionUtils.getCurrentUser());
+//            System.out.println(SessionUtils.getCurrentUserId());
+//            System.out.println(SessionUtils.getCurrentUserName());
+//        }
+        return bisUser;
     }
 
     /**
@@ -67,7 +74,8 @@ public class BisUserServiceImpl extends BaseServiceImpl<BisUser, BisUserDao> imp
         // 拼接请求地址
         String url = Constant.URL.replace("#{0}", Constant.APP_ID).replace("#{1}", Constant.SECRET).replace("#{2}", code);
         // 调用微信接口
-        return HttpUtils.doGet(url);
+        JSONObject jsonObject = HttpUtils.doGet(url);
+        return jsonObject;
     }
 
     /**

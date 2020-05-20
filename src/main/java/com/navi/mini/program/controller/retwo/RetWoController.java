@@ -60,24 +60,6 @@ public class RetWoController extends BaseController {
 	}
 	
 	/**
-	 * 方法描述： 批量删除
-	 * @param ids
-	 * @return
-	 */
-	@GetMapping(value="/deleteByIds", produces="application/json")
-	public BaseResponse deleteByIds(String ids) {
-		try {
-			clear();
-			retWoService.deleteByIds(ids);
-		} catch (Exception e) {
-			logger.info("/retWo/deleteByIds 异常：" + e.toString());
-			error(Constant.ERRORMSG + e.getMessage());
-		}
-		
-		return returnBaseResponse();
-	}
-	
-	/**
 	 * 方法描述： 根据id获取数据对象
 	 * @param id
 	 * @return

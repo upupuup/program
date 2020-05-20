@@ -96,6 +96,9 @@
 			<if test="usrHeadFlg != null">
 				#{usrHeadFlg},
             </if>
+			<if test="usrHeadFlg != null">
+				#{validFlg},
+			</if>
 			<if test="usrPhs != null">
 				#{usrPhs},
             </if>
@@ -225,13 +228,15 @@
 	</select>
 
 	<!-- 使用opendis查询用户信息 -->
-	<select id="queryByToken" resultMap="bisUser" parameterType="String">
+	<select id="queryByToken" resultMap="bisUser" parameterType="Map">
 		SELECT
 			<include refid="Table_Columns" />
 		FROM
 			<include refid="Table_Name" />
 		WHERE
-			TOKEN = #{token}
+			TOKEN = #{0}
+		AND
+			VALID_FLG = #{1}
 	</select>
 
 	<select id="queryByPhone" resultMap="bisUser" parameterType="String">
@@ -240,9 +245,9 @@
 		FROM
 			<include refid="Table_Name" />
 		WHERE
-			USR_PHS = #{usrPhs}
+			USR_PHS = #{0}
 		AND
-			VALID_FLG = #{validFlg}
+			VALID_FLG = #{1}
 	</select>
 
 

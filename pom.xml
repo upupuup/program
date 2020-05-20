@@ -15,9 +15,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-        <shiro.spring.version>1.4.0</shiro.spring.version>
         <ehcache.version>2.4.8</ehcache.version>
-        <shiro-ehcache.version>1.4.0</shiro-ehcache.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
     </properties>
@@ -66,18 +64,6 @@
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-
-        <!-- shiro -->
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring</artifactId>
-            <version>${shiro.spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-ehcache</artifactId>
-            <version>${shiro-ehcache.version}</version>
-        </dependency>
 
 		<dependency>
 			<groupId>commons-lang</groupId>

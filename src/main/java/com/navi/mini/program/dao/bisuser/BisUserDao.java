@@ -15,7 +15,7 @@ public interface BisUserDao extends BaseDao<BisUser> {
 	 * @Author: jiangzhihong
 	 * @CreateDate: 2020/5/12 21:53
 	 */
-	BisUser queryByToken(String token) throws Exception;
+	BisUser queryByToken(String token, String validFlg) throws Exception;
 
 	/**
 	 * 使用手机号查询用户
