@@ -122,33 +122,15 @@ public class BisUserController extends BaseController {
 	}
 	
 	/**
-	 * 方法描述： 根据id删除一条记录
-	 * @param id
-	 * @return
-	 */
-	@GetMapping(value="/deleteById", produces="application/json")
-	public BaseResponse deleteById(Long id) {
-		try {
-			clear();
-			bisUserService.deleteById(id);
-		} catch (Exception e) {
-			logger.info("/bisUser/deleteById 异常：" + e.toString());
-			error(Constant.ERRORMSG + e.getMessage());
-		}
-		
-		return returnBaseResponse();
-	}
-	
-	/**
 	 * 方法描述： 根据id获取数据对象
 	 * @param id
 	 * @return
 	 */
-	@GetMapping(value="/queryById", produces="application/json")
-	public BaseResponse queryById(Long id) {
+	@PostMapping(value="/queryById", produces="application/json")
+	public BaseResponse queryById(String id) {
 		try {
 			clear();
-			BisUser obj = bisUserService.queryById(id);
+			BisUser obj = bisUserService.queryByUserId(id);
 			data.put(ResultInfo.DATA, obj);
 		} catch (Exception e) {
 			logger.info("/bisUser/queryById 异常：" + e.toString());

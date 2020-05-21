@@ -1,14 +1,13 @@
-package com.navi.mini.program.model.retwo;
+package com.navi.mini.program.model.hisretwo;
 
 import com.navi.mini.program.common.model.BaseModel;
 import lombok.Data;
 
 @Data
-public class RetWo extends BaseModel {
+public class HisRetWo extends BaseModel {
 	private static final long serialVersionUID = 1L;
-
 	/**
-	 * 主键
+	 * id
 	 */
 	private String id;
 	
@@ -25,10 +24,6 @@ public class RetWo extends BaseModel {
      */
 	private String sendUsrId;
 	/**
-	 * 送果人姓名
-	 */
-	private String sendUserName;
-	/**
      *  等级
      */
 	private String grade;
@@ -40,6 +35,14 @@ public class RetWo extends BaseModel {
      *  质检员
      */
 	private String qusrId;
+	/**
+     *  申请变更的码头信息
+     */
+	private String inwharfchange;
+	/**
+     *  变更"小程序:X| WMS:W
+     */
+	private String opeEvtUsr;
 	/**
      *  总箱数
      */
@@ -57,10 +60,6 @@ public class RetWo extends BaseModel {
      */
 	private String inWharf;
 	/**
-	 * 送果码头名称
-	 */
-	private String inWharfName;
-	/**
      *  evtUsr
      */
 	private String evtUsr;
@@ -76,30 +75,5 @@ public class RetWo extends BaseModel {
      *  stopBoxTimestamp
      */
 	private String stopBoxTimestamp;
-	/**
-     *  申请变更的码头
-     */
-	private String inWharfChanger;
-	/**
-     *  申请变更的码头
-     */
-	private String inWharfChangerName;
-	/**
-     *  C待审批|A审批中|O审批结束
-     */
-	private String approvalStatus;
-	/**
-     *  Y:同意|N:拒绝
-     */
-	private String approvalResults;
-	/**
-     *  审批意见
-     */
-	private String approvalComments;
-
-	/**
-	 * 更换码头申请审批时间
-	 */
-	private String inWharfChangerTimestamp;
 
 }

@@ -26,4 +26,15 @@ public interface BisUserDao extends BaseDao<BisUser> {
 	 * @CreateDate: 2020/5/18 14:32
 	 */
 	List<BisUser> queryByPhone(String usrPhs, String validFlg) throws Exception;
+
+	/**
+	 * 使用用户主键查询
+	 * @param id 用户主键
+	 * @param validFlg 用户标识
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/21 13:54
+	 */
+	BisUser queryByUserId(String id, String validFlg) throws Exception;
 }

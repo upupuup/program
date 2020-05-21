@@ -40,25 +40,10 @@ public interface BaseService<T>{
      * @param id 唯一标识符
      * @author miaojinyong
      * @return 影响行数
-     * @throws Exception 
+     * @throws Exception
      */
     int physicsDeleteById(Long id) throws Exception;
 
-    /**
-     * 方法描述： 根据id删除一条记录
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    int deleteById(Long id)  throws Exception;
-
-    /**
-     * 方法描述： 批量删除
-     * @param ids
-     * @return
-     * @throws Exception
-     */
-    int deleteByIds(String[] ids)  throws Exception;
 
     /**
      * 函数功能描述：查询所有记录
@@ -83,11 +68,4 @@ public interface BaseService<T>{
      */
     PageInfo<T> queryListWithCompanyIdList(T t) throws Exception;
 
-    /**
-     * 函数功能描述：根据ID查询单个记录
-     * @param id
-     * @return
-     * @throws Exception
-     */
-    T queryById(Long id) throws Exception;
 }

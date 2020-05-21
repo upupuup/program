@@ -130,4 +130,31 @@ public class Constant {
 
     }
 
+    /**
+     * 关于料单
+     */
+    public interface RetWork {
+        /**
+         * 审批交换码头状态，C:待审批
+         */
+        public static final String APPROVA_WAIT_STATUS = "C";
+        /**
+         * 审批交换码头状态，A:审批中
+         */
+        public static final String APPROVA_PENDING_STATUS = "A";
+        /**
+         * 审批交换码头状态，O:审批结束
+         */
+        public static final String APPROVA_END_STATUS = "O";
+
+        /**
+         * 当前的码头
+         */
+        public static final String CURRENT_WHARF = "current_wharf";
+        /**
+         * 更换的码头
+         */
+        public static final String CHANGE_WHARF = "change_wharf";
+    }
+
 }

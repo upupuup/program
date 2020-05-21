@@ -52,7 +52,7 @@ public interface BaseDao<T extends BaseModel> {
      * @param id
      * @return
      */
-    int deleteById(@Param("updateUserId") Long updateUserId, @Param("updateUserName") String updateUserName, @Param("updateTime") String updateTime, @Param("id") Long id);
+    int deleteById(Long id);
 
     /**
      * 方法描述： 批量删除记录
@@ -78,13 +78,6 @@ public interface BaseDao<T extends BaseModel> {
      * @return 结果集合
      */
     List<T> queryList(T object) throws Exception;
-    
-    /**
-     * 函数功能描述：根据ID查询单个记录
-     * @author: miaojinyong
-     * @param id 示例id
-     * @return 示例对象
-     */
-    T queryById(Long id) throws Exception;
+
     
 }

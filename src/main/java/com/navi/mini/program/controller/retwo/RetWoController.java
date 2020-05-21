@@ -40,35 +40,36 @@ public class RetWoController extends BaseController {
 		
 		return returnBaseResponse();
 	}
-	
+
 	/**
-	 * 方法描述： 根据id删除一条记录
-	 * @param id
+	 * 查询更换码头待审批
+	 * @param retWo
 	 * @return
 	 */
-	@GetMapping(value="/deleteById", produces="application/json")
-	public BaseResponse deleteById(Long id) {
+	@PostMapping(value="/queryChangeWharfApproveList", consumes="application/json", produces="application/json")
+	public BaseResponse queryChangeWharfApproveList(@RequestBody RetWo retWo) {
 		try {
 			clear();
-			retWoService.deleteById(id);
+			PageInfo<RetWo> pageInfo = retWoService.queryChangeWharfApproveList(retWo);
+			data.put(ResultInfo.PAGE, pageInfo);
 		} catch (Exception e) {
-			logger.info("/retWo/deleteById 异常：" + e.toString());
+			logger.info("/retWo/queryChangeWharfApproveList 异常：" + e.toString());
 			error(Constant.ERRORMSG + e.getMessage());
 		}
-		
+
 		return returnBaseResponse();
 	}
-	
+
 	/**
 	 * 方法描述： 根据id获取数据对象
-	 * @param id
+	 * @param retWo
 	 * @return
 	 */
-	@GetMapping(value="/queryById", produces="application/json")
-	public BaseResponse queryById(Long id) {
+	@PostMapping(value="/queryById", consumes="application/json", produces="application/json")
+	public BaseResponse queryById(@RequestBody RetWo retWo) {
 		try {
 			clear();
-			RetWo obj = retWoService.queryById(id);
+			RetWo obj = retWoService.queryById(retWo.getId());
 			data.put(ResultInfo.DATA, obj);
 		} catch (Exception e) {
 			logger.info("/retWo/queryById 异常：" + e.toString());
@@ -93,6 +94,24 @@ public class RetWoController extends BaseController {
 			error(Constant.ERRORMSG + e.getMessage());
 		}
 		
+		return returnBaseResponse();
+	}
+
+	/**
+	 * 方法描述： 审批更换码头
+	 * @param retWo
+	 * @return
+	 */
+	@PostMapping(value="/changeWharfApprove", consumes="application/json", produces="application/json")
+	public BaseResponse changeWharfApprove(@RequestBody RetWo retWo) {
+		try {
+			clear();
+			retWoService.changeWharfApprove(retWo);
+		} catch (Exception e) {
+			logger.info("/retWo/changeWharfApprove 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
 		return returnBaseResponse();
 	}
 	

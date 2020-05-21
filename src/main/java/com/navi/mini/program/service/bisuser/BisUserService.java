@@ -51,4 +51,14 @@ public interface BisUserService extends BaseService<BisUser> {
 	 * @CreateDate: 2020/5/18 10:13
 	 */
 	void register(BisUser bisUser) throws Exception;
+
+	/**
+	 * 使用用户主键查询
+	 * @param id 用户主键
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/21 13:54
+	 */
+	BisUser queryByUserId(String id) throws Exception;
 }

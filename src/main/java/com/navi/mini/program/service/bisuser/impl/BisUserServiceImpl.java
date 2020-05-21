@@ -34,7 +34,7 @@ public class BisUserServiceImpl extends BaseServiceImpl<BisUser, BisUserDao> imp
     public void saveBisUser(BisUser bisUser) throws Exception{
 	    // 设置送果人的类型
 	    bisUser.setUsrHeadFlg(Constant.UserType.SEND_FRUIT);
-        bisUser.setUsrId(UUIDUtils.generatePrimaryKey() + "A");
+        bisUser.setUsrId(UUIDUtils.generatePrimaryKey());
         bisUser.setValidFlg(Constant.UserConstants.VALID_FLAG);
         this.insert(bisUser);
         SessionUtils.setUserSession(bisUser);
@@ -127,5 +127,17 @@ public class BisUserServiceImpl extends BaseServiceImpl<BisUser, BisUserDao> imp
         EmptyUtils.isEmpty("openid", bisUser.getToken());
     }
 
-
+    /**
+     * 使用用户主键查询
+     * @param id 用户主键
+     * @return
+     * @throws Exception
+     * @Author: jiangzhihong
+     * @CreateDate: 2020/5/21 13:54
+     */
+    @Override
+    public BisUser queryByUserId(String id) throws Exception {
+        EmptyUtils.isEmpty("用户主键", id);
+        return this.dao.queryByUserId(id, Constant.UserConstants.VALID_FLAG);
+    }
 }

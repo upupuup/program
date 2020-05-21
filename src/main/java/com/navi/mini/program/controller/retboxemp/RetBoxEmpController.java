@@ -65,41 +65,23 @@ public class RetBoxEmpController extends BaseController {
 	}
 	
 	/**
-	 * 方法描述： 根据id删除一条记录
-	 * @param id
-	 * @return
-	 */
-	@GetMapping(value="/deleteById", produces="application/json")
-	public BaseResponse deleteById(Long id) {
-		try {
-			clear();
-			retBoxEmpService.deleteById(id);
-		} catch (Exception e) {
-			logger.info("/retBoxEmp/deleteById 异常：" + e.toString());
-			error(Constant.ERRORMSG + e.getMessage());
-		}
-		
-		return returnBaseResponse();
-	}
-
-	/**
 	 * 方法描述： 根据id获取数据对象
 	 * @param id
 	 * @return
 	 */
-	@GetMapping(value="/queryById", produces="application/json")
-	public BaseResponse queryById(Long id) {
-		try {
-			clear();
-			RetBoxEmp obj = retBoxEmpService.queryById(id);
-			data.put(ResultInfo.DATA, obj);
-		} catch (Exception e) {
-			logger.info("/retBoxEmp/queryById 异常：" + e.toString());
-			error(Constant.ERRORMSG + e.getMessage());
-		}
-		
-		return returnBaseResponse();
-	}
+//	@GetMapping(value="/queryById", produces="application/json")
+//	public BaseResponse queryById(String id) {
+//		try {
+//			clear();
+//			RetBoxEmp obj = retBoxEmpService.queryById(id);
+//			data.put(ResultInfo.DATA, obj);
+//		} catch (Exception e) {
+//			logger.info("/retBoxEmp/queryById 异常：" + e.toString());
+//			error(Constant.ERRORMSG + e.getMessage());
+//		}
+//
+//		return returnBaseResponse();
+//	}
 	
 	/**
 	 * 方法描述： 保存一条记录

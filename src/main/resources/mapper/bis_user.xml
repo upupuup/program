@@ -250,5 +250,16 @@
 			VALID_FLG = #{1}
 	</select>
 
+	<select id="queryByUserId" resultMap="bisUser" parameterType="String">
+		SELECT
+			<include refid="Table_Columns" />
+		FROM
+			<include refid="Table_Name" />
+		WHERE
+			USR_ID = #{0}
+		AND
+			VALID_FLG = #{1}
+	</select>
+
 
 </mapper>

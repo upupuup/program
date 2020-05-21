@@ -15,10 +15,10 @@ public class UUIDUtils {
 	  * @author:
 	  * @date: 2018年11月27日 下午9:23:46
 	  */
-	 public static synchronized Long generatePrimaryKey() throws Exception{
+	 public static synchronized String generatePrimaryKey() throws Exception{
 		 // 生产yyyyMMddHHmmssSSS格式的时间
 		 String formatDate = DateUtils.getFormatDate(new Date(), DateUtils.FORMAT_NOLINE_YYYYMMDD24HHMMSSSSS);
-		 return 100L * Long.parseLong(formatDate) + Math.round(Math.random()*9000000000L +10000000000L);
+		 return 100L * Long.parseLong(formatDate) + Math.round(Math.random()*9000000000L +10000000000L) + "";
 	 }
 
 	 // 获取验证码(字母和数字)
