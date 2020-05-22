@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.navi.mini.program.dao.bisdata.BisDataDao">
+    <resultMap id="bisData" type="com.navi.mini.program.model.bisdata.BisData">
+		<id property="dataSeqId" column="DATA_SEQ_ID"/>
+        <result property="unqSeqId" column="UNQ_SEQ_ID"/>
+        <result property="dataCate" column="DATA_CATE"/>
+        <result property="dataId" column="DATA_ID"/>
+        <result property="dataExt" column="DATA_EXT"/>
+        <result property="dataItem" column="DATA_ITEM"/>
+        <result property="ext1" column="EXT_1"/>
+        <result property="ext2" column="EXT_2"/>
+        <result property="ext3" column="EXT_3"/>
+        <result property="ext4" column="EXT_4"/>
+        <result property="ext5" column="EXT_5"/>
+        <result property="dataDesc" column="DATA_DESC"/>
+        <result property="evtUsr" column="EVT_USR"/>
+        <result property="evtTimestamp" column="EVT_TIMESTAMP"/>
+    </resultMap>
+	
+    <sql id="Table_Name">
+        bis_data
+    </sql>
+	
+	<sql id="Table_Columns">
+        DATA_SEQ_ID,
+        UNQ_SEQ_ID,
+        DATA_CATE,
+        DATA_ID,
+        DATA_EXT,
+        DATA_ITEM,
+        EXT_1,
+        EXT_2,
+        EXT_3,
+        EXT_4,
+        EXT_5,
+        DATA_DESC,
+        EVT_USR,
+        EVT_TIMESTAMP		
+	</sql>
+	
+	<!-- insert -->
+	<insert id="insert" parameterType="com.navi.mini.program.model.bisdata.BisData">
+        INSERT INTO 
+        <include refid="Table_Name" />
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="dataSeqId != null">
+				DATA_SEQ_ID,
+            </if>
+			<if test="unqSeqId != null">
+				UNQ_SEQ_ID,
+            </if>
+			<if test="dataCate != null">
+				DATA_CATE,
+            </if>
+			<if test="dataId != null">
+				DATA_ID,
+            </if>
+			<if test="dataExt != null">
+				DATA_EXT,
+            </if>
+			<if test="dataItem != null">
+				DATA_ITEM,
+            </if>
+			<if test="ext1 != null">
+				EXT_1,
+            </if>
+			<if test="ext2 != null">
+				EXT_2,
+            </if>
+			<if test="ext3 != null">
+				EXT_3,
+            </if>
+			<if test="ext4 != null">
+				EXT_4,
+            </if>
+			<if test="ext5 != null">
+				EXT_5,
+            </if>
+			<if test="dataDesc != null">
+				DATA_DESC,
+            </if>
+			<if test="evtUsr != null">
+				EVT_USR,
+            </if>
+			<if test="evtTimestamp != null">
+				EVT_TIMESTAMP,
+            </if>
+        </trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="dataSeqId != null">
+				#{dataSeqId},
+            </if>
+			<if test="unqSeqId != null">
+				#{unqSeqId},
+            </if>
+			<if test="dataCate != null">
+				#{dataCate},
+            </if>
+			<if test="dataId != null">
+				#{dataId},
+            </if>
+			<if test="dataExt != null">
+				#{dataExt},
+            </if>
+			<if test="dataItem != null">
+				#{dataItem},
+            </if>
+			<if test="ext1 != null">
+				#{ext1},
+            </if>
+			<if test="ext2 != null">
+				#{ext2},
+            </if>
+			<if test="ext3 != null">
+				#{ext3},
+            </if>
+			<if test="ext4 != null">
+				#{ext4},
+            </if>
+			<if test="ext5 != null">
+				#{ext5},
+            </if>
+			<if test="dataDesc != null">
+				#{dataDesc},
+            </if>
+			<if test="evtUsr != null">
+				#{evtUsr},
+            </if>
+			<if test="evtTimestamp != null">
+				#{evtTimestamp},
+            </if>
+        </trim>
+    </insert>
+	
+	<!-- insert -->
+	<insert id="batchInsert" parameterType="com.navi.mini.program.model.bisdata.BisData">
+        INSERT INTO 
+        <include refid="Table_Name" />
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			DATA_SEQ_ID,
+			UNQ_SEQ_ID,
+			DATA_CATE,
+			DATA_ID,
+			DATA_EXT,
+			DATA_ITEM,
+			EXT_1,
+			EXT_2,
+			EXT_3,
+			EXT_4,
+			EXT_5,
+			DATA_DESC,
+			EVT_USR,
+			EVT_TIMESTAMP,
+        </trim>
+		VALUES
+		<foreach  collection="list" item="item"  index="index" separator=",">
+		(	
+			#{item.dataSeqId},
+			#{item.unqSeqId},
+			#{item.dataCate},
+			#{item.dataId},
+			#{item.dataExt},
+			#{item.dataItem},
+			#{item.ext1},
+			#{item.ext2},
+			#{item.ext3},
+			#{item.ext4},
+			#{item.ext5},
+			#{item.dataDesc},
+			#{item.evtUsr},
+			#{item.evtTimestamp},
+		)
+		</foreach>
+    </insert>
+	
+	<!-- update:修改时不修改createUser、createTime、isDelete -->
+    <update id="update" parameterType="com.navi.mini.program.model.bisdata.BisData">
+        UPDATE 
+        <include refid="Table_Name" />
+        <set>
+            <trim suffix=" " suffixOverrides=",">
+				<if test="unqSeqId != null">
+					UNQ_SEQ_ID = #{unqSeqId},
+				</if>
+				<if test="dataCate != null">
+					DATA_CATE = #{dataCate},
+				</if>
+				<if test="dataId != null">
+					DATA_ID = #{dataId},
+				</if>
+				<if test="dataExt != null">
+					DATA_EXT = #{dataExt},
+				</if>
+				<if test="dataItem != null">
+					DATA_ITEM = #{dataItem},
+				</if>
+				<if test="ext1 != null">
+					EXT_1 = #{ext1},
+				</if>
+				<if test="ext2 != null">
+					EXT_2 = #{ext2},
+				</if>
+				<if test="ext3 != null">
+					EXT_3 = #{ext3},
+				</if>
+				<if test="ext4 != null">
+					EXT_4 = #{ext4},
+				</if>
+				<if test="ext5 != null">
+					EXT_5 = #{ext5},
+				</if>
+				<if test="dataDesc != null">
+					DATA_DESC = #{dataDesc},
+				</if>
+				<if test="evtUsr != null">
+					EVT_USR = #{evtUsr},
+				</if>
+				<if test="evtTimestamp != null">
+					EVT_TIMESTAMP = #{evtTimestamp},
+				</if>
+            </trim>
+        </set>
+		WHERE
+			id = #{id}
+    </update>	
+	
+
+	<!-- parameterType -->
+	<update id="physicsDeleteById" parameterType="Long">
+		DELETE FROM
+			<include refid="Table_Name"/>
+		WHERE
+			id = #{id}
+	</update>
+	
+
+	
+	<!-- queryList -->
+	<select id="queryList" resultMap="bisData" parameterType="com.navi.mini.program.model.bisdata.BisData">
+		SELECT 
+			<include refid="Table_Columns" />
+		FROM
+			<include refid="Table_Name" />
+		ORDER BY 
+			create_time DESC
+	</select>
+	
+	<!-- queryById -->
+	<select id="queryByDataSeqId" resultMap="bisData" parameterType="String">
+		SELECT 
+			<include refid="Table_Columns" />
+		FROM 
+			<include refid="Table_Name" />
+		WHERE
+			DATA_SEQ_ID = #{0}
+	</select>
+</mapper>

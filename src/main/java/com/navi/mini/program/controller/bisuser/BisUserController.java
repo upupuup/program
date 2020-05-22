@@ -6,12 +6,15 @@ import com.navi.mini.program.common.constant.Constant;
 import com.navi.mini.program.common.constant.Constant.ResultInfo;
 import com.navi.mini.program.common.controller.BaseController;
 import com.navi.mini.program.common.response.BaseResponse;
+import com.navi.mini.program.common.utils.SessionUtils;
 import com.navi.mini.program.model.bisuser.BisUser;
 import com.navi.mini.program.service.bisuser.BisUserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 @Scope("prototype")
@@ -52,11 +55,12 @@ public class BisUserController extends BaseController {
 	 * @CreateDate: 2020/5/12 21:52
 	 */
 	@PostMapping(value="/queryByToken", consumes="application/json", produces="application/json")
-	public BaseResponse queryByToken(@RequestBody BisUser bisUser) {
+	public BaseResponse queryByToken(@RequestBody BisUser bisUser, HttpServletRequest request) {
 		try {
 			clear();
 			bisUser = bisUserService.queryByToken(bisUser.getToken());
 			data.put(ResultInfo.DATA, bisUser);
+			data.put("sessionid", SessionUtils.getSession().getId());
 		} catch (Exception e) {
 			logger.info("/bisUser/queryByToken 异常：" + e.toString());
 			error(Constant.ERRORMSG + e.getMessage());

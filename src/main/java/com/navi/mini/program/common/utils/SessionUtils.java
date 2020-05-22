@@ -65,6 +65,18 @@ public class SessionUtils {
 		}
 		return (String) map.get("usrId");
 	}
+	/**
+	 * 获取登录人身份
+	 * @return
+	 */
+	public static String getUsrHeadFlg() {
+		Map<String, Object> map = currentUserToMap();
+		// 判空
+		if (CollectionUtils.isEmpty(map)) {
+			return null;
+		}
+		return (String) map.get("usrHeadFlg");
+	}
 
 	/**
 	 * 获取当前用户

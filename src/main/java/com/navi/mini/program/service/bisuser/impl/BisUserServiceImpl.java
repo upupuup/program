@@ -52,12 +52,12 @@ public class BisUserServiceImpl extends BaseServiceImpl<BisUser, BisUserDao> imp
     public BisUser queryByToken(String token) throws Exception {
         EmptyUtils.isEmpty("小程序openid", token);
         BisUser bisUser = this.dao.queryByToken(token, Constant.UserConstants.VALID_FLAG);
-//        if (bisUser != null) {
-//            SessionUtils.setUserSession(bisUser);
+        if (bisUser != null) {
+            SessionUtils.setUserSession(bisUser);
 //            System.out.println(SessionUtils.getCurrentUser());
 //            System.out.println(SessionUtils.getCurrentUserId());
 //            System.out.println(SessionUtils.getCurrentUserName());
-//        }
+        }
         return bisUser;
     }
 

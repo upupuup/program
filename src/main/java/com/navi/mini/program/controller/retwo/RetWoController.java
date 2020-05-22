@@ -36,8 +36,49 @@ public class RetWoController extends BaseController {
 		} catch (Exception e) {
 			logger.info("/retWo/queryList 异常：" + e.toString());
 			error(Constant.ERRORMSG + e.getMessage());
+			e.printStackTrace();
 		}
 		
+		return returnBaseResponse();
+	}
+
+	/**
+	 * 送果历史
+	 * @param retWo
+	 * @return
+	 */
+	@PostMapping(value="/querySendFruitList", consumes="application/json", produces="application/json")
+	public BaseResponse querySendFruitList(@RequestBody RetWo retWo) {
+		try {
+			clear();
+			PageInfo<RetWo> pageInfo = retWoService.querySendFruitList(retWo);
+			data.put(ResultInfo.PAGE, pageInfo);
+		} catch (Exception e) {
+			logger.info("/retWo/querySendFruitList 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return returnBaseResponse();
+	}
+
+	/**
+	 * 查询更换码头记录
+	 * @param retWo
+	 * @return
+	 */
+	@PostMapping(value="/queryChangeWharfList", consumes="application/json", produces="application/json")
+	public BaseResponse queryChangeWharfList(@RequestBody RetWo retWo) {
+		try {
+			clear();
+			PageInfo<RetWo> pageInfo = retWoService.queryChangeWharfList(retWo);
+			data.put(ResultInfo.PAGE, pageInfo);
+		} catch (Exception e) {
+			logger.info("/retWo/queryChangeWharfList 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+			e.printStackTrace();
+		}
+
 		return returnBaseResponse();
 	}
 
@@ -55,6 +96,7 @@ public class RetWoController extends BaseController {
 		} catch (Exception e) {
 			logger.info("/retWo/queryChangeWharfApproveList 异常：" + e.toString());
 			error(Constant.ERRORMSG + e.getMessage());
+			e.printStackTrace();
 		}
 
 		return returnBaseResponse();

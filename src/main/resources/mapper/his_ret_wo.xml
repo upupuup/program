@@ -9,7 +9,7 @@
         <result property="grade" column="GRADE"/>
         <result property="orchardist" column="ORCHARDIST"/>
         <result property="qusrId" column="Q_USR_ID"/>
-        <result property="inwharfchange" column="IN_WHARF_change"/>
+        <result property="inWharfChanger" column="IN_WHARF_change"/>
         <result property="opeEvtUsr" column="OPE_EVT_USR"/>
         <result property="cnt" column="CNT"/>
         <result property="wet" column="WET"/>
@@ -19,6 +19,7 @@
         <result property="evtTimestamp" column="EVT_TIMESTAMP"/>
         <result property="startBoxTimestamp" column="START_BOX_TIMESTAMP"/>
         <result property="stopBoxTimestamp" column="STOP_BOX_TIMESTAMP"/>
+        <result property="addType" column="ADD_TYPE"/>
     </resultMap>
 	
     <sql id="Table_Name">
@@ -42,7 +43,8 @@
         EVT_USR,
         EVT_TIMESTAMP,
         START_BOX_TIMESTAMP,
-        STOP_BOX_TIMESTAMP		
+        STOP_BOX_TIMESTAMP,
+        ADD_TYPE
 	</sql>
 	
 	<!-- insert -->
@@ -71,7 +73,7 @@
 			<if test="qusrId != null">
 				Q_USR_ID,
             </if>
-			<if test="inwharfchange != null">
+			<if test="inWharfChanger != null">
 				IN_WHARF_change,
             </if>
 			<if test="opeEvtUsr != null">
@@ -101,6 +103,9 @@
 			<if test="stopBoxTimestamp != null">
 				STOP_BOX_TIMESTAMP,
             </if>
+			<if test="addType != null">
+				ADD_TYPE,
+            </if>
         </trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			#{id},
@@ -122,8 +127,8 @@
 			<if test="qusrId != null">
 				#{qusrId},
             </if>
-			<if test="inwharfchange != null">
-				#{inwharfchange},
+			<if test="inWharfChanger != null">
+				#{inWharfChanger},
             </if>
 			<if test="opeEvtUsr != null">
 				#{opeEvtUsr},
@@ -152,54 +157,10 @@
 			<if test="stopBoxTimestamp != null">
 				#{stopBoxTimestamp},
             </if>
+			<if test="addType != null">
+				#{addType}
+            </if>
         </trim>
-    </insert>
-	
-	<!-- insert -->
-	<insert id="batchInsert" parameterType="com.navi.mini.program.model.hisretwo.HisRetWo">
-        INSERT INTO 
-        <include refid="Table_Name" />
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-			ID,
-			UNQ_SEQ_ID,
-			WO_NO,
-			SEND_USR_ID,
-			GRADE,
-			ORCHARDIST,
-			Q_USR_ID,
-			IN_WHARF_change,
-			OPE_EVT_USR,
-			CNT,
-			WET,
-			STATUS,
-			IN_WHARF,
-			EVT_USR,
-			EVT_TIMESTAMP,
-			START_BOX_TIMESTAMP,
-			STOP_BOX_TIMESTAMP,
-        </trim>
-		VALUES
-		<foreach  collection="list" item="item"  index="index" separator=",">
-		(	
-			#{item.id},
-			#{item.unqSeqId},
-			#{item.woNo},
-			#{item.sendUsrId},
-			#{item.grade},
-			#{item.orchardist},
-			#{item.qusrId},
-			#{item.inwharfchange},
-			#{item.opeEvtUsr},
-			#{item.cnt},
-			#{item.wet},
-			#{item.status},
-			#{item.inWharf},
-			#{item.evtUsr},
-			#{item.evtTimestamp},
-			#{item.startBoxTimestamp},
-			#{item.stopBoxTimestamp},
-		)
-		</foreach>
     </insert>
 	
 	<!-- update:修改时不修改createUser、createTime、isDelete -->
@@ -226,8 +187,8 @@
 				<if test="qusrId != null">
 					Q_USR_ID = #{qusrId},
 				</if>
-				<if test="inwharfchange != null">
-					IN_WHARF_change = #{inwharfchange},
+				<if test="inWharfChanger != null">
+					IN_WHARF_change = #{inWharfChanger},
 				</if>
 				<if test="opeEvtUsr != null">
 					OPE_EVT_USR = #{opeEvtUsr},
@@ -255,6 +216,9 @@
 				</if>
 				<if test="stopBoxTimestamp != null">
 					STOP_BOX_TIMESTAMP = #{stopBoxTimestamp},
+				</if>
+				<if test="addType != null">
+					ADD_TYPE = #{addType},
 				</if>
             </trim>
         </set>

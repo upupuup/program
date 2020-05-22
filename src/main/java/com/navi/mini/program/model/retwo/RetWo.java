@@ -33,9 +33,17 @@ public class RetWo extends BaseModel {
      */
 	private String grade;
 	/**
+     *  等级名称
+     */
+	private String gradeName;
+	/**
      *  果农
      */
 	private String orchardist;
+	/**
+	 * 果农名称
+	 */
+	private String orchardistName;
 	/**
      *  质检员
      */
@@ -52,6 +60,10 @@ public class RetWo extends BaseModel {
      *  状态
      */
 	private String status;
+	/**
+     *  状态名称
+     */
+	private String statusName;
 	/**
      *  送果码头信息
      */
@@ -101,5 +113,9 @@ public class RetWo extends BaseModel {
 	 * 更换码头申请审批时间
 	 */
 	private String inWharfChangerTimestamp;
+	/**
+	 * 添加的方式：0：正常添加，1：码头更换添加，2：质检添加
+	 */
+	private Integer addType;
 
 }

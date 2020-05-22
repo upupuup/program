@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.navi.mini.program.dao.retboxempno.RetBoxEmpNoDao">
+    <resultMap id="retBoxEmpNo" type="com.navi.mini.program.model.retboxempno.RetBoxEmpNo">
+		<id property="retBoxEmpNo" column="RET_BOX_EMP_NO"/>
+		<result property="reqUserId" column="REQ_USER_ID"/>
+		<result property="conUserId" column="CON_USER_ID"/>
+		<result property="portId" column="PORT_ID"/>
+		<result property="approvalStatus" column="APPROVAL_STATUS"/>
+		<result property="approvalResults" column="APPROVAL_RESULTS"/>
+		<result property="approvalComments" column="APPROVAL_COMMENTS"/>
+		<result property="evtUsr" column="EVT_USR"/>
+		<result property="evtTimestamp" column="EVT_TIMESTAMP"/>
+		<result property="boxNum" column="BOX_NUM"/>
+		<result property="palletNum" column="PALLET_NUM"/>
+	</resultMap>
+
+	<sql id="Table_Name">
+        ret_box_emp_no
+    </sql>
+
+	<sql id="Table_Columns">
+        RET_BOX_EMP_NO,
+        REQ_USER_ID,
+        CON_USER_ID,
+        PORT_ID,
+        APPROVAL_STATUS,
+        APPROVAL_RESULTS,
+        APPROVAL_COMMENTS,
+        EVT_USR,
+        EVT_TIMESTAMP,
+        BOX_NUM,
+        PALLET_NUM
+	</sql>
+
+	<!-- insert -->
+	<insert id="insert" parameterType="com.navi.mini.program.model.retboxempno.RetBoxEmpNo">
+		INSERT INTO
+		<include refid="Table_Name" />
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="retBoxEmpNo != null">
+				RET_BOX_EMP_NO,
+			</if>
+			<if test="reqUserId != null">
+				REQ_USER_ID,
+			</if>
+			<if test="conUserId != null">
+				CON_USER_ID,
+			</if>
+			<if test="portId != null">
+				PORT_ID,
+			</if>
+			<if test="approvalStatus != null">
+				APPROVAL_STATUS,
+			</if>
+			<if test="approvalResults != null">
+				APPROVAL_RESULTS,
+			</if>
+			<if test="approvalComments != null">
+				APPROVAL_COMMENTS,
+			</if>
+			<if test="evtUsr != null">
+				EVT_USR,
+			</if>
+			<if test="evtTimestamp != null">
+				EVT_TIMESTAMP,
+			</if>
+			<if test="boxNum != null">
+				BOX_NUM,
+			</if>
+			<if test="palletNum != null">
+				PALLET_NUM,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="retBoxEmpNo != null">
+				#{retBoxEmpNo},
+			</if>
+			<if test="reqUserId != null">
+				#{reqUserId},
+			</if>
+			<if test="conUserId != null">
+				#{conUserId},
+			</if>
+			<if test="portId != null">
+				#{portId},
+			</if>
+			<if test="approvalStatus != null">
+				#{approvalStatus},
+			</if>
+			<if test="approvalResults != null">
+				#{approvalResults},
+			</if>
+			<if test="approvalComments != null">
+				#{approvalComments},
+			</if>
+			<if test="evtUsr != null">
+				#{evtUsr},
+			</if>
+			<if test="evtTimestamp != null">
+				#{evtTimestamp},
+			</if>
+			<if test="boxNum != null">
+				#{boxNum},
+			</if>
+			<if test="palletNum != null">
+				#{palletNum},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- insert -->
+	<insert id="batchInsert" parameterType="com.navi.mini.program.model.retboxempno.RetBoxEmpNo">
+		INSERT INTO
+		<include refid="Table_Name" />
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			RET_BOX_EMP_NO,
+			REQ_USER_ID,
+			CON_USER_ID,
+			PORT_ID,
+			APPROVAL_STATUS,
+			APPROVAL_RESULTS,
+			APPROVAL_COMMENTS,
+			EVT_USR,
+			EVT_TIMESTAMP,
+			BOX_NUM,
+			PALLET_NUM,
+		</trim>
+		VALUES
+		<foreach  collection="list" item="item"  index="index" separator=",">
+			(
+			#{item.retBoxEmpNo},
+			#{item.reqUserId},
+			#{item.conUserId},
+			#{item.portId},
+			#{item.approvalStatus},
+			#{item.approvalResults},
+			#{item.approvalComments},
+			#{item.evtUsr},
+			#{item.evtTimestamp},
+			#{item.boxNum},
+			#{item.palletNum},
+			)
+		</foreach>
+	</insert>
+
+	<!-- update:修改时不修改createUser、createTime、isDelete -->
+	<update id="update" parameterType="com.navi.mini.program.model.retboxempno.RetBoxEmpNo">
+		UPDATE
+		<include refid="Table_Name" />
+		<set>
+			<trim suffix=" " suffixOverrides=",">
+				<if test="reqUserId != null">
+					REQ_USER_ID = #{reqUserId},
+				</if>
+				<if test="conUserId != null">
+					CON_USER_ID = #{conUserId},
+				</if>
+				<if test="portId != null">
+					PORT_ID = #{portId},
+				</if>
+				<if test="approvalStatus != null">
+					APPROVAL_STATUS = #{approvalStatus},
+				</if>
+				<if test="approvalResults != null">
+					APPROVAL_RESULTS = #{approvalResults},
+				</if>
+				<if test="approvalComments != null">
+					APPROVAL_COMMENTS = #{approvalComments},
+				</if>
+				<if test="evtUsr != null">
+					EVT_USR = #{evtUsr},
+				</if>
+				<if test="evtTimestamp != null">
+					EVT_TIMESTAMP = #{evtTimestamp},
+				</if>
+				<if test="boxNum != null">
+					BOX_NUM = #{boxNum},
+				</if>
+				<if test="palletNum != null">
+					PALLET_NUM = #{palletNum},
+				</if>
+			</trim>
+		</set>
+		WHERE
+			RET_BOX_EMP_NO = #{retBoxEmpNo}
+	</update>
+
+
+	<!-- parameterType -->
+	<update id="physicsDeleteById" parameterType="Long">
+		DELETE FROM
+		<include refid="Table_Name"/>
+		WHERE
+			RET_BOX_EMP_NO = #{retBoxEmpNo}
+	</update>
+
+	<!-- queryList -->
+	<select id="queryList" resultMap="retBoxEmpNo" parameterType="com.navi.mini.program.model.retboxempno.RetBoxEmpNo">
+		SELECT 
+			<include refid="Table_Columns" />
+		FROM
+			<include refid="Table_Name" />
+		<where>
+			<if test="retBoxEmpNo != null and retBoxEmpNo != ''">
+				AND RET_BOX_EMP_NO LIKE CONCAT("%", #{retBoxEmpNo},"%")
+			</if>
+			<if test="reqUserId != null and reqUserId != ''">
+				AND REQ_USER_ID = #{reqUserId}
+			</if>
+			<if test="approvalStatus != null and approvalStatus != ''">
+				AND APPROVAL_STATUS = #{approvalStatus}
+			</if>
+		</where>
+
+		ORDER BY
+			RET_BOX_EMP_NO DESC
+	</select>
+	
+	<!-- queryByRetBoxEmpNo -->
+	<select id="queryByRetBoxEmpNo" resultMap="retBoxEmpNo" parameterType="String">
+		SELECT 
+			<include refid="Table_Columns" />
+		FROM 
+			<include refid="Table_Name" />
+		WHERE
+			RET_BOX_EMP_NO = #{retBoxEmpNo}
+	</select>
+</mapper>

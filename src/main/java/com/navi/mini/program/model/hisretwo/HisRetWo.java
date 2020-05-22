@@ -38,7 +38,7 @@ public class HisRetWo extends BaseModel {
 	/**
      *  申请变更的码头信息
      */
-	private String inwharfchange;
+	private String inWharfChanger;
 	/**
      *  变更"小程序:X| WMS:W
      */
@@ -75,5 +75,10 @@ public class HisRetWo extends BaseModel {
      *  stopBoxTimestamp
      */
 	private String stopBoxTimestamp;
+
+	/**
+	 * 添加的方式：0：正常添加，1：码头更换添加，2：质检添加
+	 */
+	private Integer addType;
 
 }

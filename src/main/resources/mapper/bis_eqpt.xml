@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.navi.mini.program.dao.biseqpt.BisEqptDao">
+    <resultMap id="bisEqpt" type="com.navi.mini.program.model.biseqpt.BisEqpt">
+		<id property="eqptId" column="eqpt_id"/>
+        <result property="eqptName" column="eqpt_name"/>
+        <result property="createUsr" column="create_usr"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updUsr" column="upd_usr"/>
+        <result property="updTime" column="upd_time"/>
+        <result property="enable" column="enable"/>
+    </resultMap>
+	
+    <sql id="Table_Name">
+        bis_eqpt
+    </sql>
+	
+	<sql id="Table_Columns">
+        eqpt_id,
+        eqpt_name,
+        create_usr,
+        create_time,
+        upd_usr,
+        upd_time,
+        enable		
+	</sql>
+	
+	<!-- insert -->
+	<insert id="insert" parameterType="com.navi.mini.program.model.biseqpt.BisEqpt">
+        INSERT INTO 
+        <include refid="Table_Name" />
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="eqptId != null">
+				eqpt_id,
+            </if>
+			<if test="eqptName != null">
+				eqpt_name,
+            </if>
+			<if test="createUsr != null">
+				create_usr,
+            </if>
+			<if test="createTime != null">
+				create_time,
+            </if>
+			<if test="updUsr != null">
+				upd_usr,
+            </if>
+			<if test="updTime != null">
+				upd_time,
+            </if>
+			<if test="enable != null">
+				enable,
+            </if>
+        </trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="eqptId != null">
+				#{eqptId},
+            </if>
+			<if test="eqptName != null">
+				#{eqptName},
+            </if>
+			<if test="createUsr != null">
+				#{createUsr},
+            </if>
+			<if test="createTime != null">
+				#{createTime},
+            </if>
+			<if test="updUsr != null">
+				#{updUsr},
+            </if>
+			<if test="updTime != null">
+				#{updTime},
+            </if>
+			<if test="enable != null">
+				#{enable},
+            </if>
+        </trim>
+    </insert>
+	
+	<!-- insert -->
+	<insert id="batchInsert" parameterType="com.navi.mini.program.model.biseqpt.BisEqpt">
+        INSERT INTO 
+        <include refid="Table_Name" />
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			eqpt_id,
+			eqpt_name,
+			create_usr,
+			create_time,
+			upd_usr,
+			upd_time,
+			enable,
+        </trim>
+		VALUES
+		<foreach  collection="list" item="item"  index="index" separator=",">
+		(	
+			#{item.eqptId},
+			#{item.eqptName},
+			#{item.createUsr},
+			#{item.createTime},
+			#{item.updUsr},
+			#{item.updTime},
+			#{item.enable},
+		)
+		</foreach>
+    </insert>
+	
+	<!-- update:修改时不修改createUser、createTime、isDelete -->
+    <update id="update" parameterType="com.navi.mini.program.model.biseqpt.BisEqpt">
+        UPDATE 
+        <include refid="Table_Name" />
+        <set>
+            <trim suffix=" " suffixOverrides=",">
+				<if test="eqptName != null">
+					eqpt_name = #{eqptName},
+				</if>
+				<if test="createUsr != null">
+					create_usr = #{createUsr},
+				</if>
+				<if test="updUsr != null">
+					upd_usr = #{updUsr},
+				</if>
+				<if test="updTime != null">
+					upd_time = #{updTime},
+				</if>
+				<if test="enable != null">
+					enable = #{enable},
+				</if>
+            </trim>
+        </set>
+		WHERE
+			eqpt_id = #{eqptId}
+    </update>	
+	
+
+	<!-- parameterType -->
+	<update id="physicsDeleteById" parameterType="String">
+		DELETE FROM
+			<include refid="Table_Name"/>
+		WHERE
+			eqpt_id = #{eqptId}
+	</update>
+
+	<!-- queryList -->
+	<select id="queryList" resultMap="bisEqpt" parameterType="com.navi.mini.program.model.biseqpt.BisEqpt">
+		SELECT 
+			<include refid="Table_Columns" />
+		FROM
+			<include refid="Table_Name" />
+		WHERE
+			enable = #{enable}
+		ORDER BY 
+			create_time DESC
+	</select>
+	
+	<!-- queryById -->
+	<select id="queryByEqptId" resultMap="bisEqpt" parameterType="com.navi.mini.program.model.biseqpt.BisEqpt">
+		SELECT 
+			<include refid="Table_Columns" />
+		FROM 
+			<include refid="Table_Name" />
+		WHERE
+			eqpt_id = #{0}
+		AND
+			enable = #{1}
+	</select>
+</mapper>

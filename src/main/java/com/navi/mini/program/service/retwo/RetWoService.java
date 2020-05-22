@@ -36,4 +36,24 @@ public interface RetWoService extends BaseService<RetWo> {
 	 * @CreateDate: 2020/5/21 21:41
 	 */
 	void changeWharfApprove(RetWo retWo) throws Exception;
+
+	/**
+	 * 查询更换码头记录
+	 * @param retWo 料单对象
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/22 19:53
+	 */
+	PageInfo<RetWo> queryChangeWharfList(RetWo retWo) throws Exception;
+
+	/**
+	 * 送果历史
+	 * @param retWo 料单对象
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/22 19:53
+	 */
+	PageInfo<RetWo> querySendFruitList(RetWo retWo) throws Exception;
 }

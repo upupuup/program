@@ -7,7 +7,7 @@ package com.navi.mini.program.common.constant;
  */
 public class Constant {
     public static final String ERRORMSG = "";
-    public static String APP_ID = "";
+	public static String APP_ID = "";
     public static String SECRET = "";
     public static String WE_CHAT_ACCESS_TOKEN = "";
     public static String TICKET_TOKEN = "";
@@ -109,6 +109,11 @@ public class Constant {
          * 无效标识
          */
         public static  final String INVALID_FLAG = "N";
+
+        /**
+         * 小程序
+         */
+        String MINI = "X";
     }
 
     /**
@@ -127,6 +132,10 @@ public class Constant {
          * 送果员
          */
         public static final String SEND_FRUIT = "3";
+        /**
+         * 码头巡检员
+         */
+        public static final String WHARF_PERSONB = "4";
 
     }
 
@@ -134,18 +143,6 @@ public class Constant {
      * 关于料单
      */
     public interface RetWork {
-        /**
-         * 审批交换码头状态，C:待审批
-         */
-        public static final String APPROVA_WAIT_STATUS = "C";
-        /**
-         * 审批交换码头状态，A:审批中
-         */
-        public static final String APPROVA_PENDING_STATUS = "A";
-        /**
-         * 审批交换码头状态，O:审批结束
-         */
-        public static final String APPROVA_END_STATUS = "O";
 
         /**
          * 当前的码头
@@ -155,6 +152,46 @@ public class Constant {
          * 更换的码头
          */
         public static final String CHANGE_WHARF = "change_wharf";
+
+        /**
+         * 正常添加
+         */
+        public static final Integer ADD_TYPE_NORMAL = 0;
+        /**
+         * 更换码头添加
+         */
+        public static final Integer ADD_TYPE_CHANGE = 1;
+        /**
+         * 质检添加
+         */
+        public static final Integer ADD_TYPE_INSPECTION = 2;
+    }
+
+    public interface Approve {
+        /**
+         * 审批状态，C:待审批
+         */
+        public static final String APPROVE_WAIT_STATUS = "C";
+        /**
+         * 审批状态，A:审批中
+         */
+        public static final String APPROVE_PENDING_STATUS = "A";
+        /**
+         * 审批状态，O:审批结束
+         */
+        public static final String APPROVE_END_STATUS = "O";
+    }
+
+    public interface Equipment {
+
+        /**
+         * 是否弃用，是
+         */
+        public static final Integer ENABLE = 1;
+        /**
+         * 是否弃用，否
+         */
+        public static final Integer DISENABLE = 0;
     }
 
 }
