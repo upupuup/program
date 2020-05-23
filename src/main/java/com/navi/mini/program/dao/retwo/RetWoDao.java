@@ -26,4 +26,24 @@ public interface RetWoDao extends BaseDao<RetWo> {
 	 * @CreateDate: 2020/5/21 19:59
 	 */
 	RetWo queryById(String id) throws Exception;
+
+	/**
+	 * 根据时间查询最近的一条记录
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/23 1:53
+	 */
+	List<RetWo> queryBySendUsrId(String currentUserId) throws Exception;
+
+
+	/**
+	 * 查询不是该状态的数据(送果人）
+	 * @param status
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/23 18:50
+	 */
+	List<RetWo> queryBySendUserIdAndNotStatus(String currentUserId, String status) throws Exception;
 }

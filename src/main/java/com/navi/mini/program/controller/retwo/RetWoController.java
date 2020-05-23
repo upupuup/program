@@ -10,7 +10,13 @@ import com.navi.mini.program.service.retwo.RetWoService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
 @Scope("prototype")
 @RestController
 @RequestMapping("/retWo")
@@ -120,6 +126,63 @@ public class RetWoController extends BaseController {
 		
 		return returnBaseResponse();
 	}
+
+	/**
+	 * 根据时间查询最近的一条记录
+	 * @param retWo
+	 * @return
+	 */
+	@PostMapping(value="/queryRetBoxOrderByRecentTime", consumes="application/json", produces="application/json")
+	public BaseResponse queryRetBoxOrderByRecentTime(@RequestBody RetWo retWo) {
+		try {
+			clear();
+			RetWo obj = retWoService.queryRetBoxOrderByRecentTime();
+			data.put(ResultInfo.DATA, obj);
+		} catch (Exception e) {
+			logger.info("/retWo/queryById 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
+
+	/**
+	 * 根据时间查询是否有不是该状态的数据
+	 * @param retWo
+	 * @return
+	 */
+	@PostMapping(value="/queryByNotStatus", consumes="application/json", produces="application/json")
+	public BaseResponse queryByNotStatus(@RequestBody RetWo retWo) {
+		try {
+			clear();
+			List<RetWo> obj = retWoService.queryByNotStatus(retWo.getStatus());
+			data.put(ResultInfo.DATA, obj);
+		} catch (Exception e) {
+			logger.info("/retWo/queryByNotStatus 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
+
+	/**
+	 * 根据时间查询是否有不是该状态的数据
+	 * @param retWo
+	 * @return
+	 */
+	@PostMapping(value="/queryByNotEndStatus", consumes="application/json", produces="application/json")
+	public BaseResponse queryByNotEndStatus(@RequestBody RetWo retWo) {
+		try {
+			clear();
+			List<RetWo> obj = retWoService.queryByNotEndStatus();
+			data.put(ResultInfo.DATALIST, obj);
+		} catch (Exception e) {
+			logger.info("/retWo/queryByNotEndStatus 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
 	
 	/**
 	 * 方法描述： 保存一条记录
@@ -140,6 +203,24 @@ public class RetWoController extends BaseController {
 	}
 
 	/**
+	 * 方法描述： 质检
+	 * @param retWo
+	 * @return
+	 */
+	@PostMapping(value="/inpsection", consumes="application/json", produces="application/json")
+	public BaseResponse inpsection(@RequestBody RetWo retWo) {
+		try {
+			clear();
+			retWoService.inpsection(retWo);
+		} catch (Exception e) {
+			logger.info("/retWo/inpsection 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
+
+	/**
 	 * 方法描述： 审批更换码头
 	 * @param retWo
 	 * @return
@@ -151,6 +232,24 @@ public class RetWoController extends BaseController {
 			retWoService.changeWharfApprove(retWo);
 		} catch (Exception e) {
 			logger.info("/retWo/changeWharfApprove 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
+
+	/**
+	 * 方法描述：送果人变更码头
+	 * @param retWo
+	 * @return
+	 */
+	@PostMapping(value="/changeWharf", consumes="application/json", produces="application/json")
+	public BaseResponse changeWharf(@RequestBody RetWo retWo) {
+		try {
+			clear();
+			retWoService.changeWharf(retWo);
+		} catch (Exception e) {
+			logger.info("/retWo/changeWharf 异常：" + e.toString());
 			error(Constant.ERRORMSG + e.getMessage());
 		}
 

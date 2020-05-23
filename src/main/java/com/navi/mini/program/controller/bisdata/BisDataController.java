@@ -7,11 +7,18 @@ import com.navi.mini.program.common.constant.Constant.ResultInfo;
 import com.navi.mini.program.common.controller.BaseController;
 import com.navi.mini.program.common.response.BaseResponse;
 import com.navi.mini.program.model.bisdata.BisData;
+import com.navi.mini.program.model.biseqpt.BisEqpt;
+import com.navi.mini.program.model.common.SelectModel;
 import com.navi.mini.program.service.bisdata.BisDataService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @Scope("prototype")
 @RestController
@@ -79,5 +86,18 @@ public class BisDataController extends BaseController {
 		
 		return returnBaseResponse();
 	}
-	
+
+	@PostMapping(value="/queryAllDropList", consumes="application/json", produces="application/json")
+	public BaseResponse queryAllDropList(@RequestBody BisData bisData) {
+		try {
+			clear();
+			List<SelectModel> pageInfo = bisDataService.queryAllDropList(bisData.getDataCate());
+			data.put(ResultInfo.DATALIST, pageInfo);
+		} catch (Exception e) {
+			logger.info("/bisData/queryAllDropList 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
 }

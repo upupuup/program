@@ -35,7 +35,7 @@ public class BisUserServiceImpl extends BaseServiceImpl<BisUser, BisUserDao> imp
 	    // 设置送果人的类型
 	    bisUser.setUsrHeadFlg(Constant.UserType.SEND_FRUIT);
         bisUser.setUsrId(UUIDUtils.generatePrimaryKey());
-        bisUser.setValidFlg(Constant.UserConstants.VALID_FLAG);
+        bisUser.setValidFlg(Constant.Flag.VALID_FLAG);
         this.insert(bisUser);
         SessionUtils.setUserSession(bisUser);
     }
@@ -51,7 +51,7 @@ public class BisUserServiceImpl extends BaseServiceImpl<BisUser, BisUserDao> imp
     @Override
     public BisUser queryByToken(String token) throws Exception {
         EmptyUtils.isEmpty("小程序openid", token);
-        BisUser bisUser = this.dao.queryByToken(token, Constant.UserConstants.VALID_FLAG);
+        BisUser bisUser = this.dao.queryByToken(token, Constant.Flag.VALID_FLAG);
         if (bisUser != null) {
             SessionUtils.setUserSession(bisUser);
 //            System.out.println(SessionUtils.getCurrentUser());
@@ -119,7 +119,7 @@ public class BisUserServiceImpl extends BaseServiceImpl<BisUser, BisUserDao> imp
         // 校验手机号码格式
         MatchUtils.matchTelephone(usrPhs, true);
         // 使用手机号查询是否被注册
-        List<BisUser> bisUserList = this.dao.queryByPhone(usrPhs, Constant.UserConstants.VALID_FLAG);
+        List<BisUser> bisUserList = this.dao.queryByPhone(usrPhs, Constant.Flag.VALID_FLAG);
         if (!CollectionUtils.isEmpty(bisUserList)) {
             throw new Exception("该手机号已被注册");
         }
@@ -138,6 +138,6 @@ public class BisUserServiceImpl extends BaseServiceImpl<BisUser, BisUserDao> imp
     @Override
     public BisUser queryByUserId(String id) throws Exception {
         EmptyUtils.isEmpty("用户主键", id);
-        return this.dao.queryByUserId(id, Constant.UserConstants.VALID_FLAG);
+        return this.dao.queryByUserId(id, Constant.Flag.VALID_FLAG);
     }
 }

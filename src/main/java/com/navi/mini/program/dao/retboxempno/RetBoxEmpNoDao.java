@@ -14,4 +14,13 @@ public interface RetBoxEmpNoDao extends BaseDao<RetBoxEmpNo> {
 	 * @CreateDate: 2020/5/22 23:49
 	 */
 	RetBoxEmpNo queryByRetBoxEmpNo(String retBoxEmpNo) throws Exception;
+
+//	/**
+//	 * 使用订单号
+//	 * @param retBoxEmpNo
+//	 * @param validFlag
+//	 * @return
+//	 * @throws Exception
+//	 */
+//	RetBoxEmpNo queryByRetBoxEmpNoAndFlag(String retBoxEmpNo, String validFlag) throws Exception;
 }

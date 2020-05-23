@@ -101,6 +101,17 @@ public class Constant {
         public static final int TIME_OUT = 86400000;
 
         /**
+         * 小程序
+         */
+        String MINI = "X";
+    }
+
+    /**
+     * 关于标识
+     */
+    public interface Flag {
+
+        /**
          * 有效标识
          */
         public static  final String VALID_FLAG = "Y";
@@ -109,11 +120,6 @@ public class Constant {
          * 无效标识
          */
         public static  final String INVALID_FLAG = "N";
-
-        /**
-         * 小程序
-         */
-        String MINI = "X";
     }
 
     /**
@@ -165,8 +171,33 @@ public class Constant {
          * 质检添加
          */
         public static final Integer ADD_TYPE_INSPECTION = 2;
+        /**
+         * 状态
+         */
+        public static final String STATUS = "STAT";
+        /**
+         * 已质检
+         */
+        public static final String WAIT = "WAIT";
+        /**
+         * 投料中
+         */
+        public static final String INPR = "INPR";
+        /**
+         * 结算中
+         */
+        public static final String COMP = "COMP";
+        /**
+         * 已结算
+         */
+        public static final String CLOSE = "CLOSE";
+
+
     }
 
+    /**
+     * 关于审批
+     */
     public interface Approve {
         /**
          * 审批状态，C:待审批

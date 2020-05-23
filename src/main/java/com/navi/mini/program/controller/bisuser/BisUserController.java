@@ -131,10 +131,10 @@ public class BisUserController extends BaseController {
 	 * @return
 	 */
 	@PostMapping(value="/queryById", produces="application/json")
-	public BaseResponse queryById(String id) {
+	public BaseResponse queryById(@RequestBody BisUser bisUser) {
 		try {
 			clear();
-			BisUser obj = bisUserService.queryByUserId(id);
+			BisUser obj = bisUserService.queryByUserId(bisUser.getUsrId());
 			data.put(ResultInfo.DATA, obj);
 		} catch (Exception e) {
 			logger.info("/bisUser/queryById 异常：" + e.toString());

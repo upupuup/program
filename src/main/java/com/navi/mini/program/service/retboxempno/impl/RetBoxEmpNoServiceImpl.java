@@ -64,6 +64,7 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
      */
     @Override
     public PageInfo<RetBoxEmpNo> queryBoxRecordList(RetBoxEmpNo retBoxEmpNo) throws Exception {
+        retBoxEmpNo.setReqUserId(SessionUtils.getCurrentUserId());
         PageInfo<RetBoxEmpNo> retBoxEmpNoPageInfo = this.queryList(retBoxEmpNo);
         return retBoxEmpNoPageInfo;
     }

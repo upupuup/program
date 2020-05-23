@@ -243,8 +243,20 @@
 			<include refid="Table_Columns" />
 		FROM
 			<include refid="Table_Name" />
-		ORDER BY 
-			create_time DESC
+		<where>
+			<if test="addType != null and addType != ''">
+				ADD_TYPE = #{addType}
+			</if>
+			<if test="qusrId != null and qusrId != ''">
+				AND Q_USR_ID = #{qusrId}
+			</if>
+			<if test="woNo != null and woNo != ''">
+				AND
+				WO_NO LIKE CONCAT("%", #{woNo}, "%")
+			</if>
+		</where>
+		ORDER BY
+			EVT_TIMESTAMP DESC
 	</select>
 	
 	<!-- queryById -->

@@ -55,7 +55,7 @@ public class RetWo extends BaseModel {
 	/**
      *  总重量
      */
-	private String wet;
+	private Double wet;
 	/**
      *  状态
      */

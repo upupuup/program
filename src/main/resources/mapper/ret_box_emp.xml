@@ -2,8 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.navi.mini.program.dao.retboxemp.RetBoxEmpDao">
     <resultMap id="retBoxEmp" type="com.navi.mini.program.model.retboxemp.RetBoxEmp">
-        <id property="id" column="ID"/>
-		<result property="boxNo" column="BOX_NO"/>
+		<id property="boxNo" column="BOX_NO"/>
+        <result property="id" column="ID"/>
+		<result property="validFlg" column="VALID_FLG"/>
         <result property="palletId" column="PALLET_ID"/>
         <result property="reqUserId" column="REQ_USER_ID"/>
         <result property="conUserId" column="CON_USER_ID"/>
@@ -12,13 +13,14 @@
         <result property="evtTimestamp" column="EVT_TIMESTAMP"/>
         <result property="retBoxEmpNo" column="RET_BOX_EMP_NO"/>
     </resultMap>
-	
+
     <sql id="Table_Name">
         ret_box_emp
     </sql>
-	
+
 	<sql id="Table_Columns">
         ID,
+        VALID_FLG
         BOX_NO,
         PALLET_ID,
         REQ_USER_ID,
@@ -26,16 +28,19 @@
         PORT_ID,
         EVT_USR,
         EVT_TIMESTAMP,
-        RET_BOX_EMP_NO		
+        RET_BOX_EMP_NO
 	</sql>
-	
+
 	<!-- insert -->
 	<insert id="insert" parameterType="com.navi.mini.program.model.retboxemp.RetBoxEmp">
-        INSERT INTO 
+        INSERT INTO
         <include refid="Table_Name" />
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
 				ID,
+            </if>
+			<if test="validFlg != null">
+				VALID_FLG,
             </if>
 			<if test="boxNo != null">
 				BOX_NO,
@@ -64,6 +69,9 @@
         </trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			#{id},
+			<if test="validFlg != null">
+				#{validFlg},
+            </if>
 			<if test="boxNo != null">
 				#{boxNo},
             </if>
@@ -90,13 +98,14 @@
             </if>
         </trim>
     </insert>
-	
+
 	<!-- insert -->
 	<insert id="batchInsert" parameterType="com.navi.mini.program.model.retboxemp.RetBoxEmp">
-        INSERT INTO 
+        INSERT INTO
         <include refid="Table_Name" />
         <trim prefix="(" suffix=")" suffixOverrides=",">
 			ID,
+			VALID_FLG,
 			BOX_NO,
 			PALLET_ID,
 			REQ_USER_ID,
@@ -108,9 +117,10 @@
         </trim>
 		VALUES
 		<foreach  collection="list" item="item"  index="index" separator=",">
-		(	
+		(
 			#{item.id},
 			#{item.boxNo},
+			#{item.validFlg},
 			#{item.palletId},
 			#{item.reqUserId},
 			#{item.conUserId},
@@ -121,10 +131,10 @@
 		)
 		</foreach>
     </insert>
-	
+
 	<!-- update:修改时不修改createUser、createTime、isDelete -->
     <update id="update" parameterType="com.navi.mini.program.model.retboxemp.RetBoxEmp">
-        UPDATE 
+        UPDATE
         <include refid="Table_Name" />
         <set>
             <trim suffix=" " suffixOverrides=",">
@@ -172,12 +182,12 @@
 		ORDER BY 
 			create_time DESC
 	</select>
-	
+
 	<!-- queryById -->
 	<select id="queryById" resultMap="retBoxEmp" parameterType="Long">
-		SELECT 
+		SELECT
 			<include refid="Table_Columns" />
-		FROM 
+		FROM
 			<include refid="Table_Name" />
 		WHERE
 			id = #{id}

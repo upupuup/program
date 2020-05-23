@@ -5,6 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.navi.mini.program.common.service.BaseService;
 import com.navi.mini.program.model.retwo.RetWo;
 
+import java.util.List;
+
 public interface RetWoService extends BaseService<RetWo> {
 	void saveRetWo(RetWo retWo) throws Exception;
 
@@ -56,4 +58,50 @@ public interface RetWoService extends BaseService<RetWo> {
 	 * @CreateDate: 2020/5/22 19:53
 	 */
 	PageInfo<RetWo> querySendFruitList(RetWo retWo) throws Exception;
+
+	/**
+	 * 送果人变更码头
+	 * @param retWo
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/23 1:44
+	 */
+	void changeWharf(RetWo retWo) throws Exception;
+
+	/**
+	 * 根据时间查询最近的一条记录
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/23 1:53
+	 */
+	RetWo queryRetBoxOrderByRecentTime() throws Exception;
+
+	/**
+	 * 查询不是该状态的数据
+	 * @param status
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/23 18:50
+	 */
+	List<RetWo> queryByNotStatus(String status) throws Exception;
+
+	/**
+	 * 查询不是结束状态的数据
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/23 18:50
+	 */
+	List<RetWo> queryByNotEndStatus() throws Exception;
+
+	/**
+	 * 质检
+	 * @param retWo
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/23 19:55
+	 */
+	void inpsection(RetWo retWo) throws Exception;
 }

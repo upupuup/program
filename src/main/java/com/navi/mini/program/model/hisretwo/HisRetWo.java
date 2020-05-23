@@ -24,13 +24,19 @@ public class HisRetWo extends BaseModel {
      */
 	private String sendUsrId;
 	/**
+	 *  送果人
+	 */
+	private String sendUserName;
+	/**
      *  等级
      */
 	private String grade;
+	private String gradeName;
 	/**
      *  果农
      */
 	private String orchardist;
+	private String orchardistName;
 	/**
      *  质检员
      */
@@ -39,6 +45,9 @@ public class HisRetWo extends BaseModel {
      *  申请变更的码头信息
      */
 	private String inWharfChanger;
+
+	private String inWharfChangerName;
+	private String inWharfName;
 	/**
      *  变更"小程序:X| WMS:W
      */

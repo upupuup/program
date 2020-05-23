@@ -40,6 +40,25 @@ public class HisRetWoController extends BaseController {
 		
 		return returnBaseResponse();
 	}
+
+	/**
+	 * 根据质检员查询记录
+	 * @param hisRetWo
+	 * @return
+	 */
+	@PostMapping(value="/queryByInspectionPerson", consumes="application/json", produces="application/json")
+	public BaseResponse queryByInspectionPerson(@RequestBody HisRetWo hisRetWo) {
+		try {
+			clear();
+			PageInfo<HisRetWo> pageInfo = hisRetWoService.queryByInspectionPerson(hisRetWo);
+			data.put(ResultInfo.PAGE, pageInfo);
+		} catch (Exception e) {
+			logger.info("/hisRetWo/queryByInspectionPerson 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
 	
 	/**
 	 * 方法描述： 根据id获取数据对象
