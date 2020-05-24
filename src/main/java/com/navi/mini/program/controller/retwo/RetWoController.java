@@ -147,6 +147,25 @@ public class RetWoController extends BaseController {
 	}
 
 	/**
+	 * 查询是否可以更换码头
+	 * @param retWo
+	 * @return
+	 */
+	@PostMapping(value="/queryCanChangeWharf", consumes="application/json", produces="application/json")
+	public BaseResponse queryCanChangeWharf(@RequestBody RetWo retWo) {
+		try {
+			clear();
+			Boolean obj = retWoService.queryCanChangeWharf(retWo.getWoNo());
+			data.put(ResultInfo.DATA, obj);
+		} catch (Exception e) {
+			logger.info("/retWo/queryCanChangeWharf 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
+
+	/**
 	 * 根据时间查询是否有不是该状态的数据
 	 * @param retWo
 	 * @return
@@ -207,13 +226,13 @@ public class RetWoController extends BaseController {
 	 * @param retWo
 	 * @return
 	 */
-	@PostMapping(value="/inpsection", consumes="application/json", produces="application/json")
-	public BaseResponse inpsection(@RequestBody RetWo retWo) {
+	@PostMapping(value="/inspection", consumes="application/json", produces="application/json")
+	public BaseResponse inspection(@RequestBody RetWo retWo) {
 		try {
 			clear();
-			retWoService.inpsection(retWo);
+			retWoService.inspection(retWo);
 		} catch (Exception e) {
-			logger.info("/retWo/inpsection 异常：" + e.toString());
+			logger.info("/retWo/inspection 异常：" + e.toString());
 			error(Constant.ERRORMSG + e.getMessage());
 		}
 

@@ -160,17 +160,22 @@ public class Constant {
         public static final String CHANGE_WHARF = "change_wharf";
 
         /**
-         * 正常添加
+         * 正常添加 1：码头更换添加，2：码头更换审批添加，3：质检添加
          */
         public static final Integer ADD_TYPE_NORMAL = 0;
         /**
          * 更换码头添加
          */
         public static final Integer ADD_TYPE_CHANGE = 1;
+
+        /**
+         * 码头更换审批添加
+         */
+        public static final Integer ADD_TYPE_CHANGE_APPROVE = 2;
         /**
          * 质检添加
          */
-        public static final Integer ADD_TYPE_INSPECTION = 2;
+        public static final Integer ADD_TYPE_INSPECTION = 3;
         /**
          * 状态
          */
@@ -213,6 +218,9 @@ public class Constant {
         public static final String APPROVE_END_STATUS = "O";
     }
 
+    /**
+     * 码头
+     */
     public interface Equipment {
 
         /**
@@ -225,4 +233,22 @@ public class Constant {
         public static final Integer DISENABLE = 0;
     }
 
+    /**
+     *
+     */
+    public interface RetBoxEmpNo {
+        /**
+         * 托
+         */
+        public static final String PALLET = "PALL";
+        /**
+         * 托数
+         */
+        public static final String PALLETNUM = "PALLETNUM";
+        /**
+         * 箱数
+         */
+        public static final String BOXNUM = "BOXNUM";
+
+    }
 }

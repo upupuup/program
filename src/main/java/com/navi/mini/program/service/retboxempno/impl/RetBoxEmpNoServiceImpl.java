@@ -4,9 +4,7 @@ package com.navi.mini.program.service.retboxempno.impl;
 import com.github.pagehelper.PageInfo;
 import com.navi.mini.program.common.constant.Constant;
 import com.navi.mini.program.common.service.impl.BaseServiceImpl;
-import com.navi.mini.program.common.utils.DateUtils;
-import com.navi.mini.program.common.utils.EmptyUtils;
-import com.navi.mini.program.common.utils.SessionUtils;
+import com.navi.mini.program.common.utils.*;
 import com.navi.mini.program.dao.retboxempno.RetBoxEmpNoDao;
 import com.navi.mini.program.model.bisdata.BisData;
 import com.navi.mini.program.model.bisuser.BisUser;
@@ -34,6 +32,28 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
     public void saveRetBoxEmpNo(RetBoxEmpNo retBoxEmpNo) throws Exception{
         String retBoxEmp = retBoxEmpNo.getRetBoxEmpNo();
         if(StringUtils.isBlank(retBoxEmp)){
+            // 校验字段
+            Integer palletNum = retBoxEmpNo.getPalletNum();
+            EmptyUtils.isEmpty("托数", palletNum);
+
+            // 查询托数
+            Integer queryPalletNum = bisDataService.queryPallet();
+            // 比较托数
+            if (palletNum > queryPalletNum) {
+                throw new Exception("托数不能大于" + queryPalletNum + "托");
+            }
+
+            // 查询箱数
+            Integer queryBoxNum = bisDataService.queryBox();
+            Integer boxNum = BeanUtils.solveTwoNumMultiply(queryBoxNum, palletNum);
+            retBoxEmpNo.setBoxNum(boxNum);
+
+            // 设置必要值
+            retBoxEmpNo.setRetBoxEmpNo(UUIDUtils.generateRetWoEmptyNo());
+            retBoxEmpNo.setReqUserId(SessionUtils.getCurrentUserId());
+            retBoxEmpNo.setApprovalStatus(Constant.Approve.APPROVE_WAIT_STATUS);
+            retBoxEmpNo.setEvtUsr(SessionUtils.getCurrentUserId());
+            retBoxEmpNo.setEvtTimestamp(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
             this.insert(retBoxEmpNo);
         }else{
             this.update(retBoxEmpNo);
@@ -41,6 +61,16 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
 
     }
 
+
+
+    /**
+     * 分页查询
+     * @param retBoxEmpNo
+     * @return
+     * @throws Exception
+     * @Author: jiangzhihong
+     * @CreateDate: 2020/5/24 16:21
+     */
     @Override
     public PageInfo<RetBoxEmpNo> queryList(RetBoxEmpNo retBoxEmpNo) throws Exception {
         PageInfo<RetBoxEmpNo> retBoxEmpNoPageInfo = super.queryList(retBoxEmpNo);

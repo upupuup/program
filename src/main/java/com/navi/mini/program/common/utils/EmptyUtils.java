@@ -309,4 +309,18 @@ public class EmptyUtils {
 		return num == null ? 0.0D : num;
 	}
 
+//	/**
+//	 * 判断是否为空并且只有一条数据
+//	 * @param coll
+//	 * @param 状态
+//	 */
+//	public static void listIsNullAndSizeIsOne(Collection coll, String msg) throws Exception {
+//		if (CollectionUtils.isEmpty(coll)) {
+//			throw new Exception(msg + "为空");
+//		}
+//
+//		if (coll.size() > 1) {
+//			throw new Exception(msg + "数据不唯一");
+//		}
+//	}
 }

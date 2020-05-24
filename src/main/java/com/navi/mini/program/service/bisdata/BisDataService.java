@@ -47,4 +47,22 @@ public interface BisDataService extends BaseService<BisData> {
 	 * @CreateDate: 2020/5/23 19:33
 	 */
 	List<SelectModel> queryAllDropList(String dataCate) throws Exception;
+
+	/**
+	 * 查询箱数
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/24 16:24
+	 */
+	Integer queryBox() throws Exception;
+
+	/**
+	 * 查询托数
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/24 16:24
+	 */
+	Integer queryPallet() throws Exception;
 }

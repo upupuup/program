@@ -103,5 +103,15 @@ public interface RetWoService extends BaseService<RetWo> {
 	 * @Author: jiangzhihong
 	 * @CreateDate: 2020/5/23 19:55
 	 */
-	void inpsection(RetWo retWo) throws Exception;
+	void inspection(RetWo retWo) throws Exception;
+
+	/**
+	 * 查询是否可以更换码头
+	 * @param woNo 单号
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/24 12:56
+	 */
+	Boolean queryCanChangeWharf(String woNo) throws Exception;
 }

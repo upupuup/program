@@ -87,6 +87,11 @@ public class BisDataController extends BaseController {
 		return returnBaseResponse();
 	}
 
+	/**
+	 * 查询下拉框的值
+	 * @param bisData
+	 * @return
+	 */
 	@PostMapping(value="/queryAllDropList", consumes="application/json", produces="application/json")
 	public BaseResponse queryAllDropList(@RequestBody BisData bisData) {
 		try {
@@ -95,6 +100,42 @@ public class BisDataController extends BaseController {
 			data.put(ResultInfo.DATALIST, pageInfo);
 		} catch (Exception e) {
 			logger.info("/bisData/queryAllDropList 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
+
+	/**
+	 * 查询箱数
+	 * @return
+	 */
+	@PostMapping(value="/queryBox", consumes="application/json", produces="application/json")
+	public BaseResponse queryBox() {
+		try {
+			clear();
+			Integer num = bisDataService.queryBox();
+			data.put(ResultInfo.DATA, num);
+		} catch (Exception e) {
+			logger.info("/bisData/queryBox 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
+
+	/**
+	 * 查询托数
+	 * @return
+	 */
+	@PostMapping(value="/queryPallet", consumes="application/json", produces="application/json")
+	public BaseResponse queryPallet() {
+		try {
+			clear();
+			Integer num = bisDataService.queryPallet();
+			data.put(ResultInfo.DATA, num);
+		} catch (Exception e) {
+			logger.info("/bisData/queryPallet 异常：" + e.toString());
 			error(Constant.ERRORMSG + e.getMessage());
 		}
 

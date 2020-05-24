@@ -65,11 +65,16 @@ public class RetWoServiceImpl extends BaseServiceImpl<RetWo, RetWoDao> implement
 	 * @CreateDate: 2020/5/23 19:55
 	 */
 	@Override
-	public void inpsection(RetWo retWo) throws Exception {
+	public void inspection(RetWo retWo) throws Exception {
 		EmptyUtils.isEmpty("送果人", retWo.getSendUsrId());
 		EmptyUtils.isEmpty("等级", retWo.getGrade());
 		EmptyUtils.isEmpty("果农", retWo.getOrchardist());
 		EmptyUtils.isEmpty("码头", retWo.getInWharf());
+
+		List<RetWo> retWos = this.queryByNotEndStatus();
+		if (!CollectionUtils.isEmpty(retWos)) {
+			throw new Exception("此人已存在料单");
+		}
 
 		retWo.setId(UUIDUtils.generatePrimaryKey());
 		retWo.setUnqSeqId(UUIDUtils.generatePrimaryKey());
@@ -77,9 +82,7 @@ public class RetWoServiceImpl extends BaseServiceImpl<RetWo, RetWoDao> implement
 		retWo.setCnt(0);
 		retWo.setWet(0.0);
 		List<BisData> bisDataList = bisDataService.queryByCateAndExt(Constant.RetWork.STATUS, Constant.RetWork.WAIT);
-		if (CollectionUtils.isEmpty(bisDataList)) {
-			throw new Exception("不存再开始状态");
-		}
+		EmptyUtils.checkListEmptyAndSize(bisDataList, "开始状态");
 		retWo.setStatus(bisDataList.get(0).getDataSeqId());
 		retWo.setEvtUsr(SessionUtils.getCurrentUserId());
 		retWo.setEvtTimestamp(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
@@ -440,7 +443,7 @@ public class RetWoServiceImpl extends BaseServiceImpl<RetWo, RetWoDao> implement
 		queryRetWo.setInWharfChanger(retWo.getInWharfChanger());
 		queryRetWo.setEvtTimestamp(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
 		queryRetWo.setEvtUsr(SessionUtils.getCurrentUserId());
-		queryRetWo.setAddType(Constant.RetWork.ADD_TYPE_CHANGE);
+		queryRetWo.setAddType(Constant.RetWork.ADD_TYPE_CHANGE_APPROVE);
 		this.saveHisRetWo(queryRetWo);
 
 		// 在新增历史表之后，把现在的表的一下字段置空
@@ -494,12 +497,17 @@ public class RetWoServiceImpl extends BaseServiceImpl<RetWo, RetWoDao> implement
 	 */
 	@Override
 	public RetWo queryRetBoxOrderByRecentTime() throws Exception {
-		List<RetWo> list= this.dao.queryBySendUsrId(SessionUtils.getCurrentUserId());
+		List<BisData> bisDataList = bisDataService.queryByCateAndExt(Constant.RetWork.STATUS, Constant.RetWork.WAIT);
+		// 校验数据是否唯一
+		EmptyUtils.checkListEmptyAndSize(bisDataList, "状态");
+		List<RetWo> list= this.dao.queryRetBoxOrderByRecentTime(SessionUtils.getCurrentUserId(), bisDataList.get(0).getDataSeqId());
 		// 为空，返回null。不为空，返回第一条
 		if (CollectionUtils.isEmpty(list)) {
 			return null;
 		}
 		RetWo retWo = list.get(0);
+
+		retWo.setStatusName(bisDataList.get(0).getDataDesc());
 		this.solveManyInfo(retWo);
 		return retWo;
 	}
@@ -536,5 +544,26 @@ public class RetWoServiceImpl extends BaseServiceImpl<RetWo, RetWoDao> implement
 			throw new Exception("已结算状态有误");
 		}
 		return this.queryByNotStatus(list.get(0).getDataSeqId());
+	}
+
+	/**
+	 * 查询是否可以更换码头
+	 * @param woNo 单号
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/24 12:56
+	 */
+	@Override
+	public Boolean queryCanChangeWharf(String woNo) throws Exception {
+		EmptyUtils.isEmpty("单号", woNo);
+		// 查询料单
+		List<RetWo> retWoList = this.dao.queryByWoNoAndNotApprove(woNo, Constant.Approve.APPROVE_WAIT_STATUS);
+		// 判断是否有带审核的更换码头信息
+		if (!CollectionUtils.isEmpty(retWoList)) {
+			return false;
+		}
+
+		return true;
 	}
 }

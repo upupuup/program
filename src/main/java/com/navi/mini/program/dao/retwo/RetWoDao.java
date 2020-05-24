@@ -46,4 +46,34 @@ public interface RetWoDao extends BaseDao<RetWo> {
 	 * @CreateDate: 2020/5/23 18:50
 	 */
 	List<RetWo> queryBySendUserIdAndNotStatus(String currentUserId, String status) throws Exception;
+
+	/**
+	 * 查询果农最近的料单
+	 * @param currentUserId
+	 * @param dataSeqId
+	 * @return
+	 * @throws Exception
+	 */
+	List<RetWo> queryRetBoxOrderByRecentTime(String currentUserId, String dataSeqId) throws Exception;
+
+	/**
+	 * 使用单号查询
+	 * @param woNo
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/24 13:12
+	 */
+	List<RetWo> queryByWoNo(String woNo) throws Exception;
+
+	/**
+	 * 使用单号和审批状态查询
+	 * @param woNo 单号
+	 * @param approvalStatus 审批状态
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/24 13:14
+	 */
+	List<RetWo> queryByWoNoAndNotApprove(String woNo, String approvalStatus) throws Exception;
 }

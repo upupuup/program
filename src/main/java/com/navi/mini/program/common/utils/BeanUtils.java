@@ -278,7 +278,7 @@ public class BeanUtils {
     }
 
     /**
-     * 两个数字相乘
+     * 两个数字相乘(Double)
      * @param num
      * @param anotherNum
      * @return
@@ -297,6 +297,27 @@ public class BeanUtils {
         }
         return BigDecimal.valueOf(num).multiply(BigDecimal.valueOf(anotherNum)).doubleValue();
     }
+
+	/**
+	 * 两个数字相乘(Integer)
+	 * @param num
+	 * @param anotherNum
+	 * @return
+	 * @throws Exception
+	 */
+	public static Integer solveTwoNumMultiply(Integer num, Integer anotherNum) throws Exception {
+		if (num == null) {
+			return 0;
+		}
+		if (anotherNum == null) {
+			return 0;
+		}
+		// 如果有一个数字有问题就返回0
+		if (num == 0 || anotherNum == 0) {
+			return 0;
+		}
+		return num * anotherNum;
+	}
 
     /**
      * 两数（double）相加
@@ -353,7 +374,7 @@ public class BeanUtils {
 		System.out.println(solveDoublePercent(1.0, 2.0, false));
 		System.out.println(solveDoublePercent(1.0, 2.0));
 
-		System.out.println(solveTwoNumMultiply(null, null));
+//		System.out.println(solveTwoNumMultiply(null, null));
 		System.out.println(solveTwoNumMultiply(null, 0.0));
 		System.out.println(solveTwoNumMultiply(0.0, null));
 		System.out.println(solveTwoNumMultiply(1.0, 2.0));
@@ -365,7 +386,7 @@ public class BeanUtils {
 		System.out.println(solveTwoNumAdd(0.0, 0.0));
 		System.out.println(solveTwoNumAdd(1.0, 2.0));
 
-		System.out.println(solveTwoNumMultiply(null, null));
+//		System.out.println(solveTwoNumMultiply(null, null));
 		System.out.println(solveTwoNumMultiply(0.0, null));
 		System.out.println(solveTwoNumMultiply(null, 0.0));
 		System.out.println(solveTwoNumMultiply(0.0, 0.0));

@@ -1,5 +1,6 @@
 package com.navi.mini.program.service.bisdata.impl;
 
+import com.navi.mini.program.common.constant.Constant;
 import com.navi.mini.program.common.service.impl.BaseServiceImpl;
 import com.navi.mini.program.common.utils.EmptyUtils;
 import com.navi.mini.program.dao.bisdata.BisDataDao;
@@ -88,5 +89,33 @@ public class BisDataServiceImpl extends BaseServiceImpl<BisData, BisDataDao> imp
             }
         }
         return selectModels;
+    }
+
+    /**
+     * 查询箱数
+     * @return
+     * @throws Exception
+     * @Author: jiangzhihong
+     * @CreateDate: 2020/5/24 16:24
+     */
+    @Override
+    public Integer queryBox() throws Exception {
+        List<BisData> boxList = this.queryByCateAndExt(Constant.RetBoxEmpNo.PALLET, Constant.RetBoxEmpNo.BOXNUM);
+        EmptyUtils.checkListEmptyAndSize(boxList, "托数");
+        return Integer.valueOf(boxList.get(0).getDataDesc());
+    }
+
+    /**
+     * 查询托数
+     * @return
+     * @throws Exception
+     * @Author: jiangzhihong
+     * @CreateDate: 2020/5/24 16:24
+     */
+    @Override
+    public Integer queryPallet() throws Exception {
+        List<BisData> palletList = this.queryByCateAndExt(Constant.RetBoxEmpNo.PALLET, Constant.RetBoxEmpNo.PALLETNUM);
+        EmptyUtils.checkListEmptyAndSize(palletList, "托数");
+        return Integer.valueOf(palletList.get(0).getDataDesc());
     }
 }
