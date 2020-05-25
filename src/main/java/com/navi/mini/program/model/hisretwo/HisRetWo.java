@@ -31,11 +31,17 @@ public class HisRetWo extends BaseModel {
      *  等级
      */
 	private String grade;
+	/**
+	 * 等级名称
+	 */
 	private String gradeName;
 	/**
      *  果农
      */
 	private String orchardist;
+	/**
+	 * 果农名称
+	 */
 	private String orchardistName;
 	/**
      *  质检员
@@ -45,8 +51,13 @@ public class HisRetWo extends BaseModel {
      *  申请变更的码头信息
      */
 	private String inWharfChanger;
-
+	/**
+	 *  申请变更的码头名称
+	 */
 	private String inWharfChangerName;
+	/**
+	 * 码头名称
+	 */
 	private String inWharfName;
 	/**
      *  变更"小程序:X| WMS:W
@@ -65,6 +76,10 @@ public class HisRetWo extends BaseModel {
      */
 	private String status;
 	/**
+	 * 状态名称
+	 */
+	private String statusName;
+	/**
      *  送果码头信息
      */
 	private String inWharf;
@@ -72,6 +87,10 @@ public class HisRetWo extends BaseModel {
      *  evtUsr
      */
 	private String evtUsr;
+	/**
+     *  evtUsrName
+     */
+	private String evtUsrName;
 	/**
      *  evtTimestamp
      */
@@ -86,8 +105,26 @@ public class HisRetWo extends BaseModel {
 	private String stopBoxTimestamp;
 
 	/**
-	 * 添加的方式：0：正常添加，1：码头更换添加，2：质检添加
+	 * 添加的方式：0：正常添加，1：码头更换添加，2：码头更换审批添加，3：质检添加
 	 */
 	private Integer addType;
+
+	/**
+	 * 更换码头申请时间
+	 */
+	private String inWharfChangerTimestamp;
+
+	/**
+	 * 审批意见
+	 */
+	private String approvalComments;
+	/**
+	 * 审批结果
+	 */
+	private String approvalResults;
+	/**
+	 * 审批状态
+	 */
+	private String approvalStatus;
 
 }

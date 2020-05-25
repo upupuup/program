@@ -16,4 +16,34 @@ public interface HisRetWoService extends BaseService<HisRetWo> {
 	 * @CreateDate: 2020/5/23 8:30
 	 */
 	PageInfo<HisRetWo> queryByInspectionPerson(HisRetWo hisRetWo) throws Exception;
+
+	/**
+	 * 更换码头记录（送果人）
+	 * @param hisRetWo
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/25 10:27
+	 */
+	PageInfo<HisRetWo> queryChangeWharf(HisRetWo hisRetWo) throws Exception;
+
+	/**
+	 * 更换码头记录（码头巡视员）
+	 * @param hisRetWo
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/25 13:35
+	 */
+	PageInfo<HisRetWo> queryChangeWharfHis(HisRetWo hisRetWo) throws Exception;
+
+	/**
+	 * 使用主键查询
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/25 13:45
+	 */
+	HisRetWo queryById(String id) throws Exception;
 }

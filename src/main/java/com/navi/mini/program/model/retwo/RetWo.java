@@ -3,6 +3,8 @@ package com.navi.mini.program.model.retwo;
 import com.navi.mini.program.common.model.BaseModel;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class RetWo extends BaseModel {
 	private static final long serialVersionUID = 1L;
@@ -60,6 +62,10 @@ public class RetWo extends BaseModel {
      *  状态
      */
 	private String status;
+	/**
+	 * 存放状态list
+	 */
+	private List<String> statusList;
 	/**
      *  状态名称
      */

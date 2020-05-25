@@ -62,4 +62,14 @@ public class RetBoxEmpNo extends BaseModel {
 	 */
 	private Integer boxNum;
 
+	/**
+	 * 申请时间
+	 */
+	private String applyTime;
+
+	/**
+	 * 审批时间
+	 */
+	private String approveTime;
+
 }

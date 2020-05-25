@@ -59,25 +59,63 @@ public class HisRetWoController extends BaseController {
 
 		return returnBaseResponse();
 	}
+
+	/**
+	 * 更换码头记录（送果人）
+	 * @param hisRetWo
+	 * @return
+	 */
+	@PostMapping(value="/queryChangeWharf", consumes="application/json", produces="application/json")
+	public BaseResponse queryChangeWharf(@RequestBody HisRetWo hisRetWo) {
+		try {
+			clear();
+			PageInfo<HisRetWo> pageInfo = hisRetWoService.queryChangeWharf(hisRetWo);
+			data.put(ResultInfo.PAGE, pageInfo);
+		} catch (Exception e) {
+			logger.info("/hisRetWo/queryChangeWharf 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
+
+	/**
+	 * 更换码头记录（码头巡视员）
+	 * @param hisRetWo
+	 * @return
+	 */
+	@PostMapping(value="/queryChangeWharfHis", consumes="application/json", produces="application/json")
+	public BaseResponse queryChangeWharfHis(@RequestBody HisRetWo hisRetWo) {
+		try {
+			clear();
+			PageInfo<HisRetWo> pageInfo = hisRetWoService.queryChangeWharfHis(hisRetWo);
+			data.put(ResultInfo.PAGE, pageInfo);
+		} catch (Exception e) {
+			logger.info("/hisRetWo/queryChangeWharf 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
 	
 	/**
 	 * 方法描述： 根据id获取数据对象
-	 * @param id
+	 * @param hisRetWo
 	 * @return
 	 */
-//	@GetMapping(value="/queryById", produces="application/json")
-//	public BaseResponse queryById(Long id) {
-//		try {
-//			clear();
-//			HisRetWo obj = hisRetWoService.queryById(id);
-//			data.put(ResultInfo.DATA, obj);
-//		} catch (Exception e) {
-//			logger.info("/hisRetWo/queryById 异常：" + e.toString());
-//			error(Constant.ERRORMSG + e.getMessage());
-//		}
-//
-//		return returnBaseResponse();
-//	}
+	@PostMapping(value="/queryById", consumes="application/json", produces="application/json")
+	public BaseResponse queryById(@RequestBody HisRetWo hisRetWo) {
+		try {
+			clear();
+			HisRetWo obj = hisRetWoService.queryById(hisRetWo.getId());
+			data.put(ResultInfo.DATA, obj);
+		} catch (Exception e) {
+			logger.info("/hisRetWo/queryById 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
 	
 	/**
 	 * 方法描述： 保存一条记录

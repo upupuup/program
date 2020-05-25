@@ -75,6 +75,8 @@ public class BisUserServiceImpl extends BaseServiceImpl<BisUser, BisUserDao> imp
         String url = Constant.URL.replace("#{0}", Constant.APP_ID).replace("#{1}", Constant.SECRET).replace("#{2}", code);
         // 调用微信接口
         JSONObject jsonObject = HttpUtils.doGet(url);
+        System.out.println(url);
+        System.out.println(jsonObject);
         return jsonObject;
     }
 

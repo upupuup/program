@@ -61,6 +61,25 @@ public class RetBoxEmpNoController extends BaseController {
 	}
 
 	/**
+	 * 领框审批记录（码头巡检员）
+	 * @param retBoxEmpNo
+	 * @return
+	 */
+	@PostMapping(value="/queryBoxRecordHisList", consumes="application/json", produces="application/json")
+	public BaseResponse queryBoxRecordHisList(@RequestBody RetBoxEmpNo retBoxEmpNo) {
+		try {
+			clear();
+			PageInfo<RetBoxEmpNo> pageInfo = retBoxEmpNoService.queryBoxRecordHisList(retBoxEmpNo);
+			data.put(ResultInfo.PAGE, pageInfo);
+		} catch (Exception e) {
+			logger.info("/retBoxEmpNo/queryBoxRecordHisList 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
+
+	/**
 	 * 领框审批记录
 	 * @param retBoxEmpNo
 	 * @return

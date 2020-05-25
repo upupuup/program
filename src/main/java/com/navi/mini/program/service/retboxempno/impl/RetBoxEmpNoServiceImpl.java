@@ -53,7 +53,9 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
             retBoxEmpNo.setReqUserId(SessionUtils.getCurrentUserId());
             retBoxEmpNo.setApprovalStatus(Constant.Approve.APPROVE_WAIT_STATUS);
             retBoxEmpNo.setEvtUsr(SessionUtils.getCurrentUserId());
-            retBoxEmpNo.setEvtTimestamp(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
+            String time = DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS);
+            retBoxEmpNo.setEvtTimestamp(time);
+            retBoxEmpNo.setApplyTime(time);
             this.insert(retBoxEmpNo);
         }else{
             this.update(retBoxEmpNo);
@@ -101,7 +103,6 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
 
     /**
      * 领框审批记录
-     *
      * @param retBoxEmpNo
      * @return
      * @throws Exception
@@ -110,7 +111,24 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
      */
     @Override
     public PageInfo<RetBoxEmpNo> queryBoxApproveList(RetBoxEmpNo retBoxEmpNo) throws Exception {
+        retBoxEmpNo.setApprovalStatus(Constant.Approve.APPROVE_END_STATUS);
+        retBoxEmpNo.setEvtUsr(SessionUtils.getCurrentUserId());
+        PageInfo<RetBoxEmpNo> retBoxEmpNoPageInfo = this.queryList(retBoxEmpNo);
+        return retBoxEmpNoPageInfo;
+    }
+
+    /**
+     * 领框审批记录（码头巡检员）
+     * @param retBoxEmpNo
+     * @return
+     * @throws Exception
+     * @Author: jiangzhihong
+     * @CreateDate: 2020/5/23 0:26
+     */
+    @Override
+    public PageInfo<RetBoxEmpNo> queryBoxRecordHisList(RetBoxEmpNo retBoxEmpNo) throws Exception {
         retBoxEmpNo.setApprovalStatus(Constant.Approve.APPROVE_WAIT_STATUS);
+        retBoxEmpNo.setEvtUsr(SessionUtils.getCurrentUserId());
         PageInfo<RetBoxEmpNo> retBoxEmpNoPageInfo = this.queryList(retBoxEmpNo);
         return retBoxEmpNoPageInfo;
     }
@@ -216,10 +234,12 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
         EmptyUtils.isEmpty("使用主键查询的对象", empNo);
 
         // 设置值
+        String time = DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS);
         retBoxEmpNo.setApprovalStatus(Constant.Approve.APPROVE_END_STATUS);
-        retBoxEmpNo.setEvtTimestamp(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
+        retBoxEmpNo.setEvtTimestamp(time);
         retBoxEmpNo.setEvtUsr(SessionUtils.getCurrentUserId());
         retBoxEmpNo.setConUserId(SessionUtils.getCurrentUserId());
+        retBoxEmpNo.setApplyTime(time);
 
         // 更新
         this.saveRetBoxEmpNo(retBoxEmpNo);

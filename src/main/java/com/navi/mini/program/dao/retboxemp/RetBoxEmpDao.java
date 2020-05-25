@@ -12,10 +12,11 @@ public interface RetBoxEmpDao extends BaseDao<RetBoxEmp> {
 	/**
 	 * 使用申请人主键查询空箱子
 	 * @param reqUserId 申请人主键
+	 * @param validFlg 是否归还
 	 * @return
 	 * @throws Exception
 	 * @Author: jiangzhihong
 	 * @CreateDate: 2020/5/18 21:22
 	 */
-	List<RetBoxEmp> queryRetBoxEmpByUserId(String reqUserId) throws Exception;
+	List<RetBoxEmp> queryRetBoxEmpByUserId(String reqUserId, String validFlg) throws Exception;
 }

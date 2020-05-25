@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,13 +118,25 @@ public class RetWoServiceImpl extends BaseServiceImpl<RetWo, RetWoDao> implement
 		// 查询料单信息
 		PageInfo<RetWo> retWoPageInfo = super.queryList(retWo);
 		List<RetWo> list = retWoPageInfo.getList();
+		this.solveAllInfo(list);
+		return retWoPageInfo;
+	}
 
+	/**
+	 * 设置各种信息
+	 * @param list 查询出的结果
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/25 12:51
+	 */
+	private void solveAllInfo(List<RetWo> list) throws Exception {
 		// 存放码头信息
 		Map<String, String> wharfMap = new HashMap<>(64);
 		Map<String, String> userMap = new HashMap<>(64);
 		Map<String, String> orchardistMap = new HashMap<>(64);
 		Map<String, String> gradeMap = new HashMap<>(64);
 		Map<String, String> statusMap = new HashMap<>(64);
+
 		// 如果不为空，那么设置送果人信息，码头信息
 		if (!CollectionUtils.isEmpty(list)) {
 			// 遍历所有的数据
@@ -135,7 +148,6 @@ public class RetWoServiceImpl extends BaseServiceImpl<RetWo, RetWoDao> implement
 				this.statusMap(ret, statusMap);
 			}
 		}
-		return retWoPageInfo;
 	}
 
 	/**
@@ -163,7 +175,26 @@ public class RetWoServiceImpl extends BaseServiceImpl<RetWo, RetWoDao> implement
 	@Override
 	public PageInfo<RetWo> querySendFruitList(RetWo retWo) throws Exception {
 		retWo.setSendUsrId(SessionUtils.getCurrentUserId());
-		return this.queryList(retWo);
+		// 查询待结算状态
+		List<BisData> completeList = bisDataService.queryByCateAndExt(Constant.RetWork.STATUS, Constant.RetWork.COMP);
+		EmptyUtils.checkListEmptyAndSize(completeList, "待结算状态");
+		// 查询已结算状态
+		List<BisData> closeList = bisDataService.queryByCateAndExt(Constant.RetWork.STATUS, Constant.RetWork.CLOSE);
+		EmptyUtils.checkListEmptyAndSize(closeList, "已结算状态");
+
+		// 添加到list中
+		List<String> statusList = new ArrayList<>();
+		statusList.add(completeList.get(0).getDataSeqId());
+		statusList.add(closeList.get(0).getDataSeqId());
+		retWo.setStatusList(statusList);
+		retWo.solvePageIndexAndPageSize(retWo.getPageIndex(), retWo.getPageSize());
+
+		// 分页查询
+		PageHelper.startPage(retWo.getPageIndex(), retWo.getPageSize());
+		List<RetWo> retWoList = this.dao.querySendFruitList(retWo);
+		// 处理信息
+		this.solveAllInfo(retWoList);
+		return new PageInfo<RetWo>(retWoList);
 	}
 
 	/**
@@ -436,7 +467,7 @@ public class RetWoServiceImpl extends BaseServiceImpl<RetWo, RetWoDao> implement
 		EmptyUtils.isEmpty("更换码头信息", retWo.getInWharfChanger());
 		// 查询料单信息
 		RetWo queryRetWo = this.queryById(id);
-		queryRetWo.setApprovalStatus(Constant.Approve.APPROVE_WAIT_STATUS);
+		queryRetWo.setApprovalStatus(Constant.Approve.APPROVE_END_STATUS);
 		queryRetWo.setApprovalComments(retWo.getApprovalComments());
 		queryRetWo.setApprovalResults(retWo.getApprovalResults());
 		queryRetWo.setInWharf(retWo.getInWharf());
@@ -471,6 +502,7 @@ public class RetWoServiceImpl extends BaseServiceImpl<RetWo, RetWoDao> implement
 		retWo.setApprovalStatus(Constant.Approve.APPROVE_WAIT_STATUS);
 		retWo.setEvtTimestamp(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
 		retWo.setEvtUsr(SessionUtils.getCurrentUserId());
+		retWo.setInWharfChangerTimestamp(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
 
 		// 查询料单信息
 		RetWo queryRetWo = this.queryById(id);

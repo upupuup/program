@@ -45,4 +45,12 @@ public interface RetBoxEmpNoService extends BaseService<RetBoxEmpNo> {
 	 * @CreateDate: 2020/5/23 0:26
 	 */
 	PageInfo<RetBoxEmpNo> queryBoxApproveList(RetBoxEmpNo retBoxEmpNo) throws Exception;
+
+	/**
+	 * 领框审批记录（码头巡检员）
+	 * @param retBoxEmpNo
+	 * @return
+	 * @throws Exception
+	 */
+	PageInfo<RetBoxEmpNo> queryBoxRecordHisList(RetBoxEmpNo retBoxEmpNo) throws Exception;
 }

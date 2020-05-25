@@ -409,4 +409,24 @@
 		AND
 			APPROVAL_STATUS = #{1}
 	</select>
+
+	<!--  -->
+	<select id="querySendFruitList" resultMap="retWo" parameterType="retWo">
+		SELECT
+			<include refid="Table_Columns" />
+		FROM
+			<include refid="Table_Name" />
+		WHERE
+			SEND_USR_ID = #{sendUsrId}
+		<if test="woNo != null and woNo != ''">
+			AND
+				WO_NO LIKE CONCAT("%", #{woNo}, "%")
+		</if>
+		AND
+			STATUS IN
+			<foreach collection="statusList" item="item" open="(" close=")" separator=",">
+				#{item}
+			</foreach>
+
+	</select>
 </mapper>

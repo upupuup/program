@@ -3,6 +3,7 @@ package com.navi.mini.program.service.hisretwo.impl;
 import com.github.pagehelper.PageInfo;
 import com.navi.mini.program.common.constant.Constant;
 import com.navi.mini.program.common.service.impl.BaseServiceImpl;
+import com.navi.mini.program.common.utils.EmptyUtils;
 import com.navi.mini.program.common.utils.SessionUtils;
 import com.navi.mini.program.common.utils.UUIDUtils;
 import com.navi.mini.program.dao.hisretwo.HisRetWoDao;
@@ -68,11 +69,41 @@ public class HisRetWoServiceImpl extends BaseServiceImpl<HisRetWo, HisRetWoDao> 
             for (HisRetWo ret : list) {
                 this.solveSendUser(ret, userMap);
                 this.solveWharf(ret, wharfMap, Constant.RetWork.CURRENT_WHARF);
+                this.solveWharf(ret, wharfMap, Constant.RetWork.CHANGE_WHARF);
                 this.solveOrchardist(ret, orchardistMap);
                 this.solveGrade(ret, gradeMap);
+                this.solveStatus(ret, statusMap);
             }
         }
         return hisRetWoPageInfo;
+    }
+
+    /**
+     * 处理状态信息
+     * @param
+     * @param statusMap
+     * @throws Exception
+     * @Author: jiangzhihong
+     * @CreateDate: 2020/5/21 14:27
+     */
+    private void solveStatus(HisRetWo ret, Map<String, String> statusMap) throws Exception {
+        // 获取用户主键
+        String status = ret.getStatus();
+        // 判断是否为空
+        if (!StringUtils.isBlank(status)) {
+            // 判断用户信息是否已经存在map里
+            if (statusMap.containsKey(status)) {
+                ret.setStatusName(statusMap.get(status));
+            } else {
+                // 查询状态信息
+                BisData queryStatus = bisDataService.queryByDataSeqId(status);
+                if (queryStatus != null) {
+                    ret.setStatusName(queryStatus.getDataDesc());
+                    statusMap.put(status, queryStatus.getDataDesc());
+                }
+            }
+
+        }
     }
 
     /**
@@ -216,5 +247,109 @@ public class HisRetWoServiceImpl extends BaseServiceImpl<HisRetWo, HisRetWoDao> 
         hisRetWo.setEvtUsr(SessionUtils.getCurrentUserId());
         hisRetWo.setAddType(Constant.RetWork.ADD_TYPE_INSPECTION);
         return this.queryList(hisRetWo);
+    }
+
+    /**
+     * 更换码头记录(送果人)
+     * @param hisRetWo
+     * @return
+     * @throws Exception
+     * @Author: jiangzhihong
+     * @CreateDate: 2020/5/25 10:27
+     */
+    @Override
+    public PageInfo<HisRetWo> queryChangeWharf(HisRetWo hisRetWo) throws Exception {
+        hisRetWo.setSendUsrId(SessionUtils.getCurrentUserId());
+        hisRetWo.setAddType(Constant.RetWork.ADD_TYPE_CHANGE_APPROVE);
+        hisRetWo.setApprovalStatus(Constant.Approve.APPROVE_END_STATUS);
+        return this.queryList(hisRetWo);
+    }
+
+    /**
+     * 更换码头记录（码头巡视员）
+     * @param hisRetWo
+     * @return
+     * @throws Exception
+     * @Author: jiangzhihong
+     * @CreateDate: 2020/5/25 13:35
+     */
+    @Override
+    public PageInfo<HisRetWo> queryChangeWharfHis(HisRetWo hisRetWo) throws Exception {
+        hisRetWo.setEvtUsr(SessionUtils.getCurrentUserId());
+        hisRetWo.setAddType(Constant.RetWork.ADD_TYPE_CHANGE_APPROVE);
+        hisRetWo.setApprovalStatus(Constant.Approve.APPROVE_END_STATUS);
+        return this.queryList(hisRetWo);
+    }
+
+    /**
+     * 使用主键查询
+     * @param id
+     * @return
+     * @throws Exception
+     * @Author: jiangzhihong
+     * @CreateDate: 2020/5/25 13:45
+     */
+    @Override
+    public HisRetWo queryById(String id) throws Exception {
+        EmptyUtils.isEmpty("主键", id);
+        HisRetWo hisRetWo = this.dao.queryById(id);
+        if (hisRetWo == null) {
+            return hisRetWo;
+        }
+
+        // 处理各种字段
+        this.solveManyInfo(hisRetWo);
+        return hisRetWo;
+    }
+
+    /**
+     * 处理各种字段
+     * @param retWo
+     * @Author: jiangzhihong
+     * @CreateDate: 2020/5/23 2:01
+     */
+    private void solveManyInfo(HisRetWo retWo) throws Exception {
+        if (retWo != null) {
+            // 查询送果人信息
+            BisUser bisUser = bisUserService.queryByUserId(retWo.getSendUsrId());
+            if (bisUser != null) {
+                retWo.setSendUserName(bisUser.getUsrName());
+            }
+
+            // 查询操作人信息
+            bisUser = bisUserService.queryByUserId(retWo.getSendUsrId());
+            if (bisUser != null) {
+                retWo.setEvtUsrName(bisUser.getUsrName());
+            }
+
+            // 查询码头信息
+            BisEqpt wharf = bisEqptService.queryByEqptId(retWo.getInWharf());
+            if (wharf != null) {
+                retWo.setInWharfName(wharf.getEqptName());
+            }
+
+            String inWharfChanger = retWo.getInWharfChanger();
+            if (!StringUtils.isBlank(inWharfChanger)) {
+                // 查询更换码头信息
+                wharf = bisEqptService.queryByEqptId(retWo.getInWharfChanger());
+                if (wharf != null) {
+                    retWo.setInWharfChangerName(wharf.getEqptName());
+                }
+            }
+
+            // 设置码头信息
+            BisData orchardist = bisDataService.queryByDataSeqId(retWo.getOrchardist());
+            if (orchardist != null) {
+                retWo.setOrchardistName(orchardist.getDataDesc());
+            }
+
+            // 等级信息
+            String grade = retWo.getGrade();
+            BisData bisData = bisDataService.queryByDataSeqId(grade);
+            if (bisData != null) {
+                retWo.setGradeName(bisData.getDataDesc());
+            }
+
+        }
     }
 }

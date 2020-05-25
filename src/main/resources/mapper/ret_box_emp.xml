@@ -199,6 +199,8 @@
 		FROM
 			<include refid="Table_Name" />
 		WHERE
-			REQ_USER_ID = #{reqUserId}
+			REQ_USER_ID = #{0}
+		AND
+			VALID_FLG = #{1}
 	</select>
 </mapper>

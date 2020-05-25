@@ -13,6 +13,8 @@
 		<result property="evtTimestamp" column="EVT_TIMESTAMP"/>
 		<result property="boxNum" column="BOX_NUM"/>
 		<result property="palletNum" column="PALLET_NUM"/>
+		<result property="approveTime" column="APPROVE_TIME"/>
+		<result property="applyTime" column="APPLY_TIME"/>
 	</resultMap>
 
 	<sql id="Table_Name">
@@ -30,7 +32,9 @@
         EVT_USR,
         EVT_TIMESTAMP,
         BOX_NUM,
-        PALLET_NUM
+        PALLET_NUM,
+        APPROVE_TIME,
+        APPLY_TIME
 	</sql>
 
 	<!-- insert -->
@@ -71,6 +75,12 @@
 			<if test="palletNum != null">
 				PALLET_NUM,
 			</if>
+			<if test="approveTime != null">
+				APPROVE_TIME,
+			</if>
+			<if test="applyTime != null">
+				APPLY_TIME,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="retBoxEmpNo != null">
@@ -106,6 +116,12 @@
 			<if test="palletNum != null">
 				#{palletNum},
 			</if>
+			<if test="approveTime != null">
+				#{approveTime},
+			</if>
+			<if test="applyTime != null">
+				#{applyTime},
+			</if>
 		</trim>
 	</insert>
 
@@ -125,6 +141,8 @@
 			EVT_TIMESTAMP,
 			BOX_NUM,
 			PALLET_NUM,
+			APPROVE_TIME,
+			APPLY_TIME
 		</trim>
 		VALUES
 		<foreach  collection="list" item="item"  index="index" separator=",">
@@ -140,6 +158,8 @@
 			#{item.evtTimestamp},
 			#{item.boxNum},
 			#{item.palletNum},
+			#{item.approveTime},
+			#{item.applyTime}
 			)
 		</foreach>
 	</insert>
@@ -180,12 +200,17 @@
 				<if test="palletNum != null">
 					PALLET_NUM = #{palletNum},
 				</if>
+				<if test="approveTime != null">
+					APPROVE_TIME = #{approveTime},
+				</if>
+				<if test="applyTime != null">
+					APPLY_TIME = #{applyTime},
+				</if>
 			</trim>
 		</set>
 		WHERE
 			RET_BOX_EMP_NO = #{retBoxEmpNo}
 	</update>
-
 
 	<!-- parameterType -->
 	<update id="physicsDeleteById" parameterType="Long">
@@ -207,6 +232,9 @@
 			</if>
 			<if test="reqUserId != null and reqUserId != ''">
 				AND REQ_USER_ID = #{reqUserId}
+			</if>
+			<if test="evtUsr != null and evtUsr != ''">
+				AND EVT_USR = #{evtUsr}
 			</if>
 			<if test="approvalStatus != null and approvalStatus != ''">
 				AND APPROVAL_STATUS = #{approvalStatus}

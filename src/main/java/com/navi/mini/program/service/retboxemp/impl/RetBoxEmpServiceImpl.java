@@ -1,6 +1,7 @@
 package com.navi.mini.program.service.retboxemp.impl;
 
 
+import com.navi.mini.program.common.constant.Constant;
 import com.navi.mini.program.common.service.impl.BaseServiceImpl;
 import com.navi.mini.program.common.utils.EmptyUtils;
 import com.navi.mini.program.dao.retboxemp.RetBoxEmpDao;
@@ -35,6 +36,6 @@ public class RetBoxEmpServiceImpl extends BaseServiceImpl<RetBoxEmp, RetBoxEmpDa
     @Override
     public List<RetBoxEmp> queryRetBoxEmpByUserId(String reqUserId) throws Exception {
         EmptyUtils.isEmpty("申请人主键", reqUserId);
-        return this.dao.queryRetBoxEmpByUserId(reqUserId);
+        return this.dao.queryRetBoxEmpByUserId(reqUserId, Constant.Flag.INVALID_FLAG);
     }
 }

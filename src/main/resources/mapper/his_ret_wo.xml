@@ -20,6 +20,10 @@
         <result property="startBoxTimestamp" column="START_BOX_TIMESTAMP"/>
         <result property="stopBoxTimestamp" column="STOP_BOX_TIMESTAMP"/>
         <result property="addType" column="ADD_TYPE"/>
+        <result property="inWharfChangerTimestamp" column="IN_WHARF_CHANGER_TIMESTAMP"/>
+        <result property="approvalStatus" column="APPROVAL_STATUS"/>
+        <result property="approvalResults" column="APPROVAL_RESULTS"/>
+        <result property="approvalComments" column="APPROVAL_COMMENTS"/>
     </resultMap>
 	
     <sql id="Table_Name">
@@ -44,7 +48,11 @@
         EVT_TIMESTAMP,
         START_BOX_TIMESTAMP,
         STOP_BOX_TIMESTAMP,
-        ADD_TYPE
+        ADD_TYPE,
+        IN_WHARF_CHANGER_TIMESTAMP,
+        APPROVAL_STATUS,
+        APPROVAL_RESULTS,
+        APPROVAL_COMMENTS
 	</sql>
 	
 	<!-- insert -->
@@ -106,6 +114,18 @@
 			<if test="addType != null">
 				ADD_TYPE,
             </if>
+			<if test="inWharfChangerTimestamp != null">
+				IN_WHARF_CHANGER_TIMESTAMP,
+            </if>
+			<if test="approvalStatus != null">
+				APPROVAL_STATUS,
+            </if>
+			<if test="approvalResults != null">
+				APPROVAL_RESULTS,
+            </if>
+			<if test="approvalComments != null">
+				APPROVAL_COMMENTS,
+            </if>
         </trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			#{id},
@@ -158,7 +178,19 @@
 				#{stopBoxTimestamp},
             </if>
 			<if test="addType != null">
-				#{addType}
+				#{addType},
+            </if>
+			<if test="inWharfChangerTimestamp != null">
+				#{inWharfChangerTimestamp},
+            </if>
+			<if test="approvalStatus != null">
+				#{approvalStatus},
+            </if>
+			<if test="approvalResults != null">
+				#{approvalResults},
+            </if>
+			<if test="approvalComments != null">
+				#{approvalComments}
             </if>
         </trim>
     </insert>
@@ -220,6 +252,18 @@
 				<if test="addType != null">
 					ADD_TYPE = #{addType},
 				</if>
+				<if test="inWharfChangerTimestamp != null">
+					IN_WHARF_CHANGER_TIMESTAMP = #{inWharfChangerTimestamp},
+				</if>
+				<if test="approvalStatus != null">
+					APPROVAL_STATUS = #{approvalStatus},
+				</if>
+				<if test="approvalResults != null">
+					APPROVAL_RESULTS = #{approvalResults},
+				</if>
+				<if test="approvalComments != null">
+					APPROVAL_COMMENTS = #{approvalComments}
+				</if>
             </trim>
         </set>
 		WHERE
@@ -234,9 +278,7 @@
 		WHERE
 			id = #{id}
 	</update>
-	
 
-	
 	<!-- queryList -->
 	<select id="queryList" resultMap="hisRetWo" parameterType="com.navi.mini.program.model.hisretwo.HisRetWo">
 		SELECT 
@@ -245,14 +287,19 @@
 			<include refid="Table_Name" />
 		<where>
 			<if test="addType != null and addType != ''">
-				ADD_TYPE = #{addType}
+				AND ADD_TYPE = #{addType}
 			</if>
 			<if test="qusrId != null and qusrId != ''">
 				AND Q_USR_ID = #{qusrId}
 			</if>
 			<if test="woNo != null and woNo != ''">
-				AND
-				WO_NO LIKE CONCAT("%", #{woNo}, "%")
+				AND WO_NO LIKE CONCAT("%", #{woNo}, "%")
+			</if>
+			<if test="evtUsr != null and evtUsr != ''">
+				AND EVT_USR = #{evtUsr}
+			</if>
+			<if test="approvalStatus != null and approvalStatus != ''">
+				AND APPROVAL_STATUS = #{approvalStatus}
 			</if>
 		</where>
 		ORDER BY
@@ -260,12 +307,12 @@
 	</select>
 	
 	<!-- queryById -->
-	<select id="queryById" resultMap="hisRetWo" parameterType="Long">
+	<select id="queryById" resultMap="hisRetWo" parameterType="String">
 		SELECT 
 			<include refid="Table_Columns" />
 		FROM 
 			<include refid="Table_Name" />
-		AND
+		WHERE
 			id = #{id}
 	</select>
 </mapper>

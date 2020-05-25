@@ -76,4 +76,14 @@ public interface RetWoDao extends BaseDao<RetWo> {
 	 * @CreateDate: 2020/5/24 13:14
 	 */
 	List<RetWo> queryByWoNoAndNotApprove(String woNo, String approvalStatus) throws Exception;
+
+	/**
+	 * 送果历史
+	 * @param retWo
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/25 12:40
+	 */
+	List<RetWo> querySendFruitList(RetWo retWo) throws Exception;
 }
