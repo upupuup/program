@@ -15,6 +15,7 @@
 		<result property="palletNum" column="PALLET_NUM"/>
 		<result property="approveTime" column="APPROVE_TIME"/>
 		<result property="applyTime" column="APPLY_TIME"/>
+		<result property="isGet" column="IS_GET"/>
 	</resultMap>
 
 	<sql id="Table_Name">
@@ -34,7 +35,8 @@
         BOX_NUM,
         PALLET_NUM,
         APPROVE_TIME,
-        APPLY_TIME
+        APPLY_TIME,
+        IS_GET
 	</sql>
 
 	<!-- insert -->
@@ -81,6 +83,9 @@
 			<if test="applyTime != null">
 				APPLY_TIME,
 			</if>
+			<if test="isGet != null">
+				IS_GET,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="retBoxEmpNo != null">
@@ -122,6 +127,9 @@
 			<if test="applyTime != null">
 				#{applyTime},
 			</if>
+			<if test="isGet != null">
+				#{isGet},
+			</if>
 		</trim>
 	</insert>
 
@@ -142,7 +150,8 @@
 			BOX_NUM,
 			PALLET_NUM,
 			APPROVE_TIME,
-			APPLY_TIME
+			APPLY_TIME,
+			IS_GET
 		</trim>
 		VALUES
 		<foreach  collection="list" item="item"  index="index" separator=",">
@@ -159,7 +168,8 @@
 			#{item.boxNum},
 			#{item.palletNum},
 			#{item.approveTime},
-			#{item.applyTime}
+			#{item.applyTime},
+			#{item.isGet}
 			)
 		</foreach>
 	</insert>
@@ -205,6 +215,9 @@
 				</if>
 				<if test="applyTime != null">
 					APPLY_TIME = #{applyTime},
+				</if>
+				<if test="isGet != null">
+					IS_GET = #{isGet},
 				</if>
 			</trim>
 		</set>
@@ -253,6 +266,18 @@
 			<include refid="Table_Name" />
 		WHERE
 			RET_BOX_EMP_NO = #{retBoxEmpNo}
+	</select>
+
+	<!-- queryHasRecordAndNotGet -->
+	<select id="queryHasRecordAndNotGet" resultMap="retBoxEmpNo" parameterType="String">
+		SELECT
+			<include refid="Table_Columns" />
+		FROM
+			<include refid="Table_Name" />
+		WHERE
+			REQ_USER_ID = #{0}
+		AND
+			IS_GET = #{1}
 	</select>
 
 </mapper>

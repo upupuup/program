@@ -72,4 +72,9 @@ public class RetBoxEmpNo extends BaseModel {
 	 */
 	private String approveTime;
 
+	/**
+	 * 是否领取，Y：是，N：不是
+	 */
+	private String isGet;
+
 }

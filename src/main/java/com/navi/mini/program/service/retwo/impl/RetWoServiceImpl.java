@@ -82,6 +82,7 @@ public class RetWoServiceImpl extends BaseServiceImpl<RetWo, RetWoDao> implement
 		retWo.setWoNo(UUIDUtils.generatePrimaryKey());
 		retWo.setCnt(0);
 		retWo.setWet(0.0);
+		retWo.setQusrId(SessionUtils.getCurrentUserId());
 		List<BisData> bisDataList = bisDataService.queryByCateAndExt(Constant.RetWork.STATUS, Constant.RetWork.WAIT);
 		EmptyUtils.checkListEmptyAndSize(bisDataList, "开始状态");
 		retWo.setStatus(bisDataList.get(0).getDataSeqId());

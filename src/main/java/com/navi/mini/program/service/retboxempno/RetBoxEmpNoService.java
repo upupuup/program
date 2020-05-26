@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.navi.mini.program.common.service.BaseService;
 import com.navi.mini.program.model.retboxempno.RetBoxEmpNo;
 
+import java.util.List;
+
 public interface RetBoxEmpNoService extends BaseService<RetBoxEmpNo> {
 	void saveRetBoxEmpNo(RetBoxEmpNo retBoxEmpNo) throws Exception;
 
@@ -53,4 +55,13 @@ public interface RetBoxEmpNoService extends BaseService<RetBoxEmpNo> {
 	 * @throws Exception
 	 */
 	PageInfo<RetBoxEmpNo> queryBoxRecordHisList(RetBoxEmpNo retBoxEmpNo) throws Exception;
+
+	/**
+	 * 查询是否有未领取的空箱
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/26 11:05
+	 */
+	List<RetBoxEmpNo> queryHasRecordAndNotGet() throws Exception;
 }

@@ -32,6 +32,11 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
     public void saveRetBoxEmpNo(RetBoxEmpNo retBoxEmpNo) throws Exception{
         String retBoxEmp = retBoxEmpNo.getRetBoxEmpNo();
         if(StringUtils.isBlank(retBoxEmp)){
+            // 查询是否有未领框的数据
+            List<RetBoxEmpNo> retBoxEmpNoList = this.queryHasRecordAndNotGet();
+            if (!CollectionUtils.isEmpty(retBoxEmpNoList)) {
+                throw new Exception("您有未确认领框的单据");
+            }
             // 校验字段
             Integer palletNum = retBoxEmpNo.getPalletNum();
             EmptyUtils.isEmpty("托数", palletNum);
@@ -56,8 +61,12 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
             String time = DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS);
             retBoxEmpNo.setEvtTimestamp(time);
             retBoxEmpNo.setApplyTime(time);
+            retBoxEmpNo.setIsGet(Constant.Flag.INVALID_FLAG);
             this.insert(retBoxEmpNo);
         }else{
+            retBoxEmpNo.setIsGet(Constant.Flag.VALID_FLAG);
+            retBoxEmpNo.setEvtUsr(SessionUtils.getCurrentUserId());
+            retBoxEmpNo.setEvtTimestamp(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
             this.update(retBoxEmpNo);
         }
 
@@ -243,5 +252,17 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
 
         // 更新
         this.saveRetBoxEmpNo(retBoxEmpNo);
+    }
+
+    /**
+     * 查询是否有未领取的空箱
+     * @return
+     * @throws Exception
+     * @Author: jiangzhihong
+     * @CreateDate: 2020/5/26 11:05
+     */
+    @Override
+    public List<RetBoxEmpNo> queryHasRecordAndNotGet() throws Exception {
+        return this.dao.queryHasRecordAndNotGet(SessionUtils.getCurrentUserId(), Constant.Flag.INVALID_FLAG);
     }
 }

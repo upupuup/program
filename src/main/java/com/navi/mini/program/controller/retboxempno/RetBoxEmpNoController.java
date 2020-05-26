@@ -10,7 +10,13 @@ import com.navi.mini.program.service.retboxempno.RetBoxEmpNoService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
 @Scope("prototype")
 @RestController
 @RequestMapping("/retBoxEmpNo")
@@ -147,6 +153,24 @@ public class RetBoxEmpNoController extends BaseController {
 			retBoxEmpNoService.getBoxApprove(retBoxEmpNo);
 		} catch (Exception e) {
 			logger.info("/retBoxEmpNo/getBoxApprove 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
+
+	/**
+	 * 查询这个人是否有未领取的空箱
+	 * @return
+	 */
+	@PostMapping(value="/queryHasRecordAndNotGet", consumes="application/json", produces="application/json")
+	public BaseResponse queryHasRecordAndNotGet() {
+		try {
+			clear();
+			List<RetBoxEmpNo> obj = retBoxEmpNoService.queryHasRecordAndNotGet();
+			data.put(ResultInfo.DATALIST, obj);
+		} catch (Exception e) {
+			logger.info("/retBoxEmpNo/queryByRetBoxEmpNo 异常：" + e.toString());
 			error(Constant.ERRORMSG + e.getMessage());
 		}
 
