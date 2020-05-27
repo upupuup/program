@@ -9,8 +9,10 @@ alter table his_ret_wo add ADD_TYPE int(1) not null comment "添加的类型：0
 
 alter table ret_box_emp_no add BOX_NUM int(5) not null comment "箱数";
 alter table ret_box_emp_no add PALLET_NUM int(5) not null comment "托数";
-alter table ret_box_emp_no add APPLY_TIME timestamp()  null comment "申请时间";
-alter table ret_box_emp_no add APPROVE_TIME timestamp() null comment "审核时间";
+alter table ret_box_emp_no add APPLY_TIME timestamp(0)  null comment "申请时间";
+alter table ret_box_emp_no add APPROVE_TIME timestamp(0) null comment "审核时间";
 
-
+-- 5026之后
 alter table ret_box_emp_no add IS_GET char(1) not null comment "是否领取，Y：是，N：不是";
+
+alter table ret_current_no add TODAY_DATE DATE(0) null comment "日期";

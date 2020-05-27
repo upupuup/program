@@ -142,6 +142,24 @@ public class RetBoxEmpNoController extends BaseController {
 	}
 
 	/**
+	 * 方法描述： 确认领框
+	 * @param retBoxEmpNo
+	 * @return
+	 */
+	@PostMapping(value="/getBoxConfig", consumes="application/json", produces="application/json")
+	public BaseResponse getBoxConfig(@RequestBody RetBoxEmpNo retBoxEmpNo) {
+		try {
+			clear();
+			retBoxEmpNoService.getBoxConfig(retBoxEmpNo);
+		} catch (Exception e) {
+			logger.info("/retBoxEmpNo/getBoxConfig 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
+
+	/**
 	 * 审批框
 	 * @param retBoxEmpNo
 	 * @return

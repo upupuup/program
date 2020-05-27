@@ -151,8 +151,8 @@
 		ORDER BY 
 			create_time DESC
 	</select>
-	
-	<!-- queryById -->
+
+	<!-- queryByEqptId -->
 	<select id="queryByEqptId" resultMap="bisEqpt" parameterType="com.navi.mini.program.model.biseqpt.BisEqpt">
 		SELECT 
 			<include refid="Table_Columns" />
@@ -162,5 +162,15 @@
 			eqpt_id = #{0}
 		AND
 			enable = #{1}
+	</select>
+
+	<!-- queryAllList -->
+	<select id="queryAllList" resultMap="bisEqpt" parameterType="com.navi.mini.program.model.biseqpt.BisEqpt">
+		SELECT
+			<include refid="Table_Columns" />
+		FROM
+			<include refid="Table_Name" />
+		WHERE
+			enable = #{0}
 	</select>
 </mapper>

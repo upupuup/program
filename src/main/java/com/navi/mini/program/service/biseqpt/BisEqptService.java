@@ -29,4 +29,13 @@ public interface BisEqptService extends BaseService<BisEqpt> {
 	 * @CreateDate: 2020/5/22 14:57
 	 */
 	List<SelectModel> queryAllDropList(BisEqpt bisEqpt) throws Exception;
+
+	/**
+	 * 查询所有的码头
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/27 15:48
+	 */
+	List<BisEqpt> queryAllList() throws Exception;
 }

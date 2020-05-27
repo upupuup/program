@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,15 +65,42 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
             retBoxEmpNo.setIsGet(Constant.Flag.INVALID_FLAG);
             this.insert(retBoxEmpNo);
         }else{
-            retBoxEmpNo.setIsGet(Constant.Flag.VALID_FLAG);
-            retBoxEmpNo.setEvtUsr(SessionUtils.getCurrentUserId());
-            retBoxEmpNo.setEvtTimestamp(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
             this.update(retBoxEmpNo);
         }
 
     }
 
+    /**
+     * 确认领框
+     * @param retBoxEmpNo
+     * @throws Exception
+     * @Author: jiangzhihong
+     * @CreateDate: 2020/5/27 10:09
+     */
+    @Override
+    public void getBoxConfig(RetBoxEmpNo retBoxEmpNo) throws Exception {
+        String no = retBoxEmpNo.getRetBoxEmpNo();
+        EmptyUtils.isEmpty("主键", no);
+        // 使用主键查询领框
+        RetBoxEmpNo empNo = this.dao.queryByRetBoxEmpNo(no);
+        if (empNo == null) {
+            throw new Exception("没有该申请信息");
+        }
 
+        // 是否审核
+        if (!Constant.Approve.APPROVE_END_STATUS.equals(empNo.getApprovalStatus())) {
+            throw new Exception("该申请还未审核");
+        }
+
+        // 审核是否通过
+        if (!Constant.Flag.VALID_FLAG.equals(empNo.getApprovalResults())) {
+            throw new Exception("审核未通过");
+        }
+
+        retBoxEmpNo.setIsGet(Constant.Flag.VALID_FLAG);
+        retBoxEmpNo.setEvtUsr(SessionUtils.getCurrentUserId());
+        retBoxEmpNo.setEvtTimestamp(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
+    }
 
     /**
      * 分页查询
@@ -263,6 +291,12 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
      */
     @Override
     public List<RetBoxEmpNo> queryHasRecordAndNotGet() throws Exception {
-        return this.dao.queryHasRecordAndNotGet(SessionUtils.getCurrentUserId(), Constant.Flag.INVALID_FLAG);
+        List<RetBoxEmpNo> retBoxEmpNoList = this.dao.queryHasRecordAndNotGet(SessionUtils.getCurrentUserId(), Constant.Flag.INVALID_FLAG);
+        // 为空返回一个空的
+        if (CollectionUtils.isEmpty(retBoxEmpNoList)) {
+            return Collections.emptyList();
+        }
+
+        return retBoxEmpNoList;
     }
 }

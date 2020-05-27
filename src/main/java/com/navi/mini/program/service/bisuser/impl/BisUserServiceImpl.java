@@ -6,7 +6,9 @@ import com.navi.mini.program.common.service.impl.BaseServiceImpl;
 import com.navi.mini.program.common.utils.*;
 import com.navi.mini.program.dao.bisuser.BisUserDao;
 import com.navi.mini.program.model.bisuser.BisUser;
+import com.navi.mini.program.model.wechat.Wechat;
 import com.navi.mini.program.service.bisuser.BisUserService;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -141,5 +143,23 @@ public class BisUserServiceImpl extends BaseServiceImpl<BisUser, BisUserDao> imp
     public BisUser queryByUserId(String id) throws Exception {
         EmptyUtils.isEmpty("用户主键", id);
         return this.dao.queryByUserId(id, Constant.Flag.VALID_FLAG);
+    }
+
+    /**
+     * 处理微信的手机号
+     * @param wechat
+     * @return
+     * @throws Exception
+     * @Author: jiangzhihong
+     * @CreateDate: 2020/5/27 18:41
+     */
+    @Override
+    public String solvePhone(Wechat wechat) throws Exception {
+        byte[] encrypData = Base64.decodeBase64(wechat.getEncryptedData());
+        byte[] ivData = Base64.decodeBase64(wechat.getIv());
+        byte[] sessionKey = Base64.decodeBase64(wechat.getSessionKey());
+        String decrypt = AESDecodeUtils.decrypt(sessionKey, ivData, encrypData);
+        JSONObject jsonObject = JSONObject.parseObject(decrypt);
+        return String.valueOf(jsonObject.get("phoneNumber"));
     }
 }

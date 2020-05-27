@@ -8,6 +8,7 @@ import com.navi.mini.program.common.controller.BaseController;
 import com.navi.mini.program.common.response.BaseResponse;
 import com.navi.mini.program.common.utils.SessionUtils;
 import com.navi.mini.program.model.bisuser.BisUser;
+import com.navi.mini.program.model.wechat.Wechat;
 import com.navi.mini.program.service.bisuser.BisUserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +81,25 @@ public class BisUserController extends BaseController {
 			data.put(Constant.ResultInfo.DATALIST, jsonObject);
 		} catch (Exception e) {
 			logger.info("/bisUser/queryByToken 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return returnBaseResponse();
+	}
+
+	/**
+	 *
+	 * @param code
+	 * @return
+	 */
+	@RequestMapping("/solvePhone")
+	public BaseResponse solvePhone(@RequestBody Wechat wechat) {
+		try {
+			String phone = bisUserService.solvePhone(wechat);
+			data.put(ResultInfo.DATA, phone);
+		} catch (Exception e) {
+			logger.info("/bisUser/solvePhone 异常：" + e.toString());
 			error(Constant.ERRORMSG + e.getMessage());
 			e.printStackTrace();
 		}

@@ -64,4 +64,13 @@ public interface RetBoxEmpNoService extends BaseService<RetBoxEmpNo> {
 	 * @CreateDate: 2020/5/26 11:05
 	 */
 	List<RetBoxEmpNo> queryHasRecordAndNotGet() throws Exception;
+
+	/**
+	 * 确认领框
+	 * @param retBoxEmpNo
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/27 10:09
+	 */
+	void getBoxConfig(RetBoxEmpNo retBoxEmpNo) throws Exception;
 }

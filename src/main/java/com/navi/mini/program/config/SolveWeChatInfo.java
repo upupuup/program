@@ -18,17 +18,17 @@ public class SolveWeChatInfo implements CommandLineRunner {
 //	@Autowired
 //	private RedisUtils redisUtils;
 
-	@Value("${wechat.we-chat-access-token}")
+	@Value("${Wechat.we-chat-access-token}")
 	private String weChatAccessToken;
-	@Value("${wechat.ticket-token}")
+	@Value("${Wechat.ticket-token}")
 	private String ticketToken;
-	@Value("${wechat.app-id}")
+	@Value("${Wechat.app-id}")
 	private String appId;
-	@Value("${wechat.app-secret}")
+	@Value("${Wechat.app-secret}")
 	private String appSecret;
-//	@Value("${wechat.domain-name}")
+//	@Value("${Wechat.domain-name}")
 //	private String domainName;
-//	@Value("${wechat.send-url}")
+//	@Value("${Wechat.send-url}")
 //	private String sendUrl;
 
 	@PostConstruct

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.navi.mini.program.dao.retlineup.RetLineUpDao">
+    <resultMap id="retLineUp" type="com.navi.mini.program.model.retlineup.RetLineUp">
+		<id property="qDate" column="Q_DATE"/>
+		<id property="qNo" column="Q_NO"/>
+        <result property="usrId" column="USR_ID"/>
+        <result property="eqptNo" column="EQPT_NO"/>
+        <result property="qStatus" column="Q_STATUS"/>
+        <result property="waitTime" column="WAIT_TIME"/>
+        <result property="evtUsa" column="EVT_USA"/>
+        <result property="evtDatatime" column="EVT_DATATIME"/>
+    </resultMap>
+	
+    <sql id="Table_Name">
+        ret_line_up
+    </sql>
+	
+	<sql id="Table_Columns">
+        Q_DATE,
+        Q_NO,
+        USR_ID,
+        EQPT_NO,
+        Q_STATUS,
+        WAIT_TIME,
+        EVT_USA,
+        EVT_DATATIME		
+	</sql>
+	
+	<!-- insert -->
+	<insert id="insert" parameterType="com.navi.mini.program.model.retlineup.RetLineUp">
+        INSERT INTO 
+        <include refid="Table_Name" />
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="qdate != null">
+				Q_DATE,
+            </if>
+			<if test="qno != null">
+				Q_NO,
+            </if>
+			<if test="usrId != null">
+				USR_ID,
+            </if>
+			<if test="eqptNo != null">
+				EQPT_NO,
+            </if>
+			<if test="qstatus != null">
+				Q_STATUS,
+            </if>
+			<if test="waitTime != null">
+				WAIT_TIME,
+            </if>
+			<if test="evtUsa != null">
+				EVT_USA,
+            </if>
+			<if test="evtDatatime != null">
+				EVT_DATATIME,
+            </if>
+        </trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="qdate != null">
+				#{qdate},
+            </if>
+			<if test="qno != null">
+				#{qno},
+            </if>
+			<if test="usrId != null">
+				#{usrId},
+            </if>
+			<if test="eqptNo != null">
+				#{eqptNo},
+            </if>
+			<if test="qstatus != null">
+				#{qstatus},
+            </if>
+			<if test="waitTime != null">
+				#{waitTime},
+            </if>
+			<if test="evtUsa != null">
+				#{evtUsa},
+            </if>
+			<if test="evtDatatime != null">
+				#{evtDatatime},
+            </if>
+        </trim>
+    </insert>
+	
+	<!-- insert -->
+	<insert id="batchInsert" parameterType="com.navi.mini.program.model.retlineup.RetLineUp">
+        INSERT INTO 
+        <include refid="Table_Name" />
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			Q_DATE,
+			Q_NO,
+			USR_ID,
+			EQPT_NO,
+			Q_STATUS,
+			WAIT_TIME,
+			EVT_USA,
+			EVT_DATATIME,
+        </trim>
+		VALUES
+		<foreach  collection="list" item="item"  index="index" separator=",">
+		(	
+			#{item.qdate},
+			#{item.qno},
+			#{item.usrId},
+			#{item.eqptNo},
+			#{item.qstatus},
+			#{item.waitTime},
+			#{item.evtUsa},
+			#{item.evtDatatime},
+		)
+		</foreach>
+    </insert>
+	
+	<!-- update:修改时不修改createUser、createTime、isDelete -->
+    <update id="update" parameterType="com.navi.mini.program.model.retlineup.RetLineUp">
+        UPDATE 
+        <include refid="Table_Name" />
+        <set>
+            <trim suffix=" " suffixOverrides=",">
+				<if test="usrId != null">
+					USR_ID = #{usrId},
+				</if>
+				<if test="eqptNo != null">
+					EQPT_NO = #{eqptNo},
+				</if>
+				<if test="qstatus != null">
+					Q_STATUS = #{qstatus},
+				</if>
+				<if test="waitTime != null">
+					WAIT_TIME = #{waitTime},
+				</if>
+				<if test="evtUsa != null">
+					EVT_USA = #{evtUsa},
+				</if>
+				<if test="evtDatatime != null">
+					EVT_DATATIME = #{evtDatatime},
+				</if>
+            </trim>
+        </set>
+		WHERE
+			id = #{id}
+    </update>	
+	
+
+	<!-- parameterType -->
+	<update id="physicsDeleteById" parameterType="Long">
+		DELETE FROM
+			<include refid="Table_Name"/>
+		WHERE
+			id = #{id}
+	</update>
+
+	<!-- queryList -->
+	<select id="queryList" resultMap="retLineUp" parameterType="com.navi.mini.program.model.retlineup.RetLineUp">
+		SELECT 
+			<include refid="Table_Columns" />
+		FROM
+			<include refid="Table_Name" />
+		ORDER BY 
+			create_time DESC
+	</select>
+
+
+	<!-- queryByUserIdAndDate -->
+	<select id="queryByUserIdAndDate" resultMap="retLineUp" parameterType="com.navi.mini.program.model.retlineup.RetLineUp">
+		SELECT
+			<include refid="Table_Columns" />
+		FROM
+			<include refid="Table_Name" />
+		WHERE
+			USR_ID = #{0}
+		AND
+			Q_DATE = #{1}
+		ORDER BY
+			Q_NO DESC
+	</select>
+	
+	<!-- queryById -->
+	<select id="queryById" resultMap="retLineUp" parameterType="Long">
+		SELECT 
+			<include refid="Table_Columns" />
+		FROM 
+			<include refid="Table_Name" />
+		AND
+			id = #{id}
+	</select>
+
+	<!-- queryByEqptNoAndDate -->
+	<select id="queryByEqptNoAndDate" resultMap="retLineUp" parameterType="com.navi.mini.program.model.retlineup.RetLineUp">
+		SELECT
+			<include refid="Table_Columns" />
+		FROM
+			<include refid="Table_Name" />
+		WHERE
+			Q_DATE = #{qDate}
+		AND
+			EQPT_NO = #{eqptNo}
+	</select>
+</mapper>

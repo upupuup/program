@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.navi.mini.program.dao.retcurrentno.RetCurrentNoDao">
+    <resultMap id="retCurrentNo" type="com.navi.mini.program.model.retcurrentno.RetCurrentNo">
+		<id property="eqptNo" column="EQPT_NO"/>
+        <result property="curNo" column="CUR_NO"/>
+        <result property="evtDatatime" column="EVT_DATATIME"/>
+        <result property="todayDate" column="TODAY_DATE"/>
+    </resultMap>
+	
+    <sql id="Table_Name">
+        ret_current_no
+    </sql>
+	
+	<sql id="Table_Columns">
+        EQPT_NO,
+        CUR_NO,
+        EVT_DATATIME,
+        TODAY_DATE
+	</sql>
+	
+	<!-- insert -->
+	<insert id="insert" parameterType="com.navi.mini.program.model.retcurrentno.RetCurrentNo">
+        INSERT INTO 
+        <include refid="Table_Name" />
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="eqptNo != null">
+				EQPT_NO,
+            </if>
+			<if test="curNo != null">
+				CUR_NO,
+            </if>
+			<if test="evtDatatime != null">
+				EVT_DATATIME,
+            </if>
+			<if test="todayDate != null">
+				TODAY_DATE,
+            </if>
+        </trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="eqptNo != null">
+				#{eqptNo},
+            </if>
+			<if test="curNo != null">
+				#{curNo},
+            </if>
+			<if test="evtDatatime != null">
+				#{evtDatatime},
+            </if>
+			<if test="todayDate != null">
+				#{todayDate},
+            </if>
+        </trim>
+    </insert>
+	
+	<!-- insert -->
+	<insert id="batchInsert" parameterType="com.navi.mini.program.model.retcurrentno.RetCurrentNo">
+        INSERT INTO 
+        <include refid="Table_Name" />
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+			EQPT_NO,
+			CUR_NO,
+			EVT_DATATIME,
+			TODAY_DATE,
+        </trim>
+		VALUES
+		<foreach  collection="list" item="item"  index="index" separator=",">
+		(	
+			#{item.eqptNo},
+			#{item.curNo},
+			#{item.evtDatatime},
+			#{item.todayDate},
+		)
+		</foreach>
+    </insert>
+	
+	<!-- update:修改时不修改createUser、createTime、isDelete -->
+    <update id="update" parameterType="com.navi.mini.program.model.retcurrentno.RetCurrentNo">
+        UPDATE 
+        <include refid="Table_Name" />
+        <set>
+            <trim suffix=" " suffixOverrides=",">
+				<if test="curNo != null">
+					CUR_NO = #{curNo},
+				</if>
+				<if test="evtDatatime != null">
+					EVT_DATATIME = #{evtDatatime},
+				</if>
+				<if test="todayDate != null">
+					TODAY_DATE = #{todayDate},
+				</if>
+            </trim>
+        </set>
+		WHERE
+			id = #{id}
+    </update>	
+	
+
+	<!-- parameterType -->
+	<update id="physicsDeleteById" parameterType="Long">
+		DELETE FROM
+			<include refid="Table_Name"/>
+		WHERE
+			id = #{id}
+	</update>
+	
+
+	
+	<!-- queryList -->
+	<select id="queryList" resultMap="retCurrentNo" parameterType="com.navi.mini.program.model.retcurrentno.RetCurrentNo">
+		SELECT 
+			<include refid="Table_Columns" />
+		FROM
+			<include refid="Table_Name" />
+		ORDER BY 
+			create_time DESC
+	</select>
+	
+	<!-- queryById -->
+	<select id="queryById" resultMap="retCurrentNo" parameterType="Long">
+		SELECT 
+			<include refid="Table_Columns" />
+		FROM 
+			<include refid="Table_Name" />
+		AND
+			id = #{id}
+	</select>
+	
+	
+	<!-- queryByEqptNoAndDate -->
+	<select id="queryByEqptNoAndDate" resultMap="retCurrentNo" parameterType="com.navi.mini.program.model.retcurrentno.RetCurrentNo">
+		SELECT 
+			<include refid="Table_Columns" />
+		FROM 
+			<include refid="Table_Name" />
+		WHERE
+			EQPT_NO = #{0}
+		AND
+			TODAY_DATE = #{1}
+	</select>
+</mapper>

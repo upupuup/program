@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class RetBoxEmpNo extends BaseModel {
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
      *  规则：LYKX+YYYYMMDD+4位流水
      */

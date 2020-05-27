@@ -3,6 +3,7 @@ package com.navi.mini.program.service.bisuser;
 import com.alibaba.fastjson.JSONObject;
 import com.navi.mini.program.common.service.BaseService;
 import com.navi.mini.program.model.bisuser.BisUser;
+import com.navi.mini.program.model.wechat.Wechat;
 
 public interface BisUserService extends BaseService<BisUser> {
 	/**
@@ -61,4 +62,14 @@ public interface BisUserService extends BaseService<BisUser> {
 	 * @CreateDate: 2020/5/21 13:54
 	 */
 	BisUser queryByUserId(String id) throws Exception;
+
+	/**
+	 * 处理微信的手机号
+	 * @param wechat
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/27 18:41
+	 */
+	String solvePhone(Wechat wechat) throws Exception;
 }

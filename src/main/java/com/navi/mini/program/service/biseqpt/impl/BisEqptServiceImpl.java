@@ -83,4 +83,16 @@ public class BisEqptServiceImpl extends BaseServiceImpl<BisEqpt, BisEqptDao> imp
         }
         return selectModels;
     }
+
+    /**
+     * 查询所有的码头
+     * @return
+     * @throws Exception
+     * @Author: jiangzhihong
+     * @CreateDate: 2020/5/27 15:48
+     */
+    @Override
+    public List<BisEqpt> queryAllList() throws Exception {
+        return this.dao.queryAllList(Constant.Equipment.DISENABLE);
+    }
 }
