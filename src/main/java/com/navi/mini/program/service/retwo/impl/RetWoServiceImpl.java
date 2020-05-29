@@ -50,6 +50,7 @@ public class RetWoServiceImpl extends BaseServiceImpl<RetWo, RetWoDao> implement
     public void saveRetWo(RetWo retWo) throws Exception{
 		String id = retWo.getId();
 		if (StringUtils.isBlank(id)) {
+			retWo.setId(UUIDUtils.generatePrimaryKey());
 			this.insert(retWo);
 			this.saveHisRetWo(retWo);
 		} else {
@@ -77,7 +78,6 @@ public class RetWoServiceImpl extends BaseServiceImpl<RetWo, RetWoDao> implement
 			throw new Exception("此人已存在料单");
 		}
 
-		retWo.setId(UUIDUtils.generatePrimaryKey());
 		retWo.setUnqSeqId(UUIDUtils.generatePrimaryKey());
 		retWo.setWoNo(UUIDUtils.generatePrimaryKey());
 		retWo.setCnt(0);

@@ -158,8 +158,51 @@ public class BisUserServiceImpl extends BaseServiceImpl<BisUser, BisUserDao> imp
         byte[] encrypData = Base64.decodeBase64(wechat.getEncryptedData());
         byte[] ivData = Base64.decodeBase64(wechat.getIv());
         byte[] sessionKey = Base64.decodeBase64(wechat.getSessionKey());
+        EmptyUtils.isEmpty("encrypData为空", encrypData);
+        EmptyUtils.isEmpty("ivData/为空", ivData);
+        EmptyUtils.isEmpty("sessionKey为空", sessionKey);
         String decrypt = AESDecodeUtils.decrypt(sessionKey, ivData, encrypData);
         JSONObject jsonObject = JSONObject.parseObject(decrypt);
         return String.valueOf(jsonObject.get("phoneNumber"));
     }
+
+	/**
+	 * 使用手机号查询
+	 * @param usrPhs 手机号
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public BisUser queryByPhone(String usrPhs) throws Exception {
+		EmptyUtils.isEmpty("手机号码", usrPhs);
+		List<BisUser> bisUserList = this.dao.queryByPhone(usrPhs, Constant.Flag.VALID_FLAG);
+		if (CollectionUtils.isEmpty(bisUserList)) {
+			return null;
+		}
+		return bisUserList.get(0);
+	}
+
+	/**
+	 * 使用手机号码查询并保存
+	 * @param usrPhs 手机号
+	 * @param token  token
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/28 11:13
+	 */
+	@Override
+	public BisUser queryByPhoneAndSaveToken(String usrPhs, String token) throws Exception {
+		EmptyUtils.isEmpty("手机号码", usrPhs);
+		EmptyUtils.isEmpty("token", token);
+		BisUser bisUser = this.queryByPhone(usrPhs);
+		if (bisUser == null) {
+			return null;
+		}
+		// 更新用户信息
+		bisUser.setToken(token);
+		bisUser.setEvtTimestamp(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
+		this.update(bisUser);
+		return bisUser;
+	}
 }

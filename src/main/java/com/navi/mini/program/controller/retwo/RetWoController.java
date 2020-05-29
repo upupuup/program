@@ -133,7 +133,7 @@ public class RetWoController extends BaseController {
 	 * @return
 	 */
 	@PostMapping(value="/queryRetBoxOrderByRecentTime", consumes="application/json", produces="application/json")
-	public BaseResponse queryRetBoxOrderByRecentTime(@RequestBody RetWo retWo) {
+	public BaseResponse queryRetBoxOrderByRecentTime() {
 		try {
 			clear();
 			RetWo obj = retWoService.queryRetBoxOrderByRecentTime();

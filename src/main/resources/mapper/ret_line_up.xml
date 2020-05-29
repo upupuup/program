@@ -195,8 +195,8 @@
 		FROM
 			<include refid="Table_Name" />
 		WHERE
-			Q_DATE = #{qDate}
+			Q_DATE = #{1}
 		AND
-			EQPT_NO = #{eqptNo}
+			EQPT_NO = #{0}
 	</select>
 </mapper>

@@ -16,4 +16,14 @@ public interface RetCurrentNoService extends BaseService<RetCurrentNo> {
 	 * @CreateDate: 2020/5/27 15:47
 	 */
 	List<RetCurrentNo> queryAllList() throws Exception;
+
+	/**
+	 * 使用码头和日期查询
+	 * @param eqptId 码头主键
+	 * @param today 日期
+	 * @return
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/28 10:36
+	 */
+	List<RetCurrentNo> queryByEquipAndTodayDate(String eqptId, String today) throws Exception;
 }

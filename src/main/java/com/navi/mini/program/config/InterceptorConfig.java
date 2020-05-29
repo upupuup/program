@@ -21,6 +21,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(getPayInterceptor()).addPathPatterns("/**").excludePathPatterns("/bisUser/getToken/**", "/bisUser/queryByToken",
-				"/bisUser/register");
+				"/bisUser/register", "/bisUser/solvePhone", "/bisUser/queryByPhoneAndSaveToken");
 	}
 }

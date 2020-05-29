@@ -72,4 +72,25 @@ public interface BisUserService extends BaseService<BisUser> {
 	 * @CreateDate: 2020/5/27 18:41
 	 */
 	String solvePhone(Wechat wechat) throws Exception;
+
+	/**
+	 * 使用手机号查询
+	 * @param usrPhs 手机号
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/28 11:13
+	 */
+	BisUser queryByPhone(String usrPhs) throws Exception;
+
+	/**
+	 * 使用手机号码查询并保存
+	 * @param usrPhs 手机号
+	 * @param token token
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/28 11:13
+	 */
+	BisUser queryByPhoneAndSaveToken(String usrPhs, String token) throws Exception;
 }

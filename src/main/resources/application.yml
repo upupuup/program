@@ -1,7 +1,7 @@
 logging:
   level:
     root: info
-    com.navi.mini.program.dao: debug
+    com.navi.mini.program: debug
 
 spring:
   datasource:
@@ -45,18 +45,12 @@ server:
 #    context-path: /equipngy
 
 # 微信配置
-wechat:
+Wechat:
   we-chat-access-token: weChatAccessTokenMiniDev
   ticket-token: ticketTokenMiniDev
-#  app-id: wx38b00b683bf8be2d
-#  app-secret: 91d189e9ec39403f778d0b4893ca76ca
+  app-id: wx38b00b683bf8be2d
+  app-secret: 91d189e9ec39403f778d0b4893ca76ca
   # 公司的
-  app-id: wxfafe4f9b7bbffd7f
-  app-secret: 93e63a4ccba1a30c2ac274bed73328a7
-
-pagehelper:
-  helperDialect: mysql
-  reasonable: true
-  supportMethodsArguments: true
-  params: count=countSql
+#  app-id: wxfafe4f9b7bbffd7f
+#  app-secret: 93e63a4ccba1a30c2ac274bed73328a7
 

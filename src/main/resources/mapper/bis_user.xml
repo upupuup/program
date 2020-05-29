@@ -196,7 +196,7 @@
             </trim>
         </set>
 		WHERE
-			id = #{id}
+			USR_ID = #{usrId}
     </update>
 
 	<!-- parameterType -->

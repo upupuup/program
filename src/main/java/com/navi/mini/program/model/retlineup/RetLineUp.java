@@ -24,6 +24,14 @@ public class RetLineUp extends BaseModel {
      */
 	private String eqptNo;
 	/**
+	 * 等待人数
+	 */
+	private Integer waitNo;
+	/**
+	 * 码头名称
+	 */
+	private String eqptName;
+	/**
      *  qstatus
      */
 	private String qStatus;

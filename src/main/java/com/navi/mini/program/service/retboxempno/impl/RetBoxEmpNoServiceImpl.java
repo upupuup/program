@@ -15,12 +15,14 @@ import com.navi.mini.program.service.retboxempno.RetBoxEmpNoService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxEmpNoDao> implements RetBoxEmpNoService {
@@ -28,7 +30,8 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
     private BisUserService bisUserService;
     @Autowired
     private BisDataService bisDataService;
-	
+
+    @Transactional(rollbackFor = Exception.class)
 	@Override
     public void saveRetBoxEmpNo(RetBoxEmpNo retBoxEmpNo) throws Exception{
         String retBoxEmp = retBoxEmpNo.getRetBoxEmpNo();
@@ -77,6 +80,7 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
      * @Author: jiangzhihong
      * @CreateDate: 2020/5/27 10:09
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void getBoxConfig(RetBoxEmpNo retBoxEmpNo) throws Exception {
         String no = retBoxEmpNo.getRetBoxEmpNo();
@@ -100,6 +104,8 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
         retBoxEmpNo.setIsGet(Constant.Flag.VALID_FLAG);
         retBoxEmpNo.setEvtUsr(SessionUtils.getCurrentUserId());
         retBoxEmpNo.setEvtTimestamp(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
+        // 调用接口，生产箱数
+
     }
 
     /**
@@ -148,7 +154,7 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
      */
     @Override
     public PageInfo<RetBoxEmpNo> queryBoxApproveList(RetBoxEmpNo retBoxEmpNo) throws Exception {
-        retBoxEmpNo.setApprovalStatus(Constant.Approve.APPROVE_END_STATUS);
+        retBoxEmpNo.setApprovalStatus(Constant.Approve.APPROVE_WAIT_STATUS);
         retBoxEmpNo.setEvtUsr(SessionUtils.getCurrentUserId());
         PageInfo<RetBoxEmpNo> retBoxEmpNoPageInfo = this.queryList(retBoxEmpNo);
         return retBoxEmpNoPageInfo;
@@ -164,7 +170,7 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
      */
     @Override
     public PageInfo<RetBoxEmpNo> queryBoxRecordHisList(RetBoxEmpNo retBoxEmpNo) throws Exception {
-        retBoxEmpNo.setApprovalStatus(Constant.Approve.APPROVE_WAIT_STATUS);
+        retBoxEmpNo.setApprovalStatus(Constant.Approve.APPROVE_END_STATUS);
         retBoxEmpNo.setEvtUsr(SessionUtils.getCurrentUserId());
         PageInfo<RetBoxEmpNo> retBoxEmpNoPageInfo = this.queryList(retBoxEmpNo);
         return retBoxEmpNoPageInfo;
@@ -259,6 +265,7 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
      * @Author: jiangzhihong
      * @CreateDate: 2020/5/23 0:07
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void getBoxApprove(RetBoxEmpNo retBoxEmpNo) throws Exception {
         // 判空
@@ -296,7 +303,24 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
         if (CollectionUtils.isEmpty(retBoxEmpNoList)) {
             return Collections.emptyList();
         }
+        // 删除
+        List<RetBoxEmpNo> collect = retBoxEmpNoList.stream().filter(obj-> Constant.Flag.VALID_FLAG.equals(obj.getApprovalResults())).collect(Collectors.toList());
+        return collect;
+    }
 
-        return retBoxEmpNoList;
+    /**
+     * 查询是否有未领取的并且通过的空箱
+     * @return
+     * @throws Exception
+     * @Author: jiangzhihong
+     * @CreateDate: 2020/5/28 13:58
+     */
+    @Override
+    public RetBoxEmpNo queryHasRecordAndNotGetPass() throws Exception {
+        List<RetBoxEmpNo> retBoxEmpNoList = this.queryHasRecordAndNotGet();
+        if (CollectionUtils.isEmpty(retBoxEmpNoList)) {
+            return null;
+        }
+        return retBoxEmpNoList.get(0);
     }
 }

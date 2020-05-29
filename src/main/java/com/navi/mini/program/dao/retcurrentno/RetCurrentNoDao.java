@@ -10,11 +10,11 @@ public interface RetCurrentNoDao extends BaseDao<RetCurrentNo> {
 	/**
 	 * 使用码头主键和今天日期查询
 	 * @param eqptNo 码头主键
-	 * @param currentDate 今天日期
+	 * @param toDayDate 今天日期
 	 * @return
 	 * @throws Exception
 	 * @Author: jiangzhihong
 	 * @CreateDate: 2020/5/27 16:08
 	 */
-	List<RetCurrentNo> queryByEqptNoAndDate(String eqptNo, String currentDate) throws Exception;
+	List<RetCurrentNo> queryByEqptNoAndDate(String eqptNo, String toDayDate) throws Exception;
 }

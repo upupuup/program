@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @Scope("prototype")
 @RestController
 @RequestMapping("/retBoxEmpNo")
@@ -181,12 +179,12 @@ public class RetBoxEmpNoController extends BaseController {
 	 * 查询这个人是否有未领取的空箱
 	 * @return
 	 */
-	@PostMapping(value="/queryHasRecordAndNotGet", consumes="application/json", produces="application/json")
-	public BaseResponse queryHasRecordAndNotGet() {
+	@PostMapping(value="/queryHasRecordAndNotGetPass", consumes="application/json", produces="application/json")
+	public BaseResponse queryHasRecordAndNotGetPass() {
 		try {
 			clear();
-			List<RetBoxEmpNo> obj = retBoxEmpNoService.queryHasRecordAndNotGet();
-			data.put(ResultInfo.DATALIST, obj);
+			RetBoxEmpNo obj = retBoxEmpNoService.queryHasRecordAndNotGetPass();
+			data.put(ResultInfo.DATA, obj);
 		} catch (Exception e) {
 			logger.info("/retBoxEmpNo/queryByRetBoxEmpNo 异常：" + e.toString());
 			error(Constant.ERRORMSG + e.getMessage());

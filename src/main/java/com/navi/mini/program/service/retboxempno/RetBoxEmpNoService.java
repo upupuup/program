@@ -73,4 +73,13 @@ public interface RetBoxEmpNoService extends BaseService<RetBoxEmpNo> {
 	 * @CreateDate: 2020/5/27 10:09
 	 */
 	void getBoxConfig(RetBoxEmpNo retBoxEmpNo) throws Exception;
+
+	/**
+	 * 查询是否有未领取的并且通过的空箱
+	 * @return
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/28 13:58
+	 */
+	RetBoxEmpNo queryHasRecordAndNotGetPass() throws Exception;
 }

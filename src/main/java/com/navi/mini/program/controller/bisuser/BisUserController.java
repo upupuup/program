@@ -71,6 +71,27 @@ public class BisUserController extends BaseController {
 	}
 
 	/**
+	 * 使用手机号码查询并保存
+	 * @param bisUser
+	 * @param request
+	 * @return
+	 */
+	@PostMapping(value="/queryByPhoneAndSaveToken", consumes="application/json", produces="application/json")
+	public BaseResponse queryByPhoneAndSaveToken(@RequestBody BisUser bisUser) {
+		try {
+			clear();
+			bisUser = bisUserService.queryByPhoneAndSaveToken(bisUser.getUsrPhs(), bisUser.getToken());
+			data.put(ResultInfo.DATA, bisUser);
+			data.put("sessionid", SessionUtils.getSession().getId());
+		} catch (Exception e) {
+			logger.info("/bisUser/queryByPhoneAndSaveToken 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
+
+	/**
 	 * 获取token
 	 * @return
 	 */
@@ -80,7 +101,7 @@ public class BisUserController extends BaseController {
 			JSONObject jsonObject = bisUserService.getToken(code);
 			data.put(Constant.ResultInfo.DATALIST, jsonObject);
 		} catch (Exception e) {
-			logger.info("/bisUser/queryByToken 异常：" + e.toString());
+			logger.info("/bisUser/getToken 异常：" + e.toString());
 			error(Constant.ERRORMSG + e.getMessage());
 			e.printStackTrace();
 		}
