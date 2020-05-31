@@ -1,5 +1,6 @@
 package com.navi.mini.program.service.retwo.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.navi.mini.program.common.constant.Constant;
@@ -22,10 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class RetWoServiceImpl extends BaseServiceImpl<RetWo, RetWoDao> implements RetWoService {
@@ -530,17 +528,20 @@ public class RetWoServiceImpl extends BaseServiceImpl<RetWo, RetWoDao> implement
 	 */
 	@Override
 	public RetWo queryRetBoxOrderByRecentTime() throws Exception {
-		List<BisData> bisDataList = bisDataService.queryByCateAndExt(Constant.RetWork.STATUS, Constant.RetWork.WAIT);
 		// 校验数据是否唯一
-		EmptyUtils.checkListEmptyAndSize(bisDataList, "状态");
-		List<RetWo> list= this.dao.queryRetBoxOrderByRecentTime(SessionUtils.getCurrentUserId(), bisDataList.get(0).getDataSeqId());
+		List<RetWo> list= this.dao.queryRetBoxOrderByRecentTime(SessionUtils.getCurrentUserId());
 		// 为空，返回null。不为空，返回第一条
 		if (CollectionUtils.isEmpty(list)) {
 			return null;
 		}
 		RetWo retWo = list.get(0);
 
-		retWo.setStatusName(bisDataList.get(0).getDataDesc());
+		// 查询状态并设置
+		BisData status = bisDataService.queryByDataSeqId(retWo.getStatus());
+		if (status == null) {
+			throw new Exception("不存在该状态名称");
+		}
+		retWo.setStatusName(status.getDataDesc());
 		this.solveManyInfo(retWo);
 		return retWo;
 	}
@@ -598,5 +599,131 @@ public class RetWoServiceImpl extends BaseServiceImpl<RetWo, RetWoDao> implement
 		}
 
 		return true;
+	}
+
+	/**
+	 * 开始投料
+	 * @param retWo 料单对象
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/29 8:40
+	 */
+	@Override
+	public void startFeeding(RetWo retWo) throws Exception {
+		String id = retWo.getId();
+		String inWharf = retWo.getInWharf();
+		// 校验数据
+		EmptyUtils.isEmpty("码头", inWharf);
+		EmptyUtils.isEmpty("主键", id);
+		Map<String, String> map = new HashMap<>(16);
+		// 查询料单
+		RetWo queryRetWo = this.dao.queryById(id);
+		if (queryRetWo == null) {
+			throw new Exception("料单不存在");
+		}
+		map.put("eqptNo ", inWharf);
+		map.put("woNo ", queryRetWo.getWoNo());
+		// 校验码头是否可用
+//		JSONObject jsonObject = HttpUtils.doPost(Constant.Url.CHECK_BEFORE_FENDING, JSONObject.toJSONString(map));
+		// 模拟json，需要删除的
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("success", "0000000");
+		jsonObject.put("errorMsg", "出错");
+		jsonObject.put("palletId", "12");
+
+		if (jsonObject == null) {
+			throw new Exception("码头校验不通过，请稍后再试");
+		}
+		Object success = jsonObject.get(Constant.Url.SUCCESS_CODE_NAME);
+		// 如果为空，则调用接口失败
+		if (success == null) {
+			throw new Exception("码头校验不通过，请稍后再试");
+		}
+		// 如果返回码不等于“0000000”，那么提示
+		if (!Constant.Url.SUCCESS_CODE.equals(String.valueOf(success))) {
+			throw new Exception(String.valueOf(jsonObject.get(Constant.Url.ERROR_MSG)));
+		}
+		// 查询投料中的状态
+		List<BisData> statusList = bisDataService.queryByCateAndExt(Constant.RetWork.STATUS, Constant.RetWork.INPR);
+		if (CollectionUtils.isEmpty(statusList)) {
+			throw new Exception("投料中状态不存在");
+		}
+		// 投料中状态
+		String insp = statusList.get(0).getDataSeqId();
+
+		// 使用码头和状态查询
+		List<RetWo> retWoList = this.dao.queryByWharfAndStatus(inWharf, insp);
+		if (!CollectionUtils.isEmpty(retWoList)) {
+			throw new Exception("还有其他送果人没有结束投料，请等待");
+		}
+
+		// 设置操作人，操作时间和状态
+		queryRetWo.setEvtTimestamp(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
+		queryRetWo.setEvtUsr(SessionUtils.getCurrentUserId());
+		queryRetWo.setStatus(insp);
+		this.saveRetWo(queryRetWo);
+	}
+
+	/**
+	 * 结束投料
+	 * @param retWo
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/31 13:50
+	 */
+	@Override
+	public void endFeeding(RetWo retWo) throws Exception {
+		String id = retWo.getId();
+		String inWharf = retWo.getInWharf();
+		// 校验数据
+		EmptyUtils.isEmpty("码头", inWharf);
+		EmptyUtils.isEmpty("主键", id);
+		Map<String, String> map = new HashMap<>(16);
+		// 查询料单
+		RetWo queryRetWo = this.dao.queryById(id);
+		if (queryRetWo == null) {
+			throw new Exception("料单不存在");
+		}
+		map.put("eqptNo ", inWharf);
+		map.put("woNo ", queryRetWo.getWoNo());
+		// 校验结束的时候发的消息
+//		JSONObject jsonObject = HttpUtils.doPost(Constant.Url.CHECK_BEFORE_FENDING, JSONObject.toJSONString(map));
+		// 模拟json，需要删除的
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("success", "0000000");
+		jsonObject.put("errorMsg", "出错");
+		jsonObject.put("palletId", "12");
+
+		if (jsonObject == null) {
+			throw new Exception("码头校验不通过，请稍后再试");
+		}
+		Object success = jsonObject.get(Constant.Url.SUCCESS_CODE_NAME);
+		// 如果为空，则调用接口失败
+		if (success == null) {
+			throw new Exception("码头校验不通过，请稍后再试");
+		}
+		// 如果返回码不等于“0000000”，那么提示
+		if (!Constant.Url.SUCCESS_CODE.equals(String.valueOf(success))) {
+			throw new Exception(String.valueOf(jsonObject.get(Constant.Url.ERROR_MSG)));
+		}
+		// 查询投料中的状态
+		List<BisData> statusList = bisDataService.queryByCateAndExt(Constant.RetWork.STATUS, Constant.RetWork.COMP);
+		if (CollectionUtils.isEmpty(statusList)) {
+			throw new Exception("结算中状态不存在");
+		}
+		// 投料中状态
+		String comp = statusList.get(0).getDataSeqId();
+
+		// 使用码头和状态查询
+//		List<RetWo> retWoList = this.dao.queryByWharfAndStatus(inWharf, comp);
+//		if (!CollectionUtils.isEmpty(retWoList)) {
+//			throw new Exception("还有其他送果人没有结束投料，请等待");
+//		}
+
+		// 设置操作人，操作时间和状态
+		queryRetWo.setEvtTimestamp(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
+		queryRetWo.setEvtUsr(SessionUtils.getCurrentUserId());
+		queryRetWo.setStatus(comp);
+		this.saveRetWo(queryRetWo);
 	}
 }

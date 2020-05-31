@@ -274,5 +274,41 @@ public class RetWoController extends BaseController {
 
 		return returnBaseResponse();
 	}
+
+	/**
+	 * 开始投料
+	 * @param retWo
+	 * @return
+	 */
+	@PostMapping(value="/startFeeding", consumes="application/json", produces="application/json")
+	public BaseResponse startFeeding(@RequestBody RetWo retWo) {
+		try {
+			clear();
+			retWoService.startFeeding(retWo);
+		} catch (Exception e) {
+			logger.info("/retWo/startFeeding 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
+
+	/**
+	 * 结束投料
+	 * @param retWo
+	 * @return
+	 */
+	@PostMapping(value="/endFeeding", consumes="application/json", produces="application/json")
+	public BaseResponse endFeeding(@RequestBody RetWo retWo) {
+		try {
+			clear();
+			retWoService.endFeeding(retWo);
+		} catch (Exception e) {
+			logger.info("/retWo/endFeeding 异常：" + e.toString());
+			error(Constant.ERRORMSG + e.getMessage());
+		}
+
+		return returnBaseResponse();
+	}
 	
 }

@@ -24,4 +24,14 @@ public interface RetLineUpDao extends BaseDao<RetLineUp> {
 	 * @throws Exception
 	 */
 	List<RetLineUp> queryByEqptNoAndDate(String eqptNo, String qDate) throws Exception;
+
+	/**
+	 * 使用码头,日期和用户查询
+	 * @param eqptNo
+	 * @param today
+	 * @param currentUserId
+	 * @return
+	 * @throws Exception
+	 */
+	List<RetLineUp> queryByEqptNoAndDateAndUserId(String eqptNo, String qDate, String usrId) throws Exception;
 }

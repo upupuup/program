@@ -114,4 +114,22 @@ public interface RetWoService extends BaseService<RetWo> {
 	 * @CreateDate: 2020/5/24 12:56
 	 */
 	Boolean queryCanChangeWharf(String woNo) throws Exception;
+
+	/**
+	 * 开始投料
+	 * @param retWo 料单对象
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/29 8:40
+	 */
+	void startFeeding(RetWo retWo) throws Exception;
+
+	/**
+	 * 结束投料
+	 * @param retWo
+	 * @throws Exception
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/31 13:50
+	 */
+	void endFeeding(RetWo retWo) throws Exception;
 }

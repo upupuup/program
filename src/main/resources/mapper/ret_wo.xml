@@ -384,8 +384,6 @@
 			<include refid="Table_Name" />
 		WHERE
 			SEND_USR_ID = #{0}
-		AND
-			status = #{1}
 	</select>
 
 	<!-- 使用单号查询 -->
@@ -428,5 +426,17 @@
 				#{item}
 			</foreach>
 
+	</select>
+
+	<!--使用码头和状态主键查询-->
+	<select id="queryByWharfAndStatus" resultMap="retWo" parameterType="String">
+		SELECT
+		<include refid="Table_Columns" />
+		FROM
+		<include refid="Table_Name" />
+		WHERE
+			STATUS = #{0}
+		AND
+			APPROVAL_STATUS = #{1}
 	</select>
 </mapper>

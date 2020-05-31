@@ -100,9 +100,7 @@ public class BisDataServiceImpl extends BaseServiceImpl<BisData, BisDataDao> imp
      */
     @Override
     public Integer queryBox() throws Exception {
-        List<BisData> boxList = this.queryByCateAndExt(Constant.RetBoxEmpNo.PALLET, Constant.RetBoxEmpNo.BOXNUM);
-        EmptyUtils.checkListEmptyAndSize(boxList, "托数");
-        return Integer.valueOf(boxList.get(0).getDataDesc());
+        return Constant.RetBoxEmpNo.BOXNUM;
     }
 
     /**
@@ -114,7 +112,7 @@ public class BisDataServiceImpl extends BaseServiceImpl<BisData, BisDataDao> imp
      */
     @Override
     public Integer queryPallet() throws Exception {
-        List<BisData> palletList = this.queryByCateAndExt(Constant.RetBoxEmpNo.PALLET, Constant.RetBoxEmpNo.PALLETNUM);
+        List<BisData> palletList = this.queryByCate(Constant.RetBoxEmpNo.PALLET);
         EmptyUtils.checkListEmptyAndSize(palletList, "托数");
         return Integer.valueOf(palletList.get(0).getDataDesc());
     }

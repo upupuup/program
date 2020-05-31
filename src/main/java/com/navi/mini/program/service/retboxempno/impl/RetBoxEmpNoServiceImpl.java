@@ -1,6 +1,7 @@
 package com.navi.mini.program.service.retboxempno.impl;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.navi.mini.program.common.constant.Constant;
 import com.navi.mini.program.common.service.impl.BaseServiceImpl;
@@ -46,7 +47,12 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
             EmptyUtils.isEmpty("托数", palletNum);
 
             // 查询托数
-            Integer queryPalletNum = bisDataService.queryPallet();
+            List<BisData> bisDataList = bisDataService.queryByCate(Constant.RetBoxEmpNo.PALLET);
+            if (CollectionUtils.isEmpty(bisDataList)) {
+                throw new Exception("托数在字典表中不存在");
+            }
+
+            Integer queryPalletNum = Integer.valueOf(bisDataList.get(0).getDataExt());
             // 比较托数
             if (palletNum > queryPalletNum) {
                 throw new Exception("托数不能大于" + queryPalletNum + "托");
@@ -67,6 +73,7 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
             retBoxEmpNo.setApplyTime(time);
             retBoxEmpNo.setIsGet(Constant.Flag.INVALID_FLAG);
             this.insert(retBoxEmpNo);
+
         }else{
             this.update(retBoxEmpNo);
         }
@@ -104,8 +111,24 @@ public class RetBoxEmpNoServiceImpl extends BaseServiceImpl<RetBoxEmpNo, RetBoxE
         retBoxEmpNo.setIsGet(Constant.Flag.VALID_FLAG);
         retBoxEmpNo.setEvtUsr(SessionUtils.getCurrentUserId());
         retBoxEmpNo.setEvtTimestamp(DateUtils.getDefaultSys(DateUtils.FORMAT_YYYYMMDD24HHMMSS));
-        // 调用接口，生产箱数
 
+        // 调用接口，生产箱数
+        HashMap<String, String> map = new HashMap<>(16);
+        map.put("boxEmpNo", retBoxEmpNo.getRetBoxEmpNo());
+        // 调用接口
+        JSONObject jsonObject = HttpUtils.doPost(Constant.Url.getEmptyBox, JSONObject.toJSONString(map));
+        if (jsonObject == null) {
+            throw new Exception("系统错误，请稍后再试");
+        }
+        Object success = jsonObject.get(Constant.Url.SUCCESS_CODE_NAME);
+        // 如果为空，则调用接口失败
+        if (success == null) {
+            throw new Exception("系统错误，请稍后再试");
+        }
+        // 如果返回码不等于“0000000”，那么提示
+        if (!Constant.Url.SUCCESS_CODE.equals(String.valueOf(success))) {
+            throw new Exception(String.valueOf(jsonObject.get(Constant.Url.ERROR_MSG)));
+        }
     }
 
     /**

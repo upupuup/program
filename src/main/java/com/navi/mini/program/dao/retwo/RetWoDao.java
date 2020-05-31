@@ -50,11 +50,10 @@ public interface RetWoDao extends BaseDao<RetWo> {
 	/**
 	 * 查询果农最近的料单
 	 * @param currentUserId
-	 * @param dataSeqId
 	 * @return
 	 * @throws Exception
 	 */
-	List<RetWo> queryRetBoxOrderByRecentTime(String currentUserId, String dataSeqId) throws Exception;
+	List<RetWo> queryRetBoxOrderByRecentTime(String currentUserId) throws Exception;
 
 	/**
 	 * 使用单号查询
@@ -86,4 +85,14 @@ public interface RetWoDao extends BaseDao<RetWo> {
 	 * @CreateDate: 2020/5/25 12:40
 	 */
 	List<RetWo> querySendFruitList(RetWo retWo) throws Exception;
+
+	/**
+	 * 使用码头和状态主键查询
+	 * @param inWharf 码头
+	 * @param status 状态
+	 * @return
+	 * @Author: jiangzhihong
+	 * @CreateDate: 2020/5/29 9:06
+	 */
+	List<RetWo> queryByWharfAndStatus(String inWharf, String status) throws Exception;
 }

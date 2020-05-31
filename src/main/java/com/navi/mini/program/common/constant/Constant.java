@@ -234,21 +234,55 @@ public class Constant {
     }
 
     /**
-     *
+     * 空箱单据
      */
     public interface RetBoxEmpNo {
         /**
          * 托
          */
-        public static final String PALLET = "PALL";
+        public static final String PALLET = "ZDTS";
         /**
          * 托数
          */
-        public static final String PALLETNUM = "PALLETNUM";
+//        public static final Integer PALLETNUM = 36;
         /**
          * 箱数
          */
-        public static final String BOXNUM = "BOXNUM";
+        public static final Integer BOXNUM = 36;
+
+    }
+
+    /**
+     * 请求的一些参数参数
+     */
+    public interface Url {
+        /**
+         * 投料前请求
+         */
+        public static final String CHECK_BEFORE_FENDING = "http://localhost:8033/wcsWharf/RequestDeviceSelfTest";
+
+        /**
+         * 结束时请求
+         */
+        public static final String CHECK_END_FENDING = "http://localhost:8033/wcsWharf/RequestDeviceSelfTest";
+        /**
+         * 空箱审批的时候，审批成功需要调接口分配空箱子
+         */
+        public static final String getEmptyBox = "http://localhost:8033/wcsWharf/RequestDeviceSelfTest";
+
+        /**
+         * 调用wcs的接口成功的code
+         */
+        public static String SUCCESS_CODE = "0000000";
+
+        /**
+         * 调用wcs的接口的code名称
+         */
+        public static String SUCCESS_CODE_NAME = "success";
+        /**
+         * 调用wcs的接口的错误信息
+         */
+        public static String ERROR_MSG = "errorMsg";
 
     }
 }

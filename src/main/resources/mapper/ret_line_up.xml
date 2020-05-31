@@ -199,4 +199,18 @@
 		AND
 			EQPT_NO = #{0}
 	</select>
+
+	<!-- queryByEqptNoAndDateAndUserId -->
+	<select id="queryByEqptNoAndDateAndUserId" resultMap="retLineUp" parameterType="com.navi.mini.program.model.retlineup.RetLineUp">
+		SELECT
+			<include refid="Table_Columns" />
+		FROM
+			<include refid="Table_Name" />
+		WHERE
+			Q_DATE = #{1}
+		AND
+			EQPT_NO = #{0}
+		AND
+			USR_ID = #{2}
+	</select>
 </mapper>
